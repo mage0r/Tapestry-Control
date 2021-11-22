@@ -1,0 +1,16 @@
+Free Ram: 17919. Free PSRam: 4152907
+
+Move to PSRAM for Stars.
+Free Ram: 56771. Free PSRam: 4119647
+
+Move to PSRAM for Constellations
+Free Ram: 67083. Free PSRam: 4104567
+
+Move to PSRAM for Planets. (plus some significant bug fixes)
+Free Ram: 70723. Free PSRam: 4105579
+
+Update ESP32 Core 2.0.1
+Free Ram: 119776. Free PSRam: 4098347
+
+
+
