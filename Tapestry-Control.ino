@@ -185,8 +185,8 @@ void setup() {
   loadConfig(SPIFFS, "/config.ini"); // load our configuration file.  If this fails, everything fails.
   display_header();
 
-  loadStars(SPIFFS, "/stars.csv");
   loadConstellations(SPIFFS, "/const.csv");
+  loadStars(SPIFFS, "/stars.csv");
   loadPlanets(SPIFFS, "/planets.csv");
 
   // finished loading all our files in to memory.  do we have any space free?

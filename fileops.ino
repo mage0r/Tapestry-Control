@@ -116,7 +116,7 @@ void loadStars(fs::FS &fs, const char * path){
           star_array[star_counter].name[char_pos] = '\0';  // terminate our name nicely
           // we've got everything we need.  Link to a LED.
           star_array[star_counter].led = &leds[star_array[star_counter].pin][star_array[star_counter].point];
-          
+
           char_pos = 0;
           counter1 = 0;
           point = 0;
@@ -129,7 +129,11 @@ void loadStars(fs::FS &fs, const char * path){
           star_array[star_counter].name[char_pos] = temp; // this is probably stupid.
           char_pos++;
         } else if (counter1 == 1) {
-          star_array[star_counter].constellation = star_array[star_counter].constellation*10 + (temp-48);
+          star_array[star_counter].constellation = star_array[star_counter].constellation*10 + (temp-48); // sets a byte reference
+          // we've linked this star to the constellation.
+          // Lets update the constellation array to include this star too.
+          constellation_array[star_array[star_counter].constellation].star_list[constellation_array[star_array[star_counter].constellation].star_count] = &star_array[star_counter];
+          constellation_array[star_array[star_counter].constellation].star_count++;
         } else if (counter1 == 2) {
           if(temp == 46) {
             point = 10;
@@ -183,14 +187,6 @@ void loadConstellations(fs::FS &fs, const char * path){
           // end of entry.
           constellation_array[constellation_counter].name[char_pos] = '\0';
           char_pos = 0;
-          // now iterate through the stars and assign partners.
-          for(int i = 0; i < star_counter; i++) {
-            // this isn't super slow, but could speed it up by assigning constellations first.
-            if(star_array[i].constellation == constellation_counter) {
-              constellation_array[constellation_counter].star_list[constellation_array[constellation_counter].star_count] = &star_array[i];
-              constellation_array[constellation_counter].star_count++;
-            }
-          }
           constellation_counter++;
          } else if (temp == '\r') {
           // skip carriage return
