@@ -6,6 +6,7 @@ void setup_fileops() {
 
   display_println(F("SPIFFS Initialised."));
 
+  // declaring these here let me load them in to PSRAM
   star_array = (stars *) ps_calloc(833, sizeof(stars));
   constellation_array = (constellations *) ps_calloc(89, sizeof(constellations));
   planet_array = (planets *) ps_calloc(10, sizeof(planets));

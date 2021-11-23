@@ -9,7 +9,7 @@ class MyCallbacks: public BLECharacteristicCallbacks {
       // 1S<256><256><256>Alpha Chamaeleontis                  // Uppercase S for Star Name.
       // 1s<256><256><256><high byte><low byte>                // Lowercase s for Star number.  Not a byte.
       // 1A<256><256><256><high byte><low byte>                // Uppercase A, <green><red><blue>, string of numbers.
-      // 1a<256><256><256><high byte><low byte><delay ms>      // Lower a, <green><red><blue>, string of numbers intersperced with time.
+      // 1a<256><256><256><ID><high byte><low byte><delay ms>  // Lower a, <green><red><blue>, string of numbers intersperced with time.
       // 1B<256>                                               // Uppercase B for brightness
       // 1P<256><256><256>Mercury                              // Uppercase P for Planet Name.
       // 1p<256><256><256>2                                    // Lowercase c for Planet number.
@@ -46,6 +46,7 @@ class MyCallbacks: public BLECharacteristicCallbacks {
           for(int i = 5; i < value.length(); i=i+3) {
             Serial.println((value[i] << 8) + value[i+1]);
             Serial.println(value[i+2]);
+            // append to an existing?
           }
         } else if(value[1] == 'c') {
           // Light up a constellation by constellation_id

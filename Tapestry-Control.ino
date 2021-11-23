@@ -29,6 +29,8 @@
 #include <BLE2902.h>
 #include "esp32-hal-psram.h" // do not forget this.
 
+#include "datastructure.h"
+
 #define FORMAT_SPIFFS_IF_FAILED true
 
 #define NUM_STRIPS 8
@@ -111,7 +113,6 @@ const int buttonPin = 21;
 unsigned long discovery_time = 0;
 byte beacon_on = -1; // -1 = always off, 0 = off, 1 = on.
 
-
 void assign_config(String name, String value) {
   if(name == "device_name")
     value.toCharArray(NAME, value.length()+1);
@@ -174,6 +175,13 @@ void setup() {
   // needs to happen before loading our stars to ensure the LED pointers are available.
   leds_setup();
 
+  display_print(F("Free Ram: "));
+  display_print(String(ESP.getFreeHeap()));
+  display_print(F(". Free PSRam: "));
+  display_println(String(ESP.getFreePsram()));
+
+  setup_animations();
+  
   display_print(F("Free Ram: "));
   display_print(String(ESP.getFreeHeap()));
   display_print(F(". Free PSRam: "));

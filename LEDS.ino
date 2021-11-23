@@ -30,6 +30,20 @@ void leds_setup() {
   display_println("LED's Initialised.");
 }
 
+void setup_animations() {
+  // Animations are a bit of their own animals.
+  // They need to be persistent.
+  // probably need to be shared between units.  future problem.
+
+  // By loading these in to PSRAM we can create a lot of them.
+  animation_array = (animation *) ps_malloc(100 * sizeof(animation)); //100?  feels like a lot.
+  //Serial.println(100 * sizeof(animation)); // just curious as to how big this is.
+
+  // Load from EEPROM?
+
+  display_println("Animations Initialised.");
+}
+
 // Fade out
 void fadeOut() {
   
@@ -42,7 +56,6 @@ void fadeOut() {
         
   }
 }
-
 
 void FillLEDsFromPaletteColors( uint8_t colorIndex)
 {

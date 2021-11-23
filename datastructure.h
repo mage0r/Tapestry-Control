@@ -44,3 +44,15 @@ typedef struct {
 } planets;
 
 planets *planet_array; // = (planets *) ps_malloc(10 * sizeof(planets));
+
+typedef struct {
+  char name[14];
+  byte unit; // which unit created this animation.
+  byte id; // how did the unit number this animation.
+  byte count; // how many stars in this sequence.
+  stars *star_list[100]; // somewhat arbitrary size
+  byte times[100];
+  
+} animation;
+
+animation *animation_array; // = (animation *) ps_malloc(10 * sizeof(animation));
