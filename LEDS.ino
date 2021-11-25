@@ -44,6 +44,22 @@ void setup_animations() {
   display_println("Animations Initialised.");
 }
 
+void append_animation(int animation_position, byte colour[3], int star_number, byte timer) {
+  
+  animation_array[animation_position].star_list[animation_array[animation_position].count] = &star_array[star_number];
+  animation_array[animation_position].colour[animation_array[animation_position].count][0] = colour[0];
+  animation_array[animation_position].colour[animation_array[animation_position].count][1] = colour[1];
+  animation_array[animation_position].colour[animation_array[animation_position].count][2] = colour[2];
+  animation_array[animation_position].times[animation_array[animation_position].count] = timer;
+  animation_array[animation_position].count++;
+
+  for(int i = 0; i < animation_array[0].count;i++){
+    Serial.println(animation_array[0].star_list[i]->name);
+    Serial.println(animation_array[0].colour[i][0]);
+    Serial.println(animation_array[0].times[i]);
+  }
+}
+
 // Fade out
 void fadeOut() {
   

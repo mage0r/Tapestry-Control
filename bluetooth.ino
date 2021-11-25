@@ -36,6 +36,8 @@ class MyCallbacks: public BLECharacteristicCallbacks {
           // Individual Star, ID
           if(screensaver) {
             FastLED.clear ();
+
+            
             screensaver = 0;
           }
           screensaver_time = millis();
@@ -43,10 +45,14 @@ class MyCallbacks: public BLECharacteristicCallbacks {
           // this has a temporary text to translate on it.
           *star_array[temp].led = CRGB(value[2],value[3],value[4]);
         } else if(value[1] == 'a') {
-          for(int i = 5; i < value.length(); i=i+3) {
-            Serial.println((value[i] << 8) + value[i+1]);
-            Serial.println(value[i+2]);
+          // append the string to the animation.
+          for(int i = 6; i < value.length(); i=i+3) {
+            int star_number = (value[i] << 8) + value[i+1];
+            //Serial.println((value[i] << 8) + value[i+1]);
+            //Serial.println(value[i+2]);
             // append to an existing?
+            byte temp_byte[3] = {value[2],value[3],value[4]};
+            append_animation(value[5], temp_byte, star_number, value[i+2]);
           }
         } else if(value[1] == 'c') {
           // Light up a constellation by constellation_id
@@ -57,7 +63,6 @@ class MyCallbacks: public BLECharacteristicCallbacks {
           }
           screensaver_time = millis(); // always need to reset this one.
           for(int i = 0 ; i < constellation_array[value[5]-48].star_count; i++) {
-            //Serial.println(constellation_array[value[5]-48].star_list[i]->name);  // keep this in mind.  it's how we reference the star.
             *constellation_array[value[5]-48].star_list[i]->led = CRGB(value[2],value[3],value[4]);
           }
         } else if(value[1] == 'p') {
@@ -77,6 +82,26 @@ class MyCallbacks: public BLECharacteristicCallbacks {
     }
 };
 
+// Next query slot.
+class QueryCallback: public BLECharacteristicCallbacks {
+  // <DeviceID><command_type>
+  // <DeviceID>v                      Set value to Version number
+  // <DeviceID>a                      Set value to next animation numbe
+    void onWrite(BLECharacteristic *pCharacteristic2) {
+      std::string value = pCharacteristic2->getValue();
+      
+      if (value.length() > 0) {
+        String temp = String(value[0]);
+        if(value[1] == 'a') {
+          temp += annimation_counter;
+        } else if(value[1] == 'v') {
+          temp += VERSION;
+        }
+        pCharacteristic2->setValue(temp.c_str());
+      }
+    }
+};
+
 class MyServerCallbacks: public BLEServerCallbacks {
     void onConnect(BLEServer* pServer) {
       bluetooth_connect++;
@@ -90,6 +115,7 @@ class MyServerCallbacks: public BLEServerCallbacks {
       display_println(F("Device disconnected."));
       display_header();
     }
+
 };
 
 void bluetooth_setup() {
@@ -117,6 +143,15 @@ void bluetooth_setup() {
   pCharacteristic->addDescriptor(new BLE2902());
 
   pCharacteristic->setValue("Ready for commands");
+
+  pCharacteristic2 = pService->createCharacteristic(
+                                         "6f485ef4-4d28-11ec-81d3-0242ac130003",
+                                         BLECharacteristic::PROPERTY_READ |
+                                         BLECharacteristic::PROPERTY_WRITE
+                                       );
+  pCharacteristic2->setCallbacks(new QueryCallback());
+  pCharacteristic2->setValue("Query for details.");
+
   pService->start();
 
   BLEAdvertising *pAdvertising = pServer->getAdvertising();

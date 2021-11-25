@@ -42,7 +42,7 @@ byte BRIGHTNESS = 64; // 0-255.  This is editable on the fly
 
 // Set our version number.  Don't forget to update when featureset changes
 #define PROJECT "Tapestry-Control"
-#define VERSION "V.0.10"
+#define VERSION "V.0.11"
 char NAME[10];
 
 // give us an update every 5 minutes.
@@ -89,9 +89,10 @@ unsigned long fade_timeout = 60000; // when to begin fadeout.
 int fadeAmount = 1;  // Set the amount to fade I usually do 5, 10, 15, 20, 25 etc even up to 255.
 
 // just helps to have a counter of these things.
-int star_counter = 0;
-int constellation_counter = 0;
-int planet_counter = 0;
+unsigned int star_counter = 0;
+unsigned int constellation_counter = 0;
+unsigned int planet_counter = 0;
+unsigned int annimation_counter = 0;
 
 // TFT screen
 TFT_eSPI myGLCD = TFT_eSPI();       // Invoke custom library
@@ -103,7 +104,8 @@ char display_temp[DISPLAY_WIDTH];
 char SERVICE_UUID[40]; // we load these configs from the file.
 char CHARACTERISTIC_UUID[40];
 BLEServer* pServer = NULL;
-BLECharacteristic* pCharacteristic = NULL;
+BLECharacteristic* pCharacteristic = NULL; // main Characteristic.
+BLECharacteristic* pCharacteristic2 = NULL; // this ble entry lets you query the unit.
 byte bluetooth_connect = 0;
 boolean bluetooth_enable = true;
 uint32_t value = 0;
