@@ -118,6 +118,11 @@ void loadStars(fs::FS &fs, const char * path){
           // we've got everything we need.  Link to a LED.
           star_array[star_counter].led = &leds[star_array[star_counter].pin][star_array[star_counter].point];
 
+          // we've linked this star to the constellation.
+          // Lets update the constellation array to include this star too.
+          constellation_array[star_array[star_counter].constellation].star_list[constellation_array[star_array[star_counter].constellation].star_count] = &star_array[star_counter];
+          constellation_array[star_array[star_counter].constellation].star_count++;
+
           char_pos = 0;
           counter1 = 0;
           point = 0;
@@ -131,10 +136,7 @@ void loadStars(fs::FS &fs, const char * path){
           char_pos++;
         } else if (counter1 == 1) {
           star_array[star_counter].constellation = star_array[star_counter].constellation*10 + (temp-48); // sets a byte reference
-          // we've linked this star to the constellation.
-          // Lets update the constellation array to include this star too.
-          constellation_array[star_array[star_counter].constellation].star_list[constellation_array[star_array[star_counter].constellation].star_count] = &star_array[star_counter];
-          constellation_array[star_array[star_counter].constellation].star_count++;
+
         } else if (counter1 == 2) {
           if(temp == 46) {
             point = 10;
@@ -163,8 +165,7 @@ void loadStars(fs::FS &fs, const char * path){
       Serial.println(star_array[3].pin);
       Serial.println(star_array[3].point);
       */
-      
-      //*star_array[3].led = CRGB::Red;  // this is how we change a star colour.
+
 }
 
 void loadConstellations(fs::FS &fs, const char * path){
@@ -255,12 +256,71 @@ void loadPlanets(fs::FS &fs, const char * path){
     display_print(F(". Done: "));
     display_println(String(planet_counter));
 
-      /*
-      Serial.println(star_array[3].name);
-      Serial.println(star_array[3].constellation);
-      Serial.println(star_array[3].magnitude);
-      Serial.println(star_array[3].pin);
-      Serial.println(star_array[3].point);
-      */
+}
+
+void loadAnimation(fs::FS &fs, const char * path){
+
+    // <animation id>,<name>,<RED>,<GREEN>,<BLUE>,<LED #>,<TIMER>
+  
+    display_print(F("Loading Animations: "));
+    display_print(path);
+
+    File file = fs.open(path);
+    if(!file || file.isDirectory()){
+        display_println(F("- failed to open file for reading"));
+        return;
+    }
+
+    // this is very specific to loading the Animations.
+
+    byte counter1 = 0;
+    int char_pos = 0;
+
+    // collect variables.
+    int temp_animation_id;
+    int temp_star = 0;
+    
+    
+    while(file.available()){
+
+        byte temp = file.read();
+
+        if(temp == ',') {
+          counter1++;
+        } else if(temp == '\n') {
+          animation_array[temp_animation_id].name[char_pos] = '\0'; // terminate our name nicely
+
+          animation_array[temp_animation_id].star_list[animation_array[temp_animation_id].count] = &star_array[temp_star];
+          animation_array[temp_animation_id].count++;
+
+          char_pos = 0;
+          counter1 = 0;
+          temp_star = 0;
+          
+        } else if (temp == '\r') {
+          // skip carriage return
+        } else if(counter1 == 0) {
+          temp_animation_id = temp;
+        } else if(counter1 == 1) {
+          // append to the name
+          animation_array[temp_animation_id].name[char_pos] = temp; // this is probably stupid.
+          char_pos++;
+        } else if (counter1 == 2) {
+          animation_array[temp_animation_id].colour[animation_array[temp_animation_id].count][0] = temp;
+        } else if (counter1 == 3) {
+          animation_array[temp_animation_id].colour[animation_array[temp_animation_id].count][1] = temp;
+        } else if (counter1 == 4) {
+          animation_array[temp_animation_id].colour[animation_array[temp_animation_id].count][2] = temp;
+        } else if (counter1 == 5) {
+          // this is our LED.
+          temp_star = temp_star*10 + (temp-48);
+        } else if (counter1 == 6) {
+          animation_array[temp_animation_id].times[animation_array[temp_animation_id].count] = temp;
+        }
+        
+    }
+
+    display_print(F(". Done: "));
+    display_println(String(animation_counter));
 
 }

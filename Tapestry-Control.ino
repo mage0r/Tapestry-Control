@@ -42,7 +42,7 @@ byte BRIGHTNESS = 64; // 0-255.  This is editable on the fly
 
 // Set our version number.  Don't forget to update when featureset changes
 #define PROJECT "Tapestry-Control"
-#define VERSION "V.0.11"
+#define VERSION "V.0.13"
 char NAME[10];
 
 // give us an update every 5 minutes.
@@ -92,7 +92,7 @@ int fadeAmount = 1;  // Set the amount to fade I usually do 5, 10, 15, 20, 25 et
 unsigned int star_counter = 0;
 unsigned int constellation_counter = 0;
 unsigned int planet_counter = 0;
-unsigned int annimation_counter = 0;
+unsigned int animation_counter = 0;
 
 // TFT screen
 TFT_eSPI myGLCD = TFT_eSPI();       // Invoke custom library
@@ -103,6 +103,7 @@ char display_temp[DISPLAY_WIDTH];
 // Bluetooth
 char SERVICE_UUID[40]; // we load these configs from the file.
 char CHARACTERISTIC_UUID[40];
+char DATA_UUID[40];
 BLEServer* pServer = NULL;
 BLECharacteristic* pCharacteristic = NULL; // main Characteristic.
 BLECharacteristic* pCharacteristic2 = NULL; // this ble entry lets you query the unit.
@@ -152,6 +153,10 @@ void assign_config(String name, String value) {
       bluetooth_enable=false;
   } else if(name == "bluetooth_char_UUID") {
     value.toCharArray(CHARACTERISTIC_UUID, value.length()+1);
+    if(value.length() < 1)
+      bluetooth_enable=false;
+  } else if(name == "bluetooth_data_UUID") {
+    value.toCharArray(DATA_UUID, value.length()+1);
     if(value.length() < 1)
       bluetooth_enable=false;
   }

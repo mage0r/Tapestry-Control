@@ -45,6 +45,11 @@ void setup_animations() {
 }
 
 void append_animation(int animation_position, byte colour[3], int star_number, byte timer) {
+
+  display_print("Append to animation:");
+  display_print(String(animation_position));
+  display_print(":");
+  display_println(String(animation_array[animation_position].count));
   
   animation_array[animation_position].star_list[animation_array[animation_position].count] = &star_array[star_number];
   animation_array[animation_position].colour[animation_array[animation_position].count][0] = colour[0];
@@ -53,10 +58,23 @@ void append_animation(int animation_position, byte colour[3], int star_number, b
   animation_array[animation_position].times[animation_array[animation_position].count] = timer;
   animation_array[animation_position].count++;
 
-  for(int i = 0; i < animation_array[0].count;i++){
-    Serial.println(animation_array[0].star_list[i]->name);
-    Serial.println(animation_array[0].colour[i][0]);
-    Serial.println(animation_array[0].times[i]);
+}
+
+void openAnimation(int animation_position) {
+  display_print("Show Animation #");
+  display_print(String(animation_position));
+  display_print(":");
+  display_println(animation_array[animation_position].name);
+
+  for(int i = 0; i < animation_array[animation_position].count;i++){
+    Serial.println(animation_array[animation_position].star_list[i]->name);
+    Serial.println(animation_array[animation_position].colour[i][0]);
+    Serial.println(animation_array[animation_position].times[i]);
+  }
+  
+  for(int i=0; i < animation_array[animation_position].count; i++) {
+    *animation_array[animation_position].star_list[i]->led = CRGB(animation_array[animation_position].colour[i][0],animation_array[animation_position].colour[i][1],animation_array[animation_position].colour[i][2]);
+    delay(animation_array[animation_position].times[i]*10); //blocking :/
   }
 }
 

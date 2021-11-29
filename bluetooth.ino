@@ -3,24 +3,24 @@ class MyCallbacks: public BLECharacteristicCallbacks {
 
       // ble can only have 20 characters.
       // what does that look like.
-      // <DeviceID><command_type><string>
-      // 1C<256><256><256>Chamaeleon                           // Uppercase C for Constellation Name.
-      // 1c<256><256><256>2                                    // Lowercase c for Constellation number.
-      // 1S<256><256><256>Alpha Chamaeleontis                  // Uppercase S for Star Name.
-      // 1s<256><256><256><high byte><low byte>                // Lowercase s for Star number.  Not a byte.
-      // 1A<256><256><256><high byte><low byte>                // Uppercase A, <green><red><blue>, string of numbers.
-      // 1a<256><256><256><ID><high byte><low byte><delay ms>  // Lower a, <green><red><blue>, string of numbers intersperced with time.
-      // 1B<256>                                               // Uppercase B for brightness
-      // 1P<256><256><256>Mercury                              // Uppercase P for Planet Name.
-      // 1p<256><256><256>2                                    // Lowercase c for Planet number.
+      // <DeviceID>c<256><256><256>2                                    // Lowercase c for Constellation number.
+      // <DeviceID>s<256><256><256><high byte><low byte>                // Lowercase s for Star number.  Not a byte.
+      // <DeviceID>p<256><256><256>2                                    // Lowercase c for Planet number.
+      // <DeviceID>a<256><256><256><ID><high byte><low byte><delay ms>  // Lower a, <green><red><blue>, string of numbers intersperced with time.
+      // <DeviceID>A<ID>                                                // Uppercase A, Animation ID.  Display Animation.
+      // <DeviceID>B<256>                                               // Uppercase B for brightness
+      
 
       //char serverHostname[20];
       
       std::string value = pCharacteristic->getValue();
 
       if (value.length() > 0) {
-        
+
+        // this is debug
         display_print(F("BT Update: "));
+        display_print(String(value.length()));
+        display_print(":");
         for (int i = 0; i < value.length(); i++){
           display_print(String(value[i]));
 
@@ -36,24 +36,41 @@ class MyCallbacks: public BLECharacteristicCallbacks {
           // Individual Star, ID
           if(screensaver) {
             FastLED.clear ();
-
-            
             screensaver = 0;
           }
           screensaver_time = millis();
           int temp = (value[5] << 8) + value[6];
           // this has a temporary text to translate on it.
-          *star_array[temp].led = CRGB(value[2],value[3],value[4]);
+          *star_array[temp-48].led = CRGB(value[2],value[3],value[4]);
+          display_print("Display Star:");
+          display_println(star_array[temp-48].name);
         } else if(value[1] == 'a') {
           // append the string to the animation.
           for(int i = 6; i < value.length(); i=i+3) {
             int star_number = (value[i] << 8) + value[i+1];
-            //Serial.println((value[i] << 8) + value[i+1]);
-            //Serial.println(value[i+2]);
+
+            // This is all debug
+            Serial.print(i);
+            Serial.print(":");
+            Serial.println(value.length());
+            Serial.print("high:");
+            Serial.println(int(value[i] << 8));
+            Serial.print("low:");
+            Serial.println(int(value[i+1]));
+            Serial.print("combined:");
+            Serial.println(star_number);
+            Serial.print("timer:");
+            Serial.println(int(value[i+2]));
+            Serial.print("animation id:");
+            Serial.println(int(value[5]));
+            
             // append to an existing?
             byte temp_byte[3] = {value[2],value[3],value[4]};
-            append_animation(value[5], temp_byte, star_number, value[i+2]);
+            append_animation(int(value[5]), temp_byte, star_number, value[i+2]);
           }
+        } else if(value[1] == 'A') {
+          // Display the animation sequence.
+          
         } else if(value[1] == 'c') {
           // Light up a constellation by constellation_id
           fade_time = millis();
@@ -65,6 +82,8 @@ class MyCallbacks: public BLECharacteristicCallbacks {
           for(int i = 0 ; i < constellation_array[value[5]-48].star_count; i++) {
             *constellation_array[value[5]-48].star_list[i]->led = CRGB(value[2],value[3],value[4]);
           }
+          display_print("Display Constellation:");
+          display_println(constellation_array[value[5]-48].name);
         } else if(value[1] == 'p') {
           // Individual Star, ID
           if(screensaver) {
@@ -74,6 +93,8 @@ class MyCallbacks: public BLECharacteristicCallbacks {
           screensaver_time = millis();
           // this has a temporary text to translate on it.
           *planet_array[value[5]-48].led = CRGB(value[2],value[3],value[4]);
+          display_print("Display Planet:");
+          display_println(planet_array[value[5]-48].name);
         }
 
         //FastLED.show();
@@ -93,7 +114,12 @@ class QueryCallback: public BLECharacteristicCallbacks {
       if (value.length() > 0) {
         String temp = String(value[0]);
         if(value[1] == 'a') {
-          temp += annimation_counter;
+          temp += animation_counter;
+          animation_counter++;
+          if(animation_counter)
+            animation_counter = 0;            
+
+          animation_array[animation_counter].count = 0;
         } else if(value[1] == 'v') {
           temp += VERSION;
         }
@@ -145,7 +171,7 @@ void bluetooth_setup() {
   pCharacteristic->setValue("Ready for commands");
 
   pCharacteristic2 = pService->createCharacteristic(
-                                         "6f485ef4-4d28-11ec-81d3-0242ac130003",
+                                         DATA_UUID,
                                          BLECharacteristic::PROPERTY_READ |
                                          BLECharacteristic::PROPERTY_WRITE
                                        );
