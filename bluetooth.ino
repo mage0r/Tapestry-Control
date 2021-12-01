@@ -41,9 +41,16 @@ class MyCallbacks: public BLECharacteristicCallbacks {
           screensaver_time = millis();
           int temp = (value[5] << 8) + value[6];
           // this has a temporary text to translate on it.
-          *star_array[temp-48].led = CRGB(value[2],value[3],value[4]);
-          display_print("Display Star:");
-          display_println(star_array[temp-48].name);
+          // broken
+          *star_array[temp].led = CRGB(value[2],value[3],value[4]);
+
+          // just check if this is a Planet
+          if(constellation_array[star_array[temp].constellation].name == "Planets")
+            display_print("Display Planet:"); 
+          else
+            display_print("Display Star:");
+          display_println(star_array[temp].name);
+          
         } else if(value[1] == 'a') {
           // append the string to the animation.
           for(int i = 6; i < value.length(); i=i+3) {
@@ -84,17 +91,6 @@ class MyCallbacks: public BLECharacteristicCallbacks {
           }
           display_print("Display Constellation:");
           display_println(constellation_array[value[5]-48].name);
-        } else if(value[1] == 'p') {
-          // Individual Star, ID
-          if(screensaver) {
-            FastLED.clear ();
-            screensaver = 0;
-          }
-          screensaver_time = millis();
-          // this has a temporary text to translate on it.
-          *planet_array[value[5]-48].led = CRGB(value[2],value[3],value[4]);
-          display_print("Display Planet:");
-          display_println(planet_array[value[5]-48].name);
         }
 
         //FastLED.show();

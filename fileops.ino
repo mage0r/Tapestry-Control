@@ -7,9 +7,8 @@ void setup_fileops() {
   display_println(F("SPIFFS Initialised."));
 
   // declaring these here let me load them in to PSRAM
-  star_array = (stars *) ps_calloc(833, sizeof(stars));
-  constellation_array = (constellations *) ps_calloc(89, sizeof(constellations));
-  planet_array = (planets *) ps_calloc(10, sizeof(planets));
+  star_array = (stars *) ps_calloc(843, sizeof(stars));
+  constellation_array = (constellations *) ps_calloc(90, sizeof(constellations));
 }
 
 void listDir(fs::FS &fs, const char * dirname, uint8_t levels){
@@ -209,53 +208,6 @@ void loadConstellations(fs::FS &fs, const char * path){
       }
       */
     
-}
-
-void loadPlanets(fs::FS &fs, const char * path){
-    display_print(F("Loading Planets: "));
-    display_print(path);
-
-    File file = fs.open(path);
-    if(!file || file.isDirectory()){
-        display_println(F("- failed to open file for reading"));
-        return;
-    }
-
-    // this is very specific to loading the planets.
-
-    byte counter1 = 0;
-    planet_counter = 0;
-    int char_pos = 0;
-    
-    while(file.available()){
-
-        byte temp = file.read();
-
-        if(temp == ',') {
-          counter1++;
-        } else if(temp == '\n') {
-          planet_array[planet_counter].name[char_pos] = '\0'; // terminate our name nicely
-          // at this point we have all the details we need to link to the leds array.
-          planet_array[planet_counter].led = &leds[planet_array[planet_counter].pin][planet_array[planet_counter].point];
-          char_pos = 0;
-          counter1 = 0;
-          planet_counter++;
-        } else if (temp == '\r') {
-          // skip carriage return
-        } else if(counter1 == 0) {
-          // append to the name
-          planet_array[planet_counter].name[char_pos] = temp; // this is probably stupid.
-          char_pos++;
-        } else if (counter1 == 1) {
-          planet_array[planet_counter].pin = temp-48;
-        } else if (counter1 == 2) {
-          planet_array[planet_counter].point = planet_array[planet_counter].point*10 + (temp-48);
-        }
-    }
-
-    display_print(F(". Done: "));
-    display_println(String(planet_counter));
-
 }
 
 void loadAnimation(fs::FS &fs, const char * path){

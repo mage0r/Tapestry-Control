@@ -202,7 +202,6 @@ void setup() {
 
   loadConstellations(SPIFFS, "/const.csv");
   loadStars(SPIFFS, "/stars.csv");
-  loadPlanets(SPIFFS, "/planets.csv");
 
   // finished loading all our files in to memory.  do we have any space free?
   display_print(F("Free Ram: "));
