@@ -87,7 +87,9 @@ class MyCallbacks: public BLECharacteristicCallbacks {
             screensaver = 0;
           }
           screensaver_time = millis(); // always need to reset this one.
-          openAnimation(int(value[2]), true); // wiping the animation for the prototype
+          setupAnimation(int(value[2]));
+          play_animation = int(value[2]);
+          //openAnimation(int(value[2]), true); // wiping the animation for the prototype
         } else if(value[1] == 'c') {
           // Light up a constellation by constellation_id
           fade_time = millis();

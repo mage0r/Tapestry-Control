@@ -48,6 +48,7 @@ void setup_animations() {
 void append_animation(int animation_position, byte colour[3], int star_number, byte timer) {
 
   /*
+  // enabling this debug information significantly slows the animation transmission speed.
   display_print(F("Append to animation:"));
   display_print(String(animation_position));
   display_print(F("["));
@@ -68,46 +69,76 @@ void append_animation(int animation_position, byte colour[3], int star_number, b
 
 }
 
-void openAnimation(int animation_position), boolean wipe_animation) {
+void setupAnimation(int animation_position) {
+  unsigned long temp_millis = millis();
+  // so, this takes a few seconds to run
+  temp_millis += 2000;
+  for(int i=0; i < animation_array[animation_position].count; i++) {
+    // cheating a bit, setting the max brightness
+    *animation_array[animation_position].star_list[i]->led &= CRGB(animation_array[animation_position].colour[i][0],animation_array[animation_position].colour[i][1],animation_array[animation_position].colour[i][2]);
+
+    // lets set our temporary delays.  these can't be runtime driven.
+    animation_array[animation_position].show[i] = temp_millis + animation_array[animation_position].times[i];
+  }
+}
+
+int openAnimation(int animation_position, boolean wipe_animation) {
+  /*
   display_print(F("Show Animation #"));
   display_print(String(animation_position));
   display_print(F(":"));
   //display_print(animation_array[animation_position].name);
   display_println("");
-
-  /*
-  for(int i = 0; i < animation_array[animation_position].count;i++){
-    Serial.println(animation_array[animation_position].star_list[i]->name);
-    Serial.println(animation_array[animation_position].colour[i][0]);
-    Serial.println(animation_array[animation_position].times[i]);
-  }
   */
-  
-  
+
+  unsigned long temp_millis = millis();
   for(int i=0; i < animation_array[animation_position].count; i++) {
-    *animation_array[animation_position].star_list[i]->led = CRGB(animation_array[animation_position].colour[i][0],animation_array[animation_position].colour[i][1],animation_array[animation_position].colour[i][2]);
+    // cheating a bit, setting the max brightness
+    //*animation_array[animation_position].star_list[i]->led &= CRGB(animation_array[animation_position].colour[i][0],animation_array[animation_position].colour[i][1],animation_array[animation_position].colour[i][2]);
+
+    if(millis() > animation_array[animation_position].show[i]) {
+      *animation_array[animation_position].star_list[i]->led++;
+  
+    }
+
+    if(*animation_array[animation_position].star_list[i]->led != CRGB(animation_array[animation_position].colour[i][0],animation_array[animation_position].colour[i][1],animation_array[animation_position].colour[i][2]))
+        wipe_animation = false;
+    
+    //*animation_array[animation_position].star_list[i]->led = CRGB(animation_array[animation_position].colour[i][0],animation_array[animation_position].colour[i][1],animation_array[animation_position].colour[i][2]);
     //display_println(animation_array[animation_position].star_list[i]->name);
-    delay(animation_array[animation_position].times[i]); //blocking :/
+    
+    //delay(animation_array[animation_position].times[i]); //blocking :/
   }
 
   if(wipe_animation) {
     animation_array[animation_position].count = 0;
+    Serial.println("wipe");
+    return(-1);
   }
-  
+  return(animation_position);
 }
 
 // Fade out
 void fadeOut() {
   
   EVERY_N_MILLISECONDS(10) {
-        for(int j = 0; j < NUM_STRIPS; j++) {
-          for( int i = 0; i < NUM_LEDS_PER_STRIP; ++i) {
-              leds[j][i].fadeToBlackBy(fadeAmount);
-          }
-        }
-        
+    for(int j = 0; j < NUM_STRIPS; j++) {
+      for( int i = 0; i < NUM_LEDS_PER_STRIP; ++i) {
+          leds[j][i].fadeToBlackBy(fadeAmount);
+      }
+    }
   }
 }
+
+/*
+void fadeIn(unsigned long temp_millis) {
+    EVERY_N_MILLISECONDS(10) {
+      if(millis() > temp_millis)
+              leds[j][i].brighten8_video( fadeAmount);
+    }
+
+}
+*/
 
 void FillLEDsFromPaletteColors( uint8_t colorIndex)
 {
@@ -120,89 +151,3 @@ void FillLEDsFromPaletteColors( uint8_t colorIndex)
       }
     }
 }
-
-void ChangePalettePeriodically()
-{
-    uint8_t secondHand = (millis() / 1000) % 60;
-    static uint8_t lastSecond = 99;
-    
-    if( lastSecond != secondHand) {
-        lastSecond = secondHand;
-        if( secondHand ==  0)  { currentPalette = RainbowColors_p;         currentBlending = LINEARBLEND; display_println("Rainbow");}
-        if( secondHand == 10)  { currentPalette = RainbowStripeColors_p;   currentBlending = NOBLEND; display_println("Rainbow Stripe"); }
-        if( secondHand == 15)  { currentPalette = RainbowStripeColors_p;   currentBlending = LINEARBLEND; display_println("Rainbow Stripe Blend"); }
-        if( secondHand == 20)  { SetupPurpleAndGreenPalette();             currentBlending = LINEARBLEND; display_println("Purple Green"); }
-        if( secondHand == 25)  { SetupTotallyRandomPalette();              currentBlending = LINEARBLEND; display_println("Random"); }
-        if( secondHand == 30)  { SetupBlackAndWhiteStripedPalette();       currentBlending = NOBLEND; display_println("Black and white"); }
-        if( secondHand == 35)  { SetupBlackAndWhiteStripedPalette();       currentBlending = LINEARBLEND; display_println("black and whipe. Blend"); }
-        if( secondHand == 40)  { currentPalette = CloudColors_p;           currentBlending = LINEARBLEND; display_println("Cloud"); }
-        if( secondHand == 45)  { currentPalette = PartyColors_p;           currentBlending = LINEARBLEND; display_println("Party"); }
-        if( secondHand == 50)  { currentPalette = myRedWhiteBluePalette_p; currentBlending = NOBLEND; display_println("Red White Blue"); }
-        if( secondHand == 55)  { currentPalette = myRedWhiteBluePalette_p; currentBlending = LINEARBLEND; display_println("Red White Blue Blend"); }
-    }
-}
-
-// This function fills the palette with totally random colors.
-void SetupTotallyRandomPalette()
-{
-    for( int i = 0; i < 16; ++i) {
-        currentPalette[i] = CHSV( random8(), 255, random8());
-    }
-}
-
-// This function sets up a palette of black and white stripes,
-// using code.  Since the palette is effectively an array of
-// sixteen CRGB colors, the various fill_* functions can be used
-// to set them up.
-void SetupBlackAndWhiteStripedPalette()
-{
-    // 'black out' all 16 palette entries...
-    fill_solid( currentPalette, 16, CRGB::Black);
-    // and set every fourth one to white.
-    currentPalette[0] = CRGB::White;
-    currentPalette[4] = CRGB::White;
-    currentPalette[8] = CRGB::White;
-    currentPalette[12] = CRGB::White;
-    
-}
-
-// This function sets up a palette of purple and green stripes.
-void SetupPurpleAndGreenPalette()
-{
-    CRGB purple = CHSV( HUE_PURPLE, 255, 255);
-    CRGB green  = CHSV( HUE_GREEN, 255, 255);
-    CRGB black  = CRGB::Black;
-    
-    currentPalette = CRGBPalette16(
-                                   green,  green,  black,  black,
-                                   purple, purple, black,  black,
-                                   green,  green,  black,  black,
-                                   purple, purple, black,  black );
-}
-
-
-// This example shows how to set up a static color palette
-// which is stored in PROGMEM (flash), which is almost always more
-// plentiful than RAM.  A static PROGMEM palette like this
-// takes up 64 bytes of flash.
-const TProgmemPalette16 myRedWhiteBluePalette_p PROGMEM =
-{
-    CRGB::Red,
-    CRGB::Gray, // 'white' is too bright compared to red and blue
-    CRGB::Blue,
-    CRGB::Black,
-    
-    CRGB::Red,
-    CRGB::Gray,
-    CRGB::Blue,
-    CRGB::Black,
-    
-    CRGB::Red,
-    CRGB::Red,
-    CRGB::Gray,
-    CRGB::Gray,
-    CRGB::Blue,
-    CRGB::Blue,
-    CRGB::Black,
-    CRGB::Black
-};

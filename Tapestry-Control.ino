@@ -94,6 +94,7 @@ unsigned int star_counter = 0;
 unsigned int constellation_counter = 0;
 unsigned int planet_counter = 0;
 unsigned int animation_counter = 0;
+int play_animation = -1;
 
 // TFT screen
 TFT_eSPI myGLCD = TFT_eSPI();       // Invoke custom library
@@ -309,6 +310,13 @@ void loop() {
   } else if(millis() > fade_timeout && fade_time < millis() - fade_timeout) {
     // Fade out the LED's over 1 minute.
     fadeOut();
+  }
+
+  if(play_animation >= 0) {
+    // we have an animation to play.
+    EVERY_N_MILLISECONDS(10) {
+      play_animation = openAnimation(play_animation, true);
+    }
   }
 
   // turn the becon off after 3 minutes.

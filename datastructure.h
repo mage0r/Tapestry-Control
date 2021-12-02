@@ -39,6 +39,7 @@ typedef struct {
   byte count = 0; // how many stars in this sequence.
   stars *star_list[255]; // somewhat arbitrary size
   byte times[255];
+  unsigned long show[255];
   byte colour[255][3];
 } animation;
 
