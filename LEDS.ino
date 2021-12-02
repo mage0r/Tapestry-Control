@@ -68,13 +68,14 @@ void append_animation(int animation_position, byte colour[3], int star_number, b
 
 }
 
-void openAnimation(int animation_position), boolean wipe_animation) {
+void openAnimation(int animation_position, boolean wipe_animation) {
+  /*
   display_print(F("Show Animation #"));
   display_print(String(animation_position));
   display_print(F(":"));
   //display_print(animation_array[animation_position].name);
   display_println("");
-
+  */
   /*
   for(int i = 0; i < animation_array[animation_position].count;i++){
     Serial.println(animation_array[animation_position].star_list[i]->name);
