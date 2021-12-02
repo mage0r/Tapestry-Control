@@ -3,7 +3,7 @@ Tapestry Controller - Do you have a giant LED powered tapestry?  This project ma
 
 This is a very specific project for a very specific piece.
 
-That said, the pieces that make up this design are pretty common so there is almost certainly something that can help others.
+That said, the components that make up this design are pretty common so there is almost certainly something that can help others.
 
 FEATURES
 --------

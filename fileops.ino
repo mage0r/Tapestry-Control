@@ -9,6 +9,7 @@ void setup_fileops() {
   // declaring these here let me load them in to PSRAM
   star_array = (stars *) ps_calloc(843, sizeof(stars));
   constellation_array = (constellations *) ps_calloc(90, sizeof(constellations));
+  
 }
 
 void listDir(fs::FS &fs, const char * dirname, uint8_t levels){
@@ -157,12 +158,12 @@ void loadStars(fs::FS &fs, const char * path){
     display_print(F(". Done: "));
     display_println(String(star_counter));
 
-      /*
-      Serial.println(star_array[3].name);
-      Serial.println(star_array[3].constellation);
-      Serial.println(star_array[3].magnitude);
-      Serial.println(star_array[3].pin);
-      Serial.println(star_array[3].point);
+    /*  
+      Serial.println(star_array[30].name);
+      Serial.println(star_array[30].constellation);
+      Serial.println(star_array[30].magnitude);
+      Serial.println(star_array[30].pin);
+      Serial.println(star_array[30].point);
       */
 
 }
@@ -248,6 +249,7 @@ void loadAnimation(fs::FS &fs, const char * path){
           char_pos = 0;
           counter1 = 0;
           temp_star = 0;
+          animation_counter++;
           
         } else if (temp == '\r') {
           // skip carriage return
@@ -276,3 +278,28 @@ void loadAnimation(fs::FS &fs, const char * path){
     display_println(String(animation_counter));
 
 }
+/*
+void appendAnimation(fs::FS &fs, const char * path, const char * message, int animation_position){
+    display_print(F("Appending to file: "));
+    display_print(path);
+
+    File file = fs.open(path, FILE_APPEND);
+    if(!file){
+        display_print(F("- failed"));
+        return;
+    }
+
+    display_print(F(""));
+    
+    if(file.print(message)){
+      display_print(F("Animation: "));
+      display_print(String(animation_position));
+      display_println(F(" appended."));
+    } else {
+      display_print(F("Animation: "));
+      display_print(String(animation_position));
+      display_println(F(" failed."));
+    }
+    file.close();
+}
+*/

@@ -7,20 +7,12 @@ BLE has limitations on the default MTU.  I have chosen to stick to these restric
 
 All <> denote a byte.
 
-Stars
+Stars or Planets
 ------------
 
 Connect to Characteristic UUID: f82be6f8-3b05-11ec-8d3d-0242ac130003
 write command:
 	<deviceID>s<red><green><blue><star ID>
-
-
-Planets
-------------
-
-Connect to Characteristic UUID: f82be6f8-3b05-11ec-8d3d-0242ac130003
-write command:
-	<deviceID>p<red><green><blue><star ID>
 
 Constellations
 ------------

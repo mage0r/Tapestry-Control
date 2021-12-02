@@ -9,6 +9,7 @@ class MyCallbacks: public BLECharacteristicCallbacks {
       // <DeviceID>a<256><256><256><ID><high byte><low byte><delay ms>  // Lower a, <green><red><blue>, string of numbers intersperced with time.
       // <DeviceID>A<ID>                                                // Uppercase A, Animation ID.  Display Animation.
       // <DeviceID>B<256>                                               // Uppercase B for brightness
+      // <DeviceID>N<ID>'Char string up to 14'                          // Name of the animation, up to 14 characters.
       
 
       //char serverHostname[20];
@@ -20,12 +21,12 @@ class MyCallbacks: public BLECharacteristicCallbacks {
         // this is debug
         display_print(F("BT Update: "));
         display_print(String(value.length()));
-        display_print(":");
+        display_print(F(":"));
         for (int i = 0; i < value.length(); i++){
           display_print(String(value[i]));
 
         }
-        display_println("");
+        display_println(F(""));
 
         // make this a function for cleanliness.
         if(value[1] == 'B') {
@@ -46,9 +47,9 @@ class MyCallbacks: public BLECharacteristicCallbacks {
 
           // just check if this is a Planet
           if(constellation_array[star_array[temp].constellation].name == "Planets")
-            display_print("Display Planet:"); 
+            display_print(F("Display Planet:"));
           else
-            display_print("Display Star:");
+            display_print(F("Display Star:"));
           display_println(star_array[temp].name);
           
         } else if(value[1] == 'a') {
@@ -57,6 +58,7 @@ class MyCallbacks: public BLECharacteristicCallbacks {
             int star_number = (value[i] << 8) + value[i+1];
 
             // This is all debug
+            /*
             Serial.print(i);
             Serial.print(":");
             Serial.println(value.length());
@@ -70,6 +72,7 @@ class MyCallbacks: public BLECharacteristicCallbacks {
             Serial.println(int(value[i+2]));
             Serial.print("animation id:");
             Serial.println(int(value[5]));
+            */
             
             // append to an existing?
             byte temp_byte[3] = {value[2],value[3],value[4]};
@@ -77,7 +80,14 @@ class MyCallbacks: public BLECharacteristicCallbacks {
           }
         } else if(value[1] == 'A') {
           // Display the animation sequence.
-          
+
+          fade_time = millis();
+          if(screensaver || true) { // for the prototype, always wipe.
+            FastLED.clear ();
+            screensaver = 0;
+          }
+          screensaver_time = millis(); // always need to reset this one.
+          openAnimation(int(value[2]), true); // wiping the animation for the prototype
         } else if(value[1] == 'c') {
           // Light up a constellation by constellation_id
           fade_time = millis();
@@ -86,11 +96,19 @@ class MyCallbacks: public BLECharacteristicCallbacks {
             screensaver = 0;
           }
           screensaver_time = millis(); // always need to reset this one.
-          for(int i = 0 ; i < constellation_array[value[5]-48].star_count; i++) {
-            *constellation_array[value[5]-48].star_list[i]->led = CRGB(value[2],value[3],value[4]);
+          for(int i = 0 ; i < constellation_array[value[5]].star_count; i++) {
+            *constellation_array[value[5]].star_list[i]->led = CRGB(value[2],value[3],value[4]);
           }
-          display_print("Display Constellation:");
-          display_println(constellation_array[value[5]-48].name);
+          display_print(F("Display Constellation:"));
+          display_println(constellation_array[value[5]].name);
+        } else if(value[1] == 'N') {
+          for(int i = 3; i < value.length(); i++) {
+            if(i == 16)
+              i = value.length(); // truncate
+            animation_array[value[2]].name[i-3] = value[i];
+          }
+          animation_array[value[2]].name[value.length()-3] = '\0';
+          
         }
 
         //FastLED.show();

@@ -83,6 +83,7 @@ extern CRGBPalette16 myRedWhiteBluePalette;
 extern const TProgmemPalette16 myRedWhiteBluePalette_p PROGMEM;
 
 unsigned long screensaver_time = 0;
+unsigned long screensaver_timeout = 90000;
 byte screensaver = 1;
 unsigned long fade_time;
 unsigned long fade_timeout = 60000; // when to begin fadeout.
@@ -202,6 +203,7 @@ void setup() {
 
   loadConstellations(SPIFFS, "/const.csv");
   loadStars(SPIFFS, "/stars.csv");
+  //loadAnimation(SPIFFS, "/ani.csv");
 
   // finished loading all our files in to memory.  do we have any space free?
   display_print(F("Free Ram: "));
@@ -290,7 +292,7 @@ void loop() {
   }
 
   // If it's been 5 minutes since showing a constellation.
-  if(!screensaver && millis() > 300000 && screensaver_time < millis() - 300000) {
+  if(!screensaver && millis() > screensaver_timeout && screensaver_time < millis() - screensaver_timeout) {
     // switch to screensaver after 5 minutes.
     display_println(F("Screensaver active."));
     screensaver = 1;
