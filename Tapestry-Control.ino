@@ -42,7 +42,7 @@ byte BRIGHTNESS = 64; // 0-255.  This is editable on the fly
 
 // Set our version number.  Don't forget to update when featureset changes
 #define PROJECT "Tapestry-Control"
-#define VERSION "V.0.13"
+#define VERSION "V.0.14"
 char NAME[10];
 
 // give us an update every 5 minutes.
@@ -312,12 +312,12 @@ void loop() {
     fadeOut();
   }
 
-  if(play_animation >= 0) {
+  //if(play_animation >= 0) {
     // we have an animation to play.
     EVERY_N_MILLISECONDS(10) {
-      play_animation = openAnimation(play_animation, true);
+      openAnimation();
     }
-  }
+  //}
 
   // turn the becon off after 3 minutes.
   if(beacon_on == 1 && millis() > 180000 && discovery_time < millis() - 180000) {

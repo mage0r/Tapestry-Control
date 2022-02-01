@@ -19,6 +19,7 @@ class MyCallbacks: public BLECharacteristicCallbacks {
       if (value.length() > 0) {
 
         // this is debug
+        /*
         display_print(F("BT Update: "));
         display_print(String(value.length()));
         display_print(F(":"));
@@ -27,6 +28,7 @@ class MyCallbacks: public BLECharacteristicCallbacks {
 
         }
         display_println(F(""));
+        */
 
         // make this a function for cleanliness.
         if(value[1] == 'B') {
