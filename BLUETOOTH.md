@@ -31,7 +31,7 @@ Connect to Characteristic UUID: 6f485ef4-4d28-11ec-81d3-0242ac130003
 Write command:
 	<deviceID>a
 wait 10s
-Read results.  It will be in the form:
+Read the characteristic values.  It will be in the form:
 	<deviceID><animation id>
 Check deviceID matches current device.
 
@@ -44,4 +44,11 @@ running this command multiple times will append to the animation.  you can chang
 Connect to Characteristic UUID: f82be6f8-3b05-11ec-8d3d-0242ac130003
 Write command:
 	<deviceID>A<animation id>
-This will show the appropriate animation.
+This will play the appropriate animation.
+
+Clearing an animation.
+Connect to Characteristic UUID: f82be6f8-3b05-11ec-8d3d-0242ac130003
+Write command:
+	<deviceID>D<animation id>
+This will reset the appropriate animation.
+

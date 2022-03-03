@@ -19,16 +19,16 @@ class MyCallbacks: public BLECharacteristicCallbacks {
       if (value.length() > 0) {
 
         // this is debug
-        /*
-        display_print(F("BT Update: "));
-        display_print(String(value.length()));
-        display_print(F(":"));
-        for (int i = 0; i < value.length(); i++){
-          display_print(String(value[i]));
+        if(DEBUG) {
+          display_print(F("BT Update: "));
+          display_print(String(value.length()));
+          display_print(F(":"));
+          for (int i = 0; i < value.length(); i++){
+            display_print(String(value[i]));
 
+          }
+          display_println(F(""));
         }
-        display_println(F(""));
-        */
 
         // make this a function for cleanliness.
         if(value[1] == 'B') {
@@ -54,26 +54,28 @@ class MyCallbacks: public BLECharacteristicCallbacks {
             display_print(F("Display Star:"));
           display_println(star_array[temp].name);
           
-        } else if(value[1] == 'a') {
+        } else if(value[1] == 'a' && value.length() > 3) {
           // append the string to the animation.
           for(int i = 6; i < value.length(); i=i+3) {
             int star_number = (value[i] << 8) + value[i+1];
 
             // This is all debug
             /*
-            Serial.print(i);
-            Serial.print(":");
-            Serial.println(value.length());
-            Serial.print("high:");
-            Serial.println(int(value[i] << 8));
-            Serial.print("low:");
-            Serial.println(int(value[i+1]));
-            Serial.print("combined:");
-            Serial.println(star_number);
-            Serial.print("timer:");
-            Serial.println(int(value[i+2]));
-            Serial.print("animation id:");
-            Serial.println(int(value[5]));
+            if(DEBUG) {
+              Serial.print(i);
+              Serial.print(":");
+              Serial.println(value.length());
+              Serial.print("high:");
+              Serial.println(int(value[i] << 8));
+              Serial.print("low:");
+              Serial.println(int(value[i+1]));
+              Serial.print("combined:");
+              Serial.println(star_number);
+              Serial.print("timer:");
+              Serial.println(int(value[i+2]));
+              Serial.print("animation id:");
+              Serial.println(int(value[5]));
+            }
             */
             
             // append to an existing?
@@ -89,9 +91,12 @@ class MyCallbacks: public BLECharacteristicCallbacks {
             screensaver = 0;
           }
           screensaver_time = millis(); // always need to reset this one.
-          setupAnimation(int(value[2]));
+          activateAnimation(int(value[2]));
           play_animation = int(value[2]);
           //openAnimation(int(value[2]), true); // wiping the animation for the prototype
+        } else if(value[1] == 'D') {
+          // clear a saved animation.
+          animation_array[int(value[2])].count = 0;
         } else if(value[1] == 'c') {
           // Light up a constellation by constellation_id
           fade_time = millis();

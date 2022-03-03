@@ -3,19 +3,12 @@ void leds_setup() {
   // each strip uses about 600 bytes of space.... makes sense.
   
   FastLED.addLeds<LED_TYPE, 4, COLOR_ORDER>(leds[0], NUM_LEDS_PER_STRIP);
-
   FastLED.addLeds<LED_TYPE, 14, COLOR_ORDER>(leds[1], NUM_LEDS_PER_STRIP);
-
   FastLED.addLeds<LED_TYPE, 15, COLOR_ORDER>(leds[2], NUM_LEDS_PER_STRIP);
-
   FastLED.addLeds<LED_TYPE, 27, COLOR_ORDER>(leds[3], NUM_LEDS_PER_STRIP);
-
   FastLED.addLeds<LED_TYPE, 26, COLOR_ORDER>(leds[4], NUM_LEDS_PER_STRIP);
-
   FastLED.addLeds<LED_TYPE, 25, COLOR_ORDER>(leds[5], NUM_LEDS_PER_STRIP);
-
   FastLED.addLeds<LED_TYPE, 19, COLOR_ORDER>(leds[6], NUM_LEDS_PER_STRIP);
-
   FastLED.addLeds<LED_TYPE, 22, COLOR_ORDER>(leds[7], NUM_LEDS_PER_STRIP);
 
   FastLED.setBrightness(  BRIGHTNESS );
@@ -50,22 +43,26 @@ void setup_animations() {
 // add new stars to the animation arrays.
 void append_animation(int animation_position, byte colour[3], int star_number, byte timer) {
 
-  /*
+  
   // enabling this debug information significantly slows the animation transmission speed.
-  display_print(F("Append to animation:"));
-  display_print(String(animation_position));
-  display_print(F("["));
-  display_print(String(animation_array[animation_position].count));
-  display_print(F("]"));
-  display_print(star_array[star_number].name);
-  display_println("");
+  /*
+  if(DEBUG) {
+    display_print(F("Append to animation:"));
+    Serial.print(String(animation_position));
+    Serial.print(F("["));
+    Serial.print(String(animation_array[animation_position].count));
+    Serial.print(F("]"));
+    Serial.print(star_array[star_number].name);
+    Serial.println("");
+  }
   */
+  
   
   animation_array[animation_position].star_list[animation_array[animation_position].count] = &star_array[star_number];
   animation_array[animation_position].colour[animation_array[animation_position].count][0] = colour[0];
   animation_array[animation_position].colour[animation_array[animation_position].count][1] = colour[1];
   animation_array[animation_position].colour[animation_array[animation_position].count][2] = colour[2];
-  animation_array[animation_position].times[animation_array[animation_position].count] = timer;
+  animation_array[animation_position].times[animation_array[animation_position].count] = timer*100;
   animation_array[animation_position].count++;
 
   //appendAnimation(SPIFFS, "/ani.csv", ,animation_position);
@@ -73,13 +70,20 @@ void append_animation(int animation_position, byte colour[3], int star_number, b
 }
 
 // This copies the requsted sequence in to the active stars array.
-void setupAnimation(int animation_position) {
+void activateAnimation(int animation_position) {
   unsigned long temp_millis = millis();
   // so, this takes a few seconds to run
   temp_millis += 2000;
 
   //where is our animation up to
   int current = active_array[0].count;
+
+   if(DEBUG && 0) {
+    display_println(F("Setup animation."));
+    Serial.println(current);
+    Serial.println(animation_position);
+    Serial.println(animation_array[animation_position].count);
+   }
 
   for(int i=0; i < animation_array[animation_position].count; i++) {
 
@@ -90,23 +94,43 @@ void setupAnimation(int animation_position) {
       break;
     }
 
-    temp_millis += animation_array[animation_position].times[i];
+    //temp_millis += animation_array[animation_position].times[i];
+    temp_millis += 700;
 
-    active_array[0].star_list[current]->led = animation_array[animation_position].star_list[i]->led; // copy the LED
-    active_array[0].rising[current] = 2; // fading in.
+    if(DEBUG && 0) {
+      Serial.print("Animation:");
+      Serial.print(i);
+    }
+
+    active_array[0].star_list[current] = animation_array[animation_position].star_list[i]; // copy the LED
+    active_array[0].rising[current] = 1; // fading in.
     active_array[0].colour[current][0] = animation_array[animation_position].colour[i][0];
     active_array[0].colour[current][1] = animation_array[animation_position].colour[i][1];
     active_array[0].colour[current][2] = animation_array[animation_position].colour[i][2];
     active_array[0].update[current] = temp_millis;
     active_array[0].brightness[current] = 0;
 
+    if(DEBUG) {
+      //Serial.println(" end.");
+    }
+
     current++;
   }
 
   active_array[0].count = current;
+
+  // super, super temporary.
+  // when we play the animation, clear the record of it.
+  animation_array[animation_position].count = 0;
 }
 
 void openAnimation() {
+
+  /*
+  if(DEBUG && active_array[0].count) {
+    display_println("Opening Annimation");
+  }
+  */
 
   // should be slightly more efficient to run this backwards.
   // by that I mean when doing a trim we won't be moving leds that 
@@ -120,12 +144,13 @@ void openAnimation() {
 
         // set the colour based on our brightness.
         // simply put, the brighness value is a percentage, multiple the colour by that
-        *active_array[0].star_list[i]->led &= CRGB((active_array[0].colour[i][0]/100*active_array[0].brightness[i]),
-                                                   (active_array[0].colour[i][1]/100*active_array[0].brightness[i]),
-                                                   (active_array[0].colour[i][2]/100*active_array[0].brightness[i]));
+        *active_array[0].star_list[i]->led = CRGB(((active_array[0].colour[i][0]/100)*active_array[0].brightness[i]),
+                                                  ((active_array[0].colour[i][1]/100)*active_array[0].brightness[i]),
+                                                  ((active_array[0].colour[i][2]/100)*active_array[0].brightness[i]));
+                                                   
 
         if(active_array[0].brightness[i] >= 100)
-          active_array[0].rising[i] = -2; // we've hit the top, back down we go.
+          active_array[0].rising[i] = -1; // we've hit the top, back down we go.
         else if(active_array[0].brightness[i] <= 0) {
           // trigger a cleanup to remove this LED from the active array.
           // probably going to be slow.
@@ -139,20 +164,30 @@ void openAnimation() {
 // this is probably going to be slow.
 void trim_active(int to_trim) {
 
-  // should be fine to remove from our count now.
-  // will stop the for loop running over and trying to copy from uninitialised memory.
+  // I figure all the calculations for -1 is more computationally expensive than a single int.
+  int temp_array_count = active_array[0].count - 1;
+
+
+  if(DEBUG) {
+    Serial.print("Trimming: ");
+    Serial.println(to_trim);
+    Serial.print("Active: ");
+    Serial.println(temp_array_count);    
+  }
+
+  // we don't care what order the LED's are in!
+  // replace the one we want gone with the last one.
+  active_array[0].star_list[to_trim] = active_array[0].star_list[temp_array_count];
+  active_array[0].rising[to_trim] = active_array[0].rising[temp_array_count];
+  active_array[0].colour[to_trim][0] = active_array[0].colour[temp_array_count][0];
+  active_array[0].colour[to_trim][1] = active_array[0].colour[temp_array_count][1];
+  active_array[0].colour[to_trim][2] = active_array[0].colour[temp_array_count][2];
+  active_array[0].update[to_trim] = active_array[0].update[temp_array_count];
+  active_array[0].brightness[to_trim] = active_array[0].brightness[temp_array_count];
+
   active_array[0].count--;
 
-  // from the indicated node to the end of the active array, shift everything down by one.
-  for(int i=to_trim; i < active_array[0].count; i ++) {
-    active_array[0].star_list[i]->led = active_array[0].star_list[i+1]->led;
-    active_array[0].rising[i] = active_array[0].rising[i+1];
-    active_array[0].colour[i][0] = active_array[0].colour[i+1][0];
-    active_array[0].colour[i][1] = active_array[0].colour[i+1][1];
-    active_array[0].colour[i][2] = active_array[0].colour[i+1][2];
-    active_array[0].update[i] = active_array[0].update[i+1];
-    active_array[0].brightness[i] = active_array[0].brightness[i+1];
-  }
+  Serial.println("Trim complete.");
 
 }
 

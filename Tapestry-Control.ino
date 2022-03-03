@@ -42,7 +42,8 @@ byte BRIGHTNESS = 64; // 0-255.  This is editable on the fly
 
 // Set our version number.  Don't forget to update when featureset changes
 #define PROJECT "Tapestry-Control"
-#define VERSION "V.0.14"
+#define VERSION "non-block-V.0.16"
+#define DEBUG 1
 char NAME[10];
 
 // give us an update every 5 minutes.
@@ -307,16 +308,23 @@ void loop() {
     startIndex = startIndex + 1; /* motion speed */
     
     FillLEDsFromPaletteColors( startIndex);
-  } else if(millis() > fade_timeout && fade_time < millis() - fade_timeout) {
+  } else {
+    EVERY_N_MILLISECONDS(30) {
+      openAnimation();
+    }
+  }
+  
+  /* else if(millis() > fade_timeout && fade_time < millis() - fade_timeout) {
     // Fade out the LED's over 1 minute.
     fadeOut();
   }
+  */
 
   //if(play_animation >= 0) {
     // we have an animation to play.
-    EVERY_N_MILLISECONDS(10) {
-      openAnimation();
-    }
+    //EVERY_N_MILLISECONDS(10) {
+    //  openAnimation();
+    //}
   //}
 
   // turn the becon off after 3 minutes.
