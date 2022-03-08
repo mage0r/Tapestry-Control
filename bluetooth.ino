@@ -19,7 +19,7 @@ class MyCallbacks: public BLECharacteristicCallbacks {
       if (value.length() > 0) {
 
         // this is debug
-        if(DEBUG) {
+        if(DEBUG && false) {
           display_print(F("BT Update: "));
           display_print(String(value.length()));
           display_print(F(":"));
@@ -79,21 +79,20 @@ class MyCallbacks: public BLECharacteristicCallbacks {
             */
             
             // append to an existing?
-            byte temp_byte[3] = {value[2],value[3],value[4]};
-            append_animation(int(value[5]), temp_byte, star_number, value[i+2]);
+            byte temp_byte[3] = {value[3],value[4],value[5]};
+            append_animation(int(value[2]), temp_byte, star_number, value[i+2]);
           }
         } else if(value[1] == 'A') {
           // Display the animation sequence.
 
           fade_time = millis();
-          if(screensaver || true) { // for the prototype, always wipe.
+          if(screensaver) {
             FastLED.clear ();
             screensaver = 0;
           }
           screensaver_time = millis(); // always need to reset this one.
           activateAnimation(int(value[2]));
           play_animation = int(value[2]);
-          //openAnimation(int(value[2]), true); // wiping the animation for the prototype
         } else if(value[1] == 'D') {
           // clear a saved animation.
           animation_array[int(value[2])].count = 0;
@@ -130,7 +129,7 @@ class MyCallbacks: public BLECharacteristicCallbacks {
 class QueryCallback: public BLECharacteristicCallbacks {
   // <DeviceID><command_type>
   // <DeviceID>v                      Set value to Version number
-  // <DeviceID>a                      Set value to next animation numbe
+  // <DeviceID>a                      Set value to next animation number
     void onWrite(BLECharacteristic *pCharacteristic2) {
       std::string value = pCharacteristic2->getValue();
       

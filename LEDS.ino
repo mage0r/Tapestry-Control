@@ -62,7 +62,7 @@ void append_animation(int animation_position, byte colour[3], int star_number, b
   animation_array[animation_position].colour[animation_array[animation_position].count][0] = colour[0];
   animation_array[animation_position].colour[animation_array[animation_position].count][1] = colour[1];
   animation_array[animation_position].colour[animation_array[animation_position].count][2] = colour[2];
-  animation_array[animation_position].times[animation_array[animation_position].count] = timer*100;
+  animation_array[animation_position].times[animation_array[animation_position].count] = timer;
   animation_array[animation_position].count++;
 
   //appendAnimation(SPIFFS, "/ani.csv", ,animation_position);
@@ -73,7 +73,7 @@ void append_animation(int animation_position, byte colour[3], int star_number, b
 void activateAnimation(int animation_position) {
   unsigned long temp_millis = millis();
   // so, this takes a few seconds to run
-  temp_millis += 2000;
+  temp_millis += 100;
 
   //where is our animation up to
   int current = active_array[0].count;
@@ -94,8 +94,8 @@ void activateAnimation(int animation_position) {
       break;
     }
 
-    //temp_millis += animation_array[animation_position].times[i];
-    temp_millis += 700;
+    temp_millis += animation_array[animation_position].times[i];
+    //temp_millis += 700;
 
     if(DEBUG && 0) {
       Serial.print("Animation:");
@@ -142,6 +142,15 @@ void openAnimation() {
         // increase/decrease the brightness depending on the rising flag.
         active_array[0].brightness[i] += active_array[0].rising[i];
 
+        // testing my fading algorithim
+        if(i == 0 && false) {
+          Serial.print(((active_array[0].colour[i][0]/100)*active_array[0].brightness[i]));
+          Serial.print(",");
+          Serial.print(((active_array[0].colour[i][1]/100)*active_array[0].brightness[i]));
+          Serial.print(",");
+          Serial.println(((active_array[0].colour[i][2]/100)*active_array[0].brightness[i]));
+        }
+
         // set the colour based on our brightness.
         // simply put, the brighness value is a percentage, multiple the colour by that
         *active_array[0].star_list[i]->led = CRGB(((active_array[0].colour[i][0]/100)*active_array[0].brightness[i]),
@@ -150,7 +159,7 @@ void openAnimation() {
                                                    
 
         if(active_array[0].brightness[i] >= 100)
-          active_array[0].rising[i] = -1; // we've hit the top, back down we go.
+          active_array[0].rising[i] = -2; // we've hit the top, back down we go.
         else if(active_array[0].brightness[i] <= 0) {
           // trigger a cleanup to remove this LED from the active array.
           // probably going to be slow.
@@ -170,9 +179,9 @@ void trim_active(int to_trim) {
 
   if(DEBUG) {
     Serial.print("Trimming: ");
-    Serial.println(to_trim);
-    Serial.print("Active: ");
-    Serial.println(temp_array_count);    
+    Serial.print(to_trim);
+    Serial.print(". Active: ");
+    Serial.print(temp_array_count);    
   }
 
   // we don't care what order the LED's are in!
@@ -187,22 +196,9 @@ void trim_active(int to_trim) {
 
   active_array[0].count--;
 
-  Serial.println("Trim complete.");
+  Serial.println(". Trim complete.");
 
 }
-
-// Fade out
-void fadeOut() {
-  
-  EVERY_N_MILLISECONDS(10) {
-    for(int j = 0; j < NUM_STRIPS; j++) {
-      for( int i = 0; i < NUM_LEDS_PER_STRIP; ++i) {
-          leds[j][i].fadeToBlackBy(fadeAmount);
-      }
-    }
-  }
-}
-
 
 void FillLEDsFromPaletteColors( uint8_t colorIndex)
 {

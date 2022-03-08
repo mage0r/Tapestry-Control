@@ -34,11 +34,13 @@ typedef struct {
 
 constellations *constellation_array; // = (constellations *) ps_malloc(90 * sizeof(constellations));
 
+// We save an arbitrary number of animations to the unit to try and generate a history.
+// each animation
 typedef struct {
   char name[14];
   byte count = 0; // how many stars in this sequence.
   stars *star_list[255]; // somewhat arbitrary size
-  byte times[255];
+  int times[255];
   byte colour[255][3];
 } animation;
 

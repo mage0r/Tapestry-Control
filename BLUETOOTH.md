@@ -37,7 +37,7 @@ Check deviceID matches current device.
 
 Connect to Characteristic UUID: f82be6f8-3b05-11ec-8d3d-0242ac130003
 Write command:
-	<deviceID>a<red><green><blue><animation id><high byte><low byte><delay ms>
+	<deviceID>a<animation id><red><green><blue><high byte><low byte><delay ms>
 n.b. <high byte><low byte><delay ms> can be repeated until you reach the 20 character limit.
 running this command multiple times will append to the animation.  you can change colours between each iteration.
 

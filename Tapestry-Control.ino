@@ -42,7 +42,7 @@ byte BRIGHTNESS = 64; // 0-255.  This is editable on the fly
 
 // Set our version number.  Don't forget to update when featureset changes
 #define PROJECT "Tapestry-Control"
-#define VERSION "non-block-V.0.16"
+#define VERSION "non-block-V.0.17"
 #define DEBUG 1
 char NAME[10];
 
@@ -314,19 +314,6 @@ void loop() {
     }
   }
   
-  /* else if(millis() > fade_timeout && fade_time < millis() - fade_timeout) {
-    // Fade out the LED's over 1 minute.
-    fadeOut();
-  }
-  */
-
-  //if(play_animation >= 0) {
-    // we have an animation to play.
-    //EVERY_N_MILLISECONDS(10) {
-    //  openAnimation();
-    //}
-  //}
-
   // turn the becon off after 3 minutes.
   if(beacon_on == 1 && millis() > 180000 && discovery_time < millis() - 180000) {
     beacon_on = 0;
@@ -338,9 +325,7 @@ void loop() {
   }
   
   read_button();
-    
-    //leds[0][10] = CRGB::Red;
-    
-    FastLED.show();
-    FastLED.delay(1000 / UPDATES_PER_SECOND);
+  
+  FastLED.show();
+  //FastLED.delay(1000 / UPDATES_PER_SECOND);
 }
