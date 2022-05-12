@@ -27,12 +27,12 @@ Animation
 
 Loading in an animation.
 
-Connect to Characteristic UUID: 6f485ef4-4d28-11ec-81d3-0242ac130003
+Connect to Characteristic UUID: f82be6f8-3b05-11ec-8d3d-0242ac130003
 Write command:
-	<deviceID>a
+	<deviceID>n
 wait 10s
 Read the characteristic values.  It will be in the form:
-	<deviceID><animation id>
+	<deviceID><highSessionID><lowSessionID>
 Check deviceID matches current device.
 
 Connect to Characteristic UUID: f82be6f8-3b05-11ec-8d3d-0242ac130003
@@ -40,6 +40,7 @@ Write command:
 	<deviceID>a<animation id><red><green><blue><high byte><low byte><delay ms>
 n.b. <high byte><low byte><delay ms> can be repeated until you reach the 20 character limit.
 running this command multiple times will append to the animation.  you can change colours between each iteration.
+<deviceID><command><animationID><red><green><blue><highLED><lowLED><highDELAY><lowDELAY><highWAIT><lowWAIT><><><><><><><><>
 
 Connect to Characteristic UUID: f82be6f8-3b05-11ec-8d3d-0242ac130003
 Write command:

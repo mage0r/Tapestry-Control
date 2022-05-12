@@ -25,27 +25,30 @@ void display_header() {
   temp_header += ".";
   temp_header += NAME;
   myGLCD.drawString(temp_header,0,0,2);
-  myGLCD.drawRightString(VERSION,320,0,2);
+  myGLCD.drawString(VERSION,200,0,2);
 
   temp_header = " WIFI";
   if(wifi_connect) {
     myGLCD.setTextColor(TFT_WHITE, TFT_BLUE);
     temp_header += ": ";
     temp_header += WiFi.localIP().toString();
+    myGLCD.drawString(temp_header,0,16,2);
   }
-  else {
+  /*else {
     myGLCD.setTextColor(TFT_BLACK, TFT_RED);
     temp_header += " ";
-  }
+
+  }*/
   
-  myGLCD.drawString(temp_header,0,16,2);
+  //myGLCD.drawString(temp_header,0,16,2);
 
   // mqtt status
-  if(mqtt_connect)
+  if(mqtt_connect) {
     myGLCD.setTextColor(TFT_WHITE, TFT_BLUE);
-  else
-    myGLCD.setTextColor(TFT_BLACK, TFT_RED);
-  myGLCD.drawString(" MQTT ",150,16,2);
+    myGLCD.drawString(" MQTT ",150,16,2);
+  } //else
+  //  myGLCD.setTextColor(TFT_BLACK, TFT_RED);
+  //myGLCD.drawString(" MQTT ",150,16,2);
 
   // Bluetooth Status
   temp_header = " BT: ";
@@ -60,7 +63,7 @@ void display_header() {
     temp_header += "0";
   }
 
-  myGLCD.drawString(temp_header,270,16,2);
+  myGLCD.drawRightString(temp_header,320,0,2);
 
   // next line, start under the header.
 }

@@ -124,6 +124,43 @@ void activateAnimation(int animation_position) {
   animation_array[animation_position].count = 0;
 }
 
+// This copies the requsted constellation in to the active stars array.
+// functionally very similar to activateAnimation, but a lot simpiler.
+void activateConstellation(byte animation_position, byte colour[3]) {
+  unsigned long temp_millis = millis();
+  // so, this takes a few seconds to run
+  temp_millis += 100;
+
+  //where is our animation up to
+  int current = active_array[0].count;
+
+  for(int i=0; i < constellation_array[animation_position].star_count; i++) {
+
+    // just check that our animation array isn't full.
+    // doing this at the top just in case it's full from the onset.
+    if(current >= 1000) {
+      display_print(F("Animation buffer exhausted."));
+      break;
+    }
+
+    // we really want to fade our whole array in at once.
+    // this is arbitrary and may be needed later.
+    //temp_millis += 700;
+
+    active_array[0].star_list[current] = constellation_array[animation_position].star_list[i];
+    active_array[0].rising[current] = 1; // fading in.
+    active_array[0].colour[current][0] = colour[0];
+    active_array[0].colour[current][1] = colour[1];
+    active_array[0].colour[current][2] = colour[2];
+    active_array[0].update[current] = temp_millis;
+    active_array[0].brightness[current] = 0;
+
+    current++;
+  }
+
+  active_array[0].count = current;
+}
+
 void openAnimation() {
 
   /*

@@ -104,11 +104,14 @@ class MyCallbacks: public BLECharacteristicCallbacks {
             screensaver = 0;
           }
           screensaver_time = millis(); // always need to reset this one.
-          for(int i = 0 ; i < constellation_array[value[5]].star_count; i++) {
-            *constellation_array[value[5]].star_list[i]->led = CRGB(value[2],value[3],value[4]);
-          }
+          byte temp_byte[3] = {value[2],value[3],value[4]};
+          activateConstellation(value[5], temp_byte);
           display_print(F("Display Constellation:"));
           display_println(constellation_array[value[5]].name);
+        } else if(value[1] == 'n') {
+          // get the next available annimation session.
+          
+          pCharacteristic->setValue(animation_counter);
         } else if(value[1] == 'N') {
           for(int i = 3; i < value.length(); i++) {
             if(i == 16)
@@ -121,31 +124,6 @@ class MyCallbacks: public BLECharacteristicCallbacks {
 
         //FastLED.show();
 
-      }
-    }
-};
-
-// Next query slot.
-class QueryCallback: public BLECharacteristicCallbacks {
-  // <DeviceID><command_type>
-  // <DeviceID>v                      Set value to Version number
-  // <DeviceID>a                      Set value to next animation number
-    void onWrite(BLECharacteristic *pCharacteristic2) {
-      std::string value = pCharacteristic2->getValue();
-      
-      if (value.length() > 0) {
-        String temp = String(value[0]);
-        if(value[1] == 'a') {
-          temp += animation_counter;
-          animation_counter++;
-          if(animation_counter)
-            animation_counter = 0;            
-
-          animation_array[animation_counter].count = 0;
-        } else if(value[1] == 'v') {
-          temp += VERSION;
-        }
-        pCharacteristic2->setValue(temp.c_str());
       }
     }
 };
@@ -191,14 +169,6 @@ void bluetooth_setup() {
   pCharacteristic->addDescriptor(new BLE2902());
 
   pCharacteristic->setValue("Ready for commands");
-
-  pCharacteristic2 = pService->createCharacteristic(
-                                         DATA_UUID,
-                                         BLECharacteristic::PROPERTY_READ |
-                                         BLECharacteristic::PROPERTY_WRITE
-                                       );
-  pCharacteristic2->setCallbacks(new QueryCallback());
-  pCharacteristic2->setValue("Query for details.");
 
   pService->start();
 
