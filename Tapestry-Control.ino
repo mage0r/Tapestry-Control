@@ -42,7 +42,7 @@ byte BRIGHTNESS = 64; // 0-255.  This is editable on the fly
 
 // Set our version number.  Don't forget to update when featureset changes
 #define PROJECT "Tapestry-Control"
-#define VERSION "V.0.20"
+#define VERSION "V.0.23"
 #define DEBUG 1
 char NAME[10];
 
@@ -89,18 +89,19 @@ byte screensaver = 1;
 unsigned long fade_time;
 unsigned long fade_timeout = 60000; // when to begin fadeout.
 int fadeAmount = 1;  // Set the amount to fade I usually do 5, 10, 15, 20, 25 etc even up to 255.
+long random_screensaver = -1;
 
 // just helps to have a counter of these things.
 unsigned int star_counter = 0;
 unsigned int constellation_counter = 0;
 unsigned int planet_counter = 0;
 unsigned int animation_counter = 0;
-int play_animation = -1;
+unsigned int last_animation_counter[20]; //keep a record of which device has which animation. 20 is widly optimistic.
 
 // TFT screen
 TFT_eSPI myGLCD = TFT_eSPI();       // Invoke custom library
 #define DISPLAY_WIDTH 46
-char display_strings[13][DISPLAY_WIDTH]; // This repesents our entire display screen.
+char display_strings[14][DISPLAY_WIDTH]; // This repesents our entire display screen.
 char display_temp[DISPLAY_WIDTH];
 
 // Bluetooth
@@ -110,7 +111,7 @@ char DATA_UUID[40];
 BLEServer* pServer = NULL;
 BLECharacteristic* pCharacteristic = NULL; // main Characteristic.
 BLECharacteristic* pCharacteristic2 = NULL; // this ble entry lets you query the unit.
-byte bluetooth_connect = 0;
+int bluetooth_connect = 0;
 boolean bluetooth_enable = true;
 uint32_t value = 0;
 
@@ -206,6 +207,7 @@ void setup() {
   loadConstellations(SPIFFS, "/const.csv");
   loadStars(SPIFFS, "/stars.csv");
   //loadAnimation(SPIFFS, "/ani.csv");
+  loadFortune(SPIFFS, "/fortune.csv");
 
   // finished loading all our files in to memory.  do we have any space free?
   display_print(F("Free Ram: "));
@@ -246,7 +248,7 @@ void setup() {
   button_setup();
 
   // this is a test for more than 40 characters
-  //display_print("1234567890123456789012345678901234567890111");
+  display_print("1234567890123456789012345678901234567890111");
 
 }
 
@@ -300,15 +302,37 @@ void loop() {
     screensaver = 1;
     screensaver_time = millis();
   }
-  
-  //ChangePalettePeriodically();
 
   if(screensaver) {
-    static uint8_t startIndex = 0;
-    startIndex = startIndex + 1; /* motion speed */
-    
-    FillLEDsFromPaletteColors( startIndex);
-  } else {
+
+    // pick a ransom screensaver.
+    // if it's 0, run for a minimum of 1 minute.
+
+    if(random_screensaver == -1) {
+      random_screensaver = random(0, animation_counter);
+      screensaver_time = millis();
+    }
+
+    if(random_screensaver == 0) {
+      // Special case, display the splashing blue lights.
+      static uint8_t startIndex = 0;
+      startIndex = startIndex + 1; /* motion speed */
+      FillLEDsFromPaletteColors( startIndex);
+
+      if(screensaver_time < millis() - 60000)
+        random_screensaver = -1;
+
+    } else if (random_screensaver > 0 && screensaver_time < millis() - 30000 && active_array[0].count < 10) {
+        // every 30 seconds, add new random animation to the display.
+        // 30 seconds might be to fast so we also check how many active stars we are showing.
+        // need to offset the random screensaver
+        activateAnimation(random_screensaver-1);
+
+        random_screensaver = -1;
+    }
+  }
+  
+  if(random_screensaver != 0 ) {
     EVERY_N_MILLISECONDS(30) {
       openAnimation();
     }
@@ -327,5 +351,4 @@ void loop() {
   read_button();
   
   FastLED.show();
-  //FastLED.delay(1000 / UPDATES_PER_SECOND);
 }

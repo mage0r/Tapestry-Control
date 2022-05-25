@@ -56,34 +56,27 @@ class MyCallbacks: public BLECharacteristicCallbacks {
           
         } else if(value[1] == 'a' && value.length() > 3) {
           // append the string to the animation.
-          for(int i = 6; i < value.length(); i=i+3) {
-            int star_number = (value[i] << 8) + value[i+1];
+          // strip bytes 2 and 3 in to a high-low int.
+          int sessionID = (value[2] << 8) + value[3];
 
-            // This is all debug
-            /*
-            if(DEBUG) {
-              Serial.print(i);
-              Serial.print(":");
-              Serial.println(value.length());
-              Serial.print("high:");
-              Serial.println(int(value[i] << 8));
-              Serial.print("low:");
-              Serial.println(int(value[i+1]));
-              Serial.print("combined:");
-              Serial.println(star_number);
-              Serial.print("timer:");
-              Serial.println(int(value[i+2]));
-              Serial.print("animation id:");
-              Serial.println(int(value[5]));
+          if(last_animation_counter[value[0]-48] == sessionID) {
+            for(int i = 7; i < value.length(); i=i+6) {
+              int star_number = (value[i] << 8) + value[i+1];
+              int timer = (value[i+2] << 8) + value[i+3];
+              int show =  (value[i+4] << 8) + value[i+5];
+
+              // append to an existing
+              byte temp_colour[3] = {value[4],value[5],value[6]};
+              //append_animation(int session_id, byte colour[3], int star_number, int timer, int show)
+              append_animation(sessionID, temp_colour, star_number, timer, show);
             }
-            */
-            
-            // append to an existing?
-            byte temp_byte[3] = {value[3],value[4],value[5]};
-            append_animation(int(value[2]), temp_byte, star_number, value[i+2]);
+          } else {
+            display_println("Session ID mismatch!");
           }
         } else if(value[1] == 'A') {
           // Display the animation sequence.
+          // strip bytes 2 and 3 in to a high-low int.
+          int sessionID = (value[2] << 8) + value[3];
 
           fade_time = millis();
           if(screensaver) {
@@ -91,11 +84,13 @@ class MyCallbacks: public BLECharacteristicCallbacks {
             screensaver = 0;
           }
           screensaver_time = millis(); // always need to reset this one.
-          activateAnimation(int(value[2]));
-          play_animation = int(value[2]);
+          activateAnimation(sessionID);
         } else if(value[1] == 'D') {
           // clear a saved animation.
-          animation_array[int(value[2])].count = 0;
+          // strip bytes 2 and 3 in to a high-low int.
+          int sessionID = (value[2] << 8) + value[3];
+
+          animation_array[sessionID].count = 0;
         } else if(value[1] == 'c') {
           // Light up a constellation by constellation_id
           fade_time = millis();
@@ -105,21 +100,32 @@ class MyCallbacks: public BLECharacteristicCallbacks {
           }
           screensaver_time = millis(); // always need to reset this one.
           byte temp_byte[3] = {value[2],value[3],value[4]};
-          activateConstellation(value[5], temp_byte);
+          int show = (value[5] << 8) + value[6];
+          activateConstellation(value[5], temp_byte, show);
           display_print(F("Display Constellation:"));
           display_println(constellation_array[value[5]].name);
         } else if(value[1] == 'n') {
           // get the next available annimation session.
-          
-          pCharacteristic->setValue(animation_counter);
-        } else if(value[1] == 'N') {
-          for(int i = 3; i < value.length(); i++) {
-            if(i == 16)
-              i = value.length(); // truncate
-            animation_array[value[2]].name[i-3] = value[i];
-          }
-          animation_array[value[2]].name[value.length()-3] = '\0';
-          
+
+          String temp = String(value[0]); // set the first character to be the tablet ID
+          last_animation_counter[value[0]-48] = animation_counter; // keep a record of which tablet has which number
+          temp += animation_counter;
+          animation_counter++;
+          if(animation_counter == 500)
+            animation_counter = 0;            
+
+          animation_array[animation_counter].count = 0; // reinitialise the array
+
+
+         
+          pCharacteristic->setValue(temp.c_str());
+
+        } else if (value[1] == 'S') {
+          // fire up the screensaver.
+          // clean up the active array.
+          active_array[0].count = 0;
+          // start up the screensaver.
+          screensaver = 1;
         }
 
         //FastLED.show();
@@ -132,8 +138,14 @@ class MyServerCallbacks: public BLEServerCallbacks {
     void onConnect(BLEServer* pServer) {
       bluetooth_connect++;
       display_println(F("New device connected."));
+      if(DEBUG)
+        Serial.println("New device");
       BLEDevice::startAdvertising(); // this advertises the characteristic
+      if(DEBUG)
+        Serial.println("Advertising BLE");
       display_header();
+      if(DEBUG)
+        Serial.println("Update the display");
     };
 
     void onDisconnect(BLEServer* pServer) {

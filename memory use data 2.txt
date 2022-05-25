@@ -1,0 +1,18 @@
+10  animations.  Free Ram: 154676.  Free PSRam: 3937235
+100 animations.  Free Ram: 154676.  Free PSRam: 2585795
+250 animations.  Free Ram: 154676.  Free PSRam:  333395
+2000 animations. Free Ram: 154676.  Free PSRam: 4087407
+1000 animations. Free Ram: 154676.  Free PSRam: 4087407
+
+reduce size of animation/session to 500 max.
+250 animations.  Free Ram: 154676.  Free PSRam: 2208395
+250 animations.  Free Ram: 154676.  Free PSRam:  329395
+
+removed names.
+250 animations.  Free Ram: 154676.  Free PSRam:  335395
+
+Created active array on main ram.
+500 animations.  Free Ram: 137628.  Free PSRam:  352411
+
+Created fortune array.
+500 animations.  Free Ram: 154620.  Free PSRam:  312983

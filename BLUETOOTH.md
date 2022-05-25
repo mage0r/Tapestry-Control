@@ -19,7 +19,14 @@ Constellations
 
 Connect to Characteristic UUID: f82be6f8-3b05-11ec-8d3d-0242ac130003
 write command:
-	<deviceID>c<red><green><blue><constellation ID>
+	<deviceID>c<red><green><blue><constellation ID><highDELAY><lowDELAY>
+
+Screensaver
+------------
+Connect to Characteristic UUID: f82be6f8-3b05-11ec-8d3d-0242ac130003
+
+write command:
+	<deviceID>S
 
 
 Animation
@@ -37,19 +44,19 @@ Check deviceID matches current device.
 
 Connect to Characteristic UUID: f82be6f8-3b05-11ec-8d3d-0242ac130003
 Write command:
-	<deviceID>a<animation id><red><green><blue><high byte><low byte><delay ms>
-n.b. <high byte><low byte><delay ms> can be repeated until you reach the 20 character limit.
+	<deviceID>a<highAnimationID><lowAnimationID><red><green><blue><highLED><lowLED><highDELAY><lowDELAY><highWAIT><lowWAIT>
+n.b. ><highLED><lowLED><highDELAY><lowDELAY><highWAIT><lowWAIT> can be repeated until you reach the 20 character limit.
 running this command multiple times will append to the animation.  you can change colours between each iteration.
-<deviceID><command><animationID><red><green><blue><highLED><lowLED><highDELAY><lowDELAY><highWAIT><lowWAIT><><><><><><><><>
+
 
 Connect to Characteristic UUID: f82be6f8-3b05-11ec-8d3d-0242ac130003
 Write command:
-	<deviceID>A<animation id>
+	<deviceID>A<highAnimationID><lowAnimationID>
 This will play the appropriate animation.
 
 Clearing an animation.
 Connect to Characteristic UUID: f82be6f8-3b05-11ec-8d3d-0242ac130003
 Write command:
-	<deviceID>D<animation id>
+	<deviceID>D<highAnimationID><lowAnimationID>
 This will reset the appropriate animation.
 

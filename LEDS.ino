@@ -29,8 +29,10 @@ void setup_animations() {
   // probably need to be shared between units.  future problem.
 
   // By loading these in to PSRAM we can create a lot of them.
-  animation_array = (animation *) ps_calloc(100, sizeof(animation)); //100?  feels like a lot.
+  animation_array = (animation *) ps_calloc(500, sizeof(animation)); //any more than this and we run out of ram.
 
+  // Crunch time.  This doesn't need to be an array, but it does need to be allocated to lock
+  // up the RAM.  Don't have time to get this fixed
   active_array = (active *) ps_calloc(1, sizeof(active)); // only need one active.
   
   //Serial.println(1 * sizeof(active)); // just curious as to how big this is. 14004
@@ -41,31 +43,23 @@ void setup_animations() {
 }
 
 // add new stars to the animation arrays.
-void append_animation(int animation_position, byte colour[3], int star_number, byte timer) {
+void append_animation(int animation_position, byte colour[3], int star_number, int timer, int show) {
 
-  
-  // enabling this debug information significantly slows the animation transmission speed.
-  /*
-  if(DEBUG) {
-    display_print(F("Append to animation:"));
-    Serial.print(String(animation_position));
-    Serial.print(F("["));
-    Serial.print(String(animation_array[animation_position].count));
-    Serial.print(F("]"));
-    Serial.print(star_array[star_number].name);
-    Serial.println("");
+  if(animation_array[animation_position].count > 1000) {
+    display_print(F("Too many stars!"));
+
+  } else {
+
+    animation_array[animation_position].star_list[animation_array[animation_position].count] = &star_array[star_number];
+    animation_array[animation_position].colour[animation_array[animation_position].count][0] = colour[0];
+    animation_array[animation_position].colour[animation_array[animation_position].count][1] = colour[1];
+    animation_array[animation_position].colour[animation_array[animation_position].count][2] = colour[2];
+    animation_array[animation_position].times[animation_array[animation_position].count] = timer;
+    animation_array[animation_position].show[animation_array[animation_position].count] = show;
+    animation_array[animation_position].count++;
+
+    //appendAnimation(SPIFFS, "/ani.csv", ,animation_position);
   }
-  */
-  
-  
-  animation_array[animation_position].star_list[animation_array[animation_position].count] = &star_array[star_number];
-  animation_array[animation_position].colour[animation_array[animation_position].count][0] = colour[0];
-  animation_array[animation_position].colour[animation_array[animation_position].count][1] = colour[1];
-  animation_array[animation_position].colour[animation_array[animation_position].count][2] = colour[2];
-  animation_array[animation_position].times[animation_array[animation_position].count] = timer;
-  animation_array[animation_position].count++;
-
-  //appendAnimation(SPIFFS, "/ani.csv", ,animation_position);
 
 }
 
@@ -89,7 +83,7 @@ void activateAnimation(int animation_position) {
 
     // just check that our animation array isn't full.
     // doing this at the top just in case it's full from the onset.
-    if(current >= 1000) {
+    if(current >= 500) {
       display_print(F("Animation buffer exhausted."));
       break;
     }
@@ -97,36 +91,31 @@ void activateAnimation(int animation_position) {
     temp_millis += animation_array[animation_position].times[i];
     //temp_millis += 700;
 
-    if(DEBUG && 0) {
-      Serial.print("Animation:");
-      Serial.print(i);
-    }
-
     active_array[0].star_list[current] = animation_array[animation_position].star_list[i]; // copy the LED
     active_array[0].rising[current] = 1; // fading in.
     active_array[0].colour[current][0] = animation_array[animation_position].colour[i][0];
     active_array[0].colour[current][1] = animation_array[animation_position].colour[i][1];
     active_array[0].colour[current][2] = animation_array[animation_position].colour[i][2];
     active_array[0].update[current] = temp_millis;
+    active_array[0].show[current] = animation_array[animation_position].show[i];
     active_array[0].brightness[current] = 0;
-
-    if(DEBUG) {
-      //Serial.println(" end.");
-    }
 
     current++;
   }
 
   active_array[0].count = current;
 
+  // do we have a custom message to display?
+  // pick one at random?  
+
   // super, super temporary.
   // when we play the animation, clear the record of it.
-  animation_array[animation_position].count = 0;
+  //animation_array[animation_position].count = 0;
 }
 
 // This copies the requsted constellation in to the active stars array.
 // functionally very similar to activateAnimation, but a lot simpiler.
-void activateConstellation(byte animation_position, byte colour[3]) {
+void activateConstellation(byte animation_position, byte colour[3], int show) {
   unsigned long temp_millis = millis();
   // so, this takes a few seconds to run
   temp_millis += 100;
@@ -143,9 +132,8 @@ void activateConstellation(byte animation_position, byte colour[3]) {
       break;
     }
 
-    // we really want to fade our whole array in at once.
-    // this is arbitrary and may be needed later.
-    //temp_millis += 700;
+    // copy our constellation to the animation list.
+    // we need to keep a record of our animation list so we can play it back. 
 
     active_array[0].star_list[current] = constellation_array[animation_position].star_list[i];
     active_array[0].rising[current] = 1; // fading in.
@@ -153,6 +141,7 @@ void activateConstellation(byte animation_position, byte colour[3]) {
     active_array[0].colour[current][1] = colour[1];
     active_array[0].colour[current][2] = colour[2];
     active_array[0].update[current] = temp_millis;
+    active_array[0].show[current] = show;
     active_array[0].brightness[current] = 0;
 
     current++;
@@ -179,15 +168,6 @@ void openAnimation() {
         // increase/decrease the brightness depending on the rising flag.
         active_array[0].brightness[i] += active_array[0].rising[i];
 
-        // testing my fading algorithim
-        if(i == 0 && false) {
-          Serial.print(((active_array[0].colour[i][0]/100)*active_array[0].brightness[i]));
-          Serial.print(",");
-          Serial.print(((active_array[0].colour[i][1]/100)*active_array[0].brightness[i]));
-          Serial.print(",");
-          Serial.println(((active_array[0].colour[i][2]/100)*active_array[0].brightness[i]));
-        }
-
         // set the colour based on our brightness.
         // simply put, the brighness value is a percentage, multiple the colour by that
         *active_array[0].star_list[i]->led = CRGB(((active_array[0].colour[i][0]/100)*active_array[0].brightness[i]),
@@ -195,9 +175,10 @@ void openAnimation() {
                                                   ((active_array[0].colour[i][2]/100)*active_array[0].brightness[i]));
                                                    
 
-        if(active_array[0].brightness[i] >= 100)
+        if(active_array[0].brightness[i] >= 100) {
           active_array[0].rising[i] = -2; // we've hit the top, back down we go.
-        else if(active_array[0].brightness[i] <= 0) {
+          active_array[0].update[i] = long(millis() + active_array[0].show);// don't forget to wait a bit!
+        } else if(active_array[0].brightness[i] <= 0) {
           // trigger a cleanup to remove this LED from the active array.
           // probably going to be slow.
           trim_active(i);
@@ -229,6 +210,7 @@ void trim_active(int to_trim) {
   active_array[0].colour[to_trim][1] = active_array[0].colour[temp_array_count][1];
   active_array[0].colour[to_trim][2] = active_array[0].colour[temp_array_count][2];
   active_array[0].update[to_trim] = active_array[0].update[temp_array_count];
+  active_array[0].show[to_trim] = active_array[0].show[temp_array_count];
   active_array[0].brightness[to_trim] = active_array[0].brightness[temp_array_count];
 
   active_array[0].count--;

@@ -9,6 +9,7 @@ void setup_fileops() {
   // declaring these here let me load them in to PSRAM
   star_array = (stars *) ps_calloc(843, sizeof(stars));
   constellation_array = (constellations *) ps_calloc(90, sizeof(constellations));
+  fortune = (fortunes *) ps_calloc(1, sizeof(fortunes));
   
 }
 
@@ -241,7 +242,6 @@ void loadAnimation(fs::FS &fs, const char * path){
         if(temp == ',') {
           counter1++;
         } else if(temp == '\n') {
-          animation_array[temp_animation_id].name[char_pos] = '\0'; // terminate our name nicely
 
           animation_array[temp_animation_id].star_list[animation_array[temp_animation_id].count] = &star_array[temp_star];
           animation_array[temp_animation_id].count++;
@@ -255,20 +255,16 @@ void loadAnimation(fs::FS &fs, const char * path){
           // skip carriage return
         } else if(counter1 == 0) {
           temp_animation_id = temp;
-        } else if(counter1 == 1) {
-          // append to the name
-          animation_array[temp_animation_id].name[char_pos] = temp; // this is probably stupid.
-          char_pos++;
-        } else if (counter1 == 2) {
+        } else if (counter1 == 1) {
           animation_array[temp_animation_id].colour[animation_array[temp_animation_id].count][0] = temp;
-        } else if (counter1 == 3) {
+        } else if (counter1 == 2) {
           animation_array[temp_animation_id].colour[animation_array[temp_animation_id].count][1] = temp;
-        } else if (counter1 == 4) {
+        } else if (counter1 == 3) {
           animation_array[temp_animation_id].colour[animation_array[temp_animation_id].count][2] = temp;
-        } else if (counter1 == 5) {
+        } else if (counter1 == 4) {
           // this is our LED.
           temp_star = temp_star*10 + (temp-48);
-        } else if (counter1 == 6) {
+        } else if (counter1 == 5) {
           animation_array[temp_animation_id].times[animation_array[temp_animation_id].count] = temp;
         }
         
@@ -303,3 +299,79 @@ void appendAnimation(fs::FS &fs, const char * path, const char * message, int an
     file.close();
 }
 */
+
+void loadFortune(fs::FS &fs, const char * path){
+
+    display_print(F("Loading Fortune: "));
+    display_print(path);
+
+    File file = fs.open(path);
+    if(!file || file.isDirectory()){
+        display_println(F("- failed to open file for reading"));
+        return;
+    }
+
+    // this is very specific to loading the Fortune.
+
+    byte counter1 = 0;
+    int char_pos = 0;
+
+    // collect variables.
+    int temp_animation_id = -1;
+    int temp_star_id = -1;
+    int temp_constellation_id = -1;
+    int fortune_counter = 0;
+     
+    
+    while(file.available() && fortune_counter < 200){
+
+        byte temp = file.read();
+
+        if(temp == ',') {
+          counter1++;
+        } else if(temp == '\n') {
+
+          if(temp_star_id > -1) {
+            fortune->star_list[fortune_counter] = &star_array[temp_star_id];
+          }
+
+          if(temp_constellation_id > -1) {
+            fortune->constellation_list[fortune_counter] = &constellation_array[temp_constellation_id];
+          }
+
+          if(temp_animation_id > -1) {
+            fortune->animation_list[fortune_counter] = &animation_array[temp_animation_id];
+          }
+
+          fortune->text[fortune_counter][char_pos] = '\0';
+
+          fortune_counter++;
+          char_pos = 0;
+          counter1 = 0;
+          temp_animation_id = -1;
+          temp_star_id = -1;
+          temp_constellation_id = -1;
+          
+        } else if (temp == '\r') {
+          // skip carriage return
+        } else if(counter1 == 0) {
+          // first section is star_id
+          temp_star_id = temp_star_id*10 + (temp-48);
+        } else if (counter1 == 1) {
+          // second section is constellation_id
+          temp_constellation_id = temp_constellation_id*10 + (temp-48);
+        } else if (counter1 == 2) {
+          // third section is animation_id
+          temp_animation_id = temp_animation_id*10 + (temp-48);
+        } else if (counter1 == 3) {
+          // forth section is the text.  
+          fortune->text[fortune_counter][char_pos] = temp;
+          char_pos++;
+        }
+        
+    }
+
+    display_print(F(". Done: "));
+    display_println(String(fortune_counter));
+
+}

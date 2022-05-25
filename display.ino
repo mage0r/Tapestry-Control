@@ -15,7 +15,7 @@ void setup_display() {
 }
 
 void display_header() {
-  myGLCD.fillRect(0, 0, 319, 31,TFT_BLUE); // clear the top of the screen
+  myGLCD.fillRect(0, 0, 319, 16,TFT_BLUE); // clear the top of the screen
 
   String temp_header; // we re-use this a bit.
 
@@ -34,27 +34,20 @@ void display_header() {
     temp_header += WiFi.localIP().toString();
     myGLCD.drawString(temp_header,0,16,2);
   }
-  /*else {
-    myGLCD.setTextColor(TFT_BLACK, TFT_RED);
-    temp_header += " ";
-
-  }*/
-  
-  //myGLCD.drawString(temp_header,0,16,2);
 
   // mqtt status
   if(mqtt_connect) {
     myGLCD.setTextColor(TFT_WHITE, TFT_BLUE);
     myGLCD.drawString(" MQTT ",150,16,2);
-  } //else
-  //  myGLCD.setTextColor(TFT_BLACK, TFT_RED);
-  //myGLCD.drawString(" MQTT ",150,16,2);
+  }
 
   // Bluetooth Status
   temp_header = " BT: ";
   if(bluetooth_connect) {
     if(beacon_on == 0)
       myGLCD.setTextColor(TFT_WHITE, TFT_BLUE);
+    else if (bluetooth_connect == 1) // no connected devices
+      myGLCD.setTextColor(TFT_GREEN, TFT_WHITE);
     else
       myGLCD.setTextColor(TFT_WHITE, TFT_GREEN);
     temp_header += String(bluetooth_connect - 1);
@@ -70,11 +63,11 @@ void display_header() {
 
 void display_update() {
 
-  myGLCD.fillRect(0, 31, 319, 239,TFT_BLACK); // hide everything!
-  myGLCD.setCursor(0, 31, 2);
+  myGLCD.fillRect(0, 16, 319, 239,TFT_BLACK); // hide everything!
+  myGLCD.setCursor(0, 16, 2);
   myGLCD.setTextColor(TFT_WHITE,TFT_BLACK);
   myGLCD.setTextSize(1);
-  for(int i = 0; i < 12; i++) {
+  for(int i = 0; i < 13; i++) {
     myGLCD.println(display_strings[i]);
   }
 }
@@ -85,16 +78,30 @@ void safe_append(String temp) {
   temp.replace('\n',' ');
   temp.replace('\r',' ');
 
-  //Serial.println(strlen(display_strings[12]));
   int count = 0;
-  for (int i = strlen(display_strings[12]); i < DISPLAY_WIDTH; i++) {
-    display_strings[12][i] = temp.charAt(count);
+  for (int i = strlen(display_strings[13]); i < DISPLAY_WIDTH; i++) {
+    display_strings[13][i] = temp.charAt(count);
     count++;
     if(count > temp.length())
       i=DISPLAY_WIDTH;
   }
 
-  display_strings[12][DISPLAY_WIDTH-1] = '\0';
+  display_strings[13][DISPLAY_WIDTH-1] = '\0';
+
+  // send the leftover string to a new line.
+  if(count < temp.length()) {
+
+    // Do the shuffle.
+    for(int i = 0; i < 13; i++) {
+      strcpy(display_strings[i],display_strings[i+1]);
+    }
+
+    display_strings[13][0] = '\0';
+    display_update();
+
+    temp = temp.substring(count);
+    safe_append(temp);
+  }  
   
 }
 
@@ -103,8 +110,8 @@ void display_print(String temp) {
 
  safe_append(temp);
 
-  myGLCD.print(temp); // don't need to redraw the whole screen.
-  Serial.print(temp);
+ myGLCD.print(temp); // don't need to redraw the whole screen.
+ Serial.print(temp);
 
 }
 
@@ -112,11 +119,11 @@ void display_println(String temp) {
   safe_append(temp);
 
   // Do the shuffle.
-  for(int i = 0; i < 12; i++) {
+  for(int i = 0; i < 13; i++) {
     strcpy(display_strings[i],display_strings[i+1]);
   }
 
-  display_strings[12][0] = '\0';
+  display_strings[13][0] = '\0';
 
   display_update();
   Serial.println(temp);
