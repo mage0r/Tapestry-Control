@@ -3,19 +3,12 @@ void leds_setup() {
   // each strip uses about 600 bytes of space.... makes sense.
   
   FastLED.addLeds<LED_TYPE, 4, COLOR_ORDER>(leds[0], NUM_LEDS_PER_STRIP);
-
   FastLED.addLeds<LED_TYPE, 14, COLOR_ORDER>(leds[1], NUM_LEDS_PER_STRIP);
-
   FastLED.addLeds<LED_TYPE, 15, COLOR_ORDER>(leds[2], NUM_LEDS_PER_STRIP);
-
   FastLED.addLeds<LED_TYPE, 27, COLOR_ORDER>(leds[3], NUM_LEDS_PER_STRIP);
-
   FastLED.addLeds<LED_TYPE, 26, COLOR_ORDER>(leds[4], NUM_LEDS_PER_STRIP);
-
   FastLED.addLeds<LED_TYPE, 25, COLOR_ORDER>(leds[5], NUM_LEDS_PER_STRIP);
-
   FastLED.addLeds<LED_TYPE, 19, COLOR_ORDER>(leds[6], NUM_LEDS_PER_STRIP);
-
   FastLED.addLeds<LED_TYPE, 22, COLOR_ORDER>(leds[7], NUM_LEDS_PER_STRIP);
 
   FastLED.setBrightness(  BRIGHTNESS );
@@ -36,78 +29,190 @@ void setup_animations() {
   // probably need to be shared between units.  future problem.
 
   // By loading these in to PSRAM we can create a lot of them.
-  animation_array = (animation *) ps_calloc(100, sizeof(animation)); //100?  feels like a lot.
+  animation_array = (animation *) ps_calloc(500, sizeof(animation)); //any more than this and we run out of ram.
+
+  // Crunch time.  This doesn't need to be an array, but it does need to be allocated to lock
+  // up the RAM.  Don't have time to get this fixed
+  active_array = (active *) ps_calloc(1, sizeof(active)); // only need one active.
   
-  //Serial.println(100 * sizeof(animation)); // just curious as to how big this is.
+  //Serial.println(1 * sizeof(active)); // just curious as to how big this is. 14004
 
   // Load from EEPROM?
 
   display_println(F("Animations Initialised."));
 }
 
-void append_animation(int animation_position, byte colour[3], int star_number, byte timer) {
+// add new stars to the animation arrays.
+void append_animation(int animation_position, byte colour[3], int star_number, int timer, int show) {
 
-  /*
-  display_print(F("Append to animation:"));
-  display_print(String(animation_position));
-  display_print(F("["));
-  display_print(String(animation_array[animation_position].count));
-  display_print(F("]"));
-  display_print(star_array[star_number].name);
-  display_println("");
-  */
-  
-  animation_array[animation_position].star_list[animation_array[animation_position].count] = &star_array[star_number];
-  animation_array[animation_position].colour[animation_array[animation_position].count][0] = colour[0];
-  animation_array[animation_position].colour[animation_array[animation_position].count][1] = colour[1];
-  animation_array[animation_position].colour[animation_array[animation_position].count][2] = colour[2];
-  animation_array[animation_position].times[animation_array[animation_position].count] = timer;
-  animation_array[animation_position].count++;
+  if(animation_array[animation_position].count > 1000) {
+    display_print(F("Too many stars!"));
 
-  //appendAnimation(SPIFFS, "/ani.csv", ,animation_position);
+  } else {
+
+    animation_array[animation_position].star_list[animation_array[animation_position].count] = &star_array[star_number];
+    animation_array[animation_position].colour[animation_array[animation_position].count][0] = colour[0];
+    animation_array[animation_position].colour[animation_array[animation_position].count][1] = colour[1];
+    animation_array[animation_position].colour[animation_array[animation_position].count][2] = colour[2];
+    animation_array[animation_position].times[animation_array[animation_position].count] = timer;
+    animation_array[animation_position].show[animation_array[animation_position].count] = show;
+    animation_array[animation_position].count++;
+
+    //appendAnimation(SPIFFS, "/ani.csv", ,animation_position);
+
+  }
 
 }
 
-void openAnimation(int animation_position, boolean wipe_animation) {
-  /*
-  display_print(F("Show Animation #"));
-  display_print(String(animation_position));
-  display_print(F(":"));
-  //display_print(animation_array[animation_position].name);
-  display_println("");
-  */
-  /*
-  for(int i = 0; i < animation_array[animation_position].count;i++){
-    Serial.println(animation_array[animation_position].star_list[i]->name);
-    Serial.println(animation_array[animation_position].colour[i][0]);
-    Serial.println(animation_array[animation_position].times[i]);
-  }
-  */
-  
-  
+// This copies the requsted sequence in to the active stars array.
+void activateAnimation(int animation_position) {
+  unsigned long temp_millis = millis();
+  // so, this takes a few seconds to run
+  //temp_millis += 100;
+
+  //where is our animation up to
+  int current = active_array[0].count;
+
+   if(DEBUG && false) {
+    display_println(F("Setup animation."));
+    Serial.println(current);
+    Serial.println(animation_position);
+    Serial.println(animation_array[animation_position].count);
+   }
+
   for(int i=0; i < animation_array[animation_position].count; i++) {
-    *animation_array[animation_position].star_list[i]->led = CRGB(animation_array[animation_position].colour[i][0],animation_array[animation_position].colour[i][1],animation_array[animation_position].colour[i][2]);
-    //display_println(animation_array[animation_position].star_list[i]->name);
-    delay(animation_array[animation_position].times[i]); //blocking :/
+
+    // just check that our animation array isn't full.
+    // doing this at the top just in case it's full from the onset.
+    if(current >= 500) {
+      display_print(F("Animation buffer exhausted."));
+      break;
+    }
+
+    temp_millis += animation_array[animation_position].times[i];
+    //temp_millis += 700;
+
+    active_array[0].star_list[current] = animation_array[animation_position].star_list[i]; // copy the LED
+    active_array[0].rising[current] = 1; // fading in.
+    active_array[0].colour[current][0] = animation_array[animation_position].colour[i][0];
+    active_array[0].colour[current][1] = animation_array[animation_position].colour[i][1];
+    active_array[0].colour[current][2] = animation_array[animation_position].colour[i][2];
+    active_array[0].update[current] = temp_millis;
+    active_array[0].show[current] = animation_array[animation_position].show[i];
+    active_array[0].brightness[current] = 0;
+
+    current++;
   }
 
-  if(wipe_animation) {
-    animation_array[animation_position].count = 0;
-  }
-  
+  active_array[0].count = current;
+
+  // do we have a custom message to display?
+  // pick one at random?  
+
+  // super, super temporary.
+  // when we play the animation, clear the record of it.
+  //animation_array[animation_position].count = 0;
 }
 
-// Fade out
-void fadeOut() {
-  
-  EVERY_N_MILLISECONDS(10) {
-        for(int j = 0; j < NUM_STRIPS; j++) {
-          for( int i = 0; i < NUM_LEDS_PER_STRIP; ++i) {
-              leds[j][i].fadeToBlackBy(fadeAmount);
-          }
-        }
-        
+// This copies the requsted constellation in to the active stars array.
+// functionally very similar to activateAnimation, but a lot simpiler.
+void activateConstellation(byte animation_position, byte colour[3], int show) {
+  unsigned long temp_millis = millis();
+  // so, this takes a few seconds to run
+  //temp_millis += 100;
+
+  //where is our animation up to
+  int current = active_array[0].count;
+
+  for(int i=0; i < constellation_array[animation_position].star_count; i++) {
+
+    // just check that our animation array isn't full.
+    // doing this at the top just in case it's full from the onset.
+    if(current >= 1000) {
+      display_print(F("Animation buffer exhausted."));
+      break;
+    }
+
+    // copy our constellation to the animation list.
+    // we need to keep a record of our animation list so we can play it back. 
+
+    active_array[0].star_list[current] = constellation_array[animation_position].star_list[i];
+    active_array[0].rising[current] = 1; // fading in.
+    active_array[0].colour[current][0] = colour[0];
+    active_array[0].colour[current][1] = colour[1];
+    active_array[0].colour[current][2] = colour[2];
+    active_array[0].update[current] = temp_millis;
+    active_array[0].show[current] = show;
+    active_array[0].brightness[current] = 0;
+
+    current++;
   }
+
+  active_array[0].count = current;
+}
+
+void openAnimation() {
+
+  // should be slightly more efficient to run this backwards.
+  // by that I mean when doing a trim we won't be moving leds that 
+  // would be removed later anyway.
+  for(int i=active_array[0].count-1; i >= 0; i--) {
+
+      if(active_array[0].update[i] <= millis()) {
+        // we're go to start the sequence.
+        // increase/decrease the brightness depending on the rising flag.
+        active_array[0].brightness[i] += active_array[0].rising[i];
+
+        // set the colour based on our brightness.
+        // simply put, the brighness value is a percentage, multiple the colour by that
+        *active_array[0].star_list[i]->led = CRGB(((active_array[0].colour[i][0]/100)*active_array[0].brightness[i]),
+                                                  ((active_array[0].colour[i][1]/100)*active_array[0].brightness[i]),
+                                                  ((active_array[0].colour[i][2]/100)*active_array[0].brightness[i]));
+                                                   
+
+        if(active_array[0].brightness[i] >= 100) {
+          active_array[0].rising[i] = -2; // we've hit the top, back down we go.
+          active_array[0].update[i] = long(active_array[0].show[i]) + millis();// don't forget to wait a bit at max brightness!
+        } else if(active_array[0].brightness[i] <= 0) {
+          // trigger a cleanup to remove this LED from the active array.
+          // probably going to be slow.
+          trim_active(i);
+        }
+      }
+  }
+}
+
+// remove a completed animation from the stack.
+// this is probably going to be slow.
+void trim_active(int to_trim) {
+
+  // I figure all the calculations for -1 is more computationally expensive than a single int.
+  int temp_array_count = active_array[0].count - 1;
+
+
+  if(DEBUG) {
+    Serial.print("Trimming: ");
+    Serial.print(to_trim);
+    Serial.print(". Active: ");
+    Serial.print(temp_array_count);    
+  }
+
+  // we don't care what order the LED's are in!
+  // replace the one we want gone with the last one.
+  active_array[0].star_list[to_trim] = active_array[0].star_list[temp_array_count];
+  active_array[0].rising[to_trim] = active_array[0].rising[temp_array_count];
+  active_array[0].colour[to_trim][0] = active_array[0].colour[temp_array_count][0];
+  active_array[0].colour[to_trim][1] = active_array[0].colour[temp_array_count][1];
+  active_array[0].colour[to_trim][2] = active_array[0].colour[temp_array_count][2];
+  active_array[0].update[to_trim] = active_array[0].update[temp_array_count];
+  active_array[0].show[to_trim] = active_array[0].show[temp_array_count];
+  active_array[0].brightness[to_trim] = active_array[0].brightness[temp_array_count];
+
+  active_array[0].count--;
+
+  if(DEBUG)
+    Serial.println(". Trim complete.");
+
 }
 
 void FillLEDsFromPaletteColors( uint8_t colorIndex)
@@ -121,89 +226,3 @@ void FillLEDsFromPaletteColors( uint8_t colorIndex)
       }
     }
 }
-
-void ChangePalettePeriodically()
-{
-    uint8_t secondHand = (millis() / 1000) % 60;
-    static uint8_t lastSecond = 99;
-    
-    if( lastSecond != secondHand) {
-        lastSecond = secondHand;
-        if( secondHand ==  0)  { currentPalette = RainbowColors_p;         currentBlending = LINEARBLEND; display_println("Rainbow");}
-        if( secondHand == 10)  { currentPalette = RainbowStripeColors_p;   currentBlending = NOBLEND; display_println("Rainbow Stripe"); }
-        if( secondHand == 15)  { currentPalette = RainbowStripeColors_p;   currentBlending = LINEARBLEND; display_println("Rainbow Stripe Blend"); }
-        if( secondHand == 20)  { SetupPurpleAndGreenPalette();             currentBlending = LINEARBLEND; display_println("Purple Green"); }
-        if( secondHand == 25)  { SetupTotallyRandomPalette();              currentBlending = LINEARBLEND; display_println("Random"); }
-        if( secondHand == 30)  { SetupBlackAndWhiteStripedPalette();       currentBlending = NOBLEND; display_println("Black and white"); }
-        if( secondHand == 35)  { SetupBlackAndWhiteStripedPalette();       currentBlending = LINEARBLEND; display_println("black and whipe. Blend"); }
-        if( secondHand == 40)  { currentPalette = CloudColors_p;           currentBlending = LINEARBLEND; display_println("Cloud"); }
-        if( secondHand == 45)  { currentPalette = PartyColors_p;           currentBlending = LINEARBLEND; display_println("Party"); }
-        if( secondHand == 50)  { currentPalette = myRedWhiteBluePalette_p; currentBlending = NOBLEND; display_println("Red White Blue"); }
-        if( secondHand == 55)  { currentPalette = myRedWhiteBluePalette_p; currentBlending = LINEARBLEND; display_println("Red White Blue Blend"); }
-    }
-}
-
-// This function fills the palette with totally random colors.
-void SetupTotallyRandomPalette()
-{
-    for( int i = 0; i < 16; ++i) {
-        currentPalette[i] = CHSV( random8(), 255, random8());
-    }
-}
-
-// This function sets up a palette of black and white stripes,
-// using code.  Since the palette is effectively an array of
-// sixteen CRGB colors, the various fill_* functions can be used
-// to set them up.
-void SetupBlackAndWhiteStripedPalette()
-{
-    // 'black out' all 16 palette entries...
-    fill_solid( currentPalette, 16, CRGB::Black);
-    // and set every fourth one to white.
-    currentPalette[0] = CRGB::White;
-    currentPalette[4] = CRGB::White;
-    currentPalette[8] = CRGB::White;
-    currentPalette[12] = CRGB::White;
-    
-}
-
-// This function sets up a palette of purple and green stripes.
-void SetupPurpleAndGreenPalette()
-{
-    CRGB purple = CHSV( HUE_PURPLE, 255, 255);
-    CRGB green  = CHSV( HUE_GREEN, 255, 255);
-    CRGB black  = CRGB::Black;
-    
-    currentPalette = CRGBPalette16(
-                                   green,  green,  black,  black,
-                                   purple, purple, black,  black,
-                                   green,  green,  black,  black,
-                                   purple, purple, black,  black );
-}
-
-
-// This example shows how to set up a static color palette
-// which is stored in PROGMEM (flash), which is almost always more
-// plentiful than RAM.  A static PROGMEM palette like this
-// takes up 64 bytes of flash.
-const TProgmemPalette16 myRedWhiteBluePalette_p PROGMEM =
-{
-    CRGB::Red,
-    CRGB::Gray, // 'white' is too bright compared to red and blue
-    CRGB::Blue,
-    CRGB::Black,
-    
-    CRGB::Red,
-    CRGB::Gray,
-    CRGB::Blue,
-    CRGB::Black,
-    
-    CRGB::Red,
-    CRGB::Red,
-    CRGB::Gray,
-    CRGB::Gray,
-    CRGB::Blue,
-    CRGB::Blue,
-    CRGB::Black,
-    CRGB::Black
-};

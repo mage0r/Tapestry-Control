@@ -12,5 +12,6 @@ Free Ram: 70723. Free PSRam: 4105579
 Update ESP32 Core 2.0.1
 Free Ram: 119776. Free PSRam: 4098347
 
-
+Wifi Disabled.
+Free Ram: 153648. Free PSRam: 3898331
 

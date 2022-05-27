@@ -19,7 +19,14 @@ Constellations
 
 Connect to Characteristic UUID: f82be6f8-3b05-11ec-8d3d-0242ac130003
 write command:
-	<deviceID>c<red><green><blue><constellation ID>
+	<deviceID>c<red><green><blue><constellation ID><highWAIT><lowWAIT>
+
+Screensaver
+------------
+Connect to Characteristic UUID: f82be6f8-3b05-11ec-8d3d-0242ac130003
+
+write command:
+	<deviceID>S
 
 
 Animation
@@ -27,21 +34,29 @@ Animation
 
 Loading in an animation.
 
-Connect to Characteristic UUID: 6f485ef4-4d28-11ec-81d3-0242ac130003
+Connect to Characteristic UUID: f82be6f8-3b05-11ec-8d3d-0242ac130003
 Write command:
-	<deviceID>a
+	<deviceID>n
 wait 10s
-Read results.  It will be in the form:
-	<deviceID><animation id>
+Read the characteristic values.  It will be in the form:
+	<deviceID><highSessionID><lowSessionID>
 Check deviceID matches current device.
 
 Connect to Characteristic UUID: f82be6f8-3b05-11ec-8d3d-0242ac130003
 Write command:
-	<deviceID>a<red><green><blue><animation id><high byte><low byte><delay ms>
-n.b. <high byte><low byte><delay ms> can be repeated until you reach the 20 character limit.
+	<deviceID>a<highSessionID><lowSessionID><red><green><blue><highLED><lowLED><highDELAY><lowDELAY><highWAIT><lowWAIT>
+n.b. ><highLED><lowLED><highDELAY><lowDELAY><highWAIT><lowWAIT> can be repeated until you reach the 20 character limit.
 running this command multiple times will append to the animation.  you can change colours between each iteration.
 
+Playing a session.
 Connect to Characteristic UUID: f82be6f8-3b05-11ec-8d3d-0242ac130003
 Write command:
-	<deviceID>A<animation id>
-This will show the appropriate animation.
+	<deviceID>A<highSessionID><lowSessionID>
+This will play the appropriate session.
+
+Clearing a session.
+Connect to Characteristic UUID: f82be6f8-3b05-11ec-8d3d-0242ac130003
+Write command:
+	<deviceID>D<highSessionID><lowSessionID>
+This will reset the appropriate session.
+

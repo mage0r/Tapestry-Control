@@ -34,12 +34,38 @@ typedef struct {
 
 constellations *constellation_array; // = (constellations *) ps_malloc(90 * sizeof(constellations));
 
+// We save an arbitrary number of animations to the unit to try and generate a history.
+// each animation
 typedef struct {
-  char name[14];
   byte count = 0; // how many stars in this sequence.
-  stars *star_list[255]; // somewhat arbitrary size
-  byte times[255];
-  byte colour[255][3];
+  stars *star_list[500]; // somewhat arbitrary size
+  unsigned int times[500]; // how long before starting the next led.
+  unsigned int show[500]; // how long to hold the led's on.
+  byte colour[500][3];
 } animation;
 
 animation *animation_array; // = (animation *) ps_malloc(10 * sizeof(animation));
+
+// ok, if we keep an array of stars we are 
+typedef struct {
+  int count = 0; // how many stars active at the moment.
+  stars *star_list[1000]; // always seems arbitrary, but as we only have 840 LED's, this leaves some buffer.
+  byte rising[1000]; // we fading in or fading out?  Could be a bool
+  byte colour[1000][3]; // What colour is our goal?
+  unsigned long update[1000]; // when are we next updating this star.  Basically the trigger time.
+  unsigned int show[1000];
+  byte brightness[1000];
+} active;
+
+active *active_array;
+
+// Fortune.  We store quotes to display.  Limited character count.
+// Some Fortunes are linked to a constellation, planet or annimation.
+typedef struct {
+  stars *star_list[200];
+  constellations *constellation_list[200];
+  animation *animation_list[200];
+  char text[200][100];
+} fortunes;
+
+fortunes *fortune;
