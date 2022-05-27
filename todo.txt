@@ -1,11 +1,9 @@
 Software:
 Screensaver
 	weird race condition where it doesn't start the screensaver first up.
-Add constellation in as an annimation
+Add constellation in as an animation
 Save animations
 Load animations
-Session ids, only get a new one if the current one isn't blank.
-Report back a session mismatch.
 Fortune sayings
 	load in
 	execute when stars or constellations are lit

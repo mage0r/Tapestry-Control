@@ -118,22 +118,34 @@ class MyCallbacks: public BLECharacteristicCallbacks {
           // get the next available annimation session.
 
           String temp = String(value[0]); // set the first character to be the tablet ID
-          last_animation_counter[value[0]-48] = animation_counter; // keep a record of which tablet has which number
-          temp += animation_counter;
+
+          // if the current session is empty, don't advance it.
+          // provided the current device has this ID of course.
+          if(animation_counter > 0 && animation_array[last_animation_counter[value[0]-48]].count == 0) {
+            // our last selected array is empty, just re-use it.
+            temp += last_animation_counter[value[0]-48];
+          } else {
+            last_animation_counter[value[0]-48] = animation_counter; // keep a record of which tablet has which number
+            temp += animation_counter;
+
+            animation_counter++;
+            if(animation_counter >= 500)
+              animation_counter = 0;
+            animation_array[animation_counter].count = 0; // reset it to zero.
+          }
 
           display_print("New Session for Tablet ");
           display_print(String(value[0]));
           display_print(":");
           display_println(String(animation_counter));
-
-          animation_counter++;
-          if(animation_counter == 500)
-            animation_counter = 0;            
-
-          animation_array[animation_counter].count = 0; // reinitialise the array
+ 
+          pCharacteristic->setValue(temp.c_str());
+        } else if (value[1] == 'N') {
+          // Lets just check our current session for our tablet.
+          String temp = String(value[0]); // set the first character to be the tablet ID
+          temp += last_animation_counter[value[0]-48];
 
           pCharacteristic->setValue(temp.c_str());
-
         } else if (value[1] == 'S') {
           // fire up the screensaver.
           // clean up the active array.
