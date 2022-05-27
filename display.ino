@@ -27,20 +27,6 @@ void display_header() {
   myGLCD.drawString(temp_header,0,0,2);
   myGLCD.drawString(VERSION,200,0,2);
 
-  temp_header = " WIFI";
-  if(wifi_connect) {
-    myGLCD.setTextColor(TFT_WHITE, TFT_BLUE);
-    temp_header += ": ";
-    temp_header += WiFi.localIP().toString();
-    myGLCD.drawString(temp_header,0,16,2);
-  }
-
-  // mqtt status
-  if(mqtt_connect) {
-    myGLCD.setTextColor(TFT_WHITE, TFT_BLUE);
-    myGLCD.drawString(" MQTT ",150,16,2);
-  }
-
   // Bluetooth Status
   temp_header = " BT: ";
   if(bluetooth_connect) {

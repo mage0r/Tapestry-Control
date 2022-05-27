@@ -60,3 +60,12 @@ Write command:
 	<deviceID>D<highSessionID><lowSessionID>
 This will reset the appropriate session.
 
+Checking the current session without advancing.
+Connect to Characteristic UUID: f82be6f8-3b05-11ec-8d3d-0242ac130003
+Write command:
+	<deviceID>N
+wait 10s
+Read the characteristic values.  It will be in the form:
+	<deviceID><highSessionID><lowSessionID>
+Check deviceID matches current device.
+

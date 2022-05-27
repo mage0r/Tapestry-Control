@@ -137,7 +137,7 @@ class MyCallbacks: public BLECharacteristicCallbacks {
           display_print("New Session for Tablet ");
           display_print(String(value[0]));
           display_print(":");
-          display_println(String(animation_counter));
+          display_println(String(last_animation_counter[value[0]-48]));
  
           pCharacteristic->setValue(temp.c_str());
         } else if (value[1] == 'N') {
