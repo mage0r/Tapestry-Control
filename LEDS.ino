@@ -59,6 +59,7 @@ void append_animation(int animation_position, byte colour[3], int star_number, i
     animation_array[animation_position].count++;
 
     //appendAnimation(SPIFFS, "/ani.csv", ,animation_position);
+
   }
 
 }
