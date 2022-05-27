@@ -1,844 +1,843 @@
-Alpha Chamaeleontis,0,4.05,1,7
-Theta Chamaeleontis,0,4.34,1,6
-Gamma Chamaeleontis,0,4.11,0,1
-Delta Chamaeleontis,0,4.45,0,0
-Beta Chamaeleontis,0,4.24,6,27
-Alpha Volantis,1,4,0,15
-Beta Volantis,1,3.77,1,9
-Epsilon Volantis,1,4.35,1,8
-Delta Volantis,1,3.97,1,3
-Gamma Volantis,1,3.62,1,4
-Zeta Volantis,1,3.93,1,5
-Alpha Carinae,2,-0.72,1,20
-Chi Carinae,2,3.46,1,11
-Epsilon Carinae,2,1.86,1,10
-Iota Carinae,2,2.23,0,16
-q Carinae,2,3.52,0,11
-Rho Carinae,2,3.31,0,3
-Theta Carinae,2,2.74,0,4
-Omega Carinae,2,3.29,0,2
-l Carinae,2,3.94,0,13
-Upsilon Carinae,2,2.92,0,12
-Beta Carinae,2,1.67,0,14
-a Carinae,2,3.36,0,18
-d Carinae,2,4.25,0,19
-Gamma Velorum,3,1.83,1,12
-Delta Velorum,3,1.96,0,20
-Kappa Velorum,3,2.47,0,17
-Phi Velorum,3,3.52,0,10
-Mu Velorum,3,2.69,0,7
-p Velorum,3,3.91,0,8
-q Velorum,3,3.86,0,9
-Psi Velorum,3,3.66,0,23
-Lambda Velorum,3,2.21,0,22
-c Velorum,3,3.91,0,21
-Alpha Antliae,4,4.41,0,33
-Epsilon Antliae,4,4.66,0,24
-Iota Antliae,4,4.75,0,34
-Theta Antliae,4,4.88,0,32
-Beta Pyxidis,5,4.13,0,25
-Alpha Pyxidis,5,3.61,0,26
-Gamma Pyxidis,5,4.02,0,27
-Delta Pyxidis,5,4.91,0,28
-Kappa Pyxidis,5,4.72,0,29
-Theta Pyxidis,5,4.78,0,30
-Lambda Pyxidis,5,4.84,0,31
-Alpha Crateris,6,4.22,0,42
-Beta Crateris,6,4.47,0,41
-Gamma Crateris,6,4.13,0,39
-Delta Crateris,6,3.7,0,40
-Zeta Crateris,6,4.88,0,38
-Epsilon Crateris,6,4.91,0,90
-Theta Crateris,6,4.66,0,91
-Eta Crateris,6,5.16,0,37
-Alpha Sextantis,7,4.47,0,87
-Beta Sextantis,7,5.03,0,88
-Delta Sextantis,7,5.19,0,89
-Gamma Sextantis,7,5.06,0,48
-Epsilon Hydrae,8,3.5,0,57
-Delta Hydrae,8,4.13,0,56
-Sigma Hydrae,8,4.59,0,55
-Eta Hydrae,8,4.22,0,54
-Zeta Hydrae,8,3.27,0,52
-Rho Hydrae,8,4.34,0,53
-Theta Hydrae,8,3.78,0,51
-Iota Hydrae,8,4.03,0,50
-Alpha Hydrae,8,2.13,0,49
-Lambda Hydrae,8,3.77,0,45
-Upsilon2 Hydrae,8,4.56,0,46
-Upsilon1 Hydrae,8,4.25,0,47
-Mu Hydrae,8,3.95,0,44
-Nu Hydrae,8,3.27,0,43
-Xi Hydrae,8,3.69,0,35
-Beta Hydrae,8,4.25,0,36
-Gamma Hydrae,8,3.14,6,41
-Pi Hydrae,8,3.41,6,59
-E Hydrae ,8,4.53,6,60
-Iota Cancri,9,4.19,0,61
-Gamma Cancri,9,4.66,0,60
-Delta Cancri,9,4.09,0,59
-Alpha Cancri,9,4.28,0,58
-Beta Cancri,9,3.66,1,92
-Mu Leonis,10,4.03,0,79
-Epsilon Leonis,10,3.11,0,80
-Zeta Leonis,10,3.5,0,84
-Gamma Leonis,10,2.16,0,85
-Eta Leonis,10,3.5,0,83
-Alpha Leonis,10,1.32,0,82
-Delta Leonis,10,2.58,0,97
-b Leonis,10,4.41,0,96
-Beta Leonis,10,2.16,0,94
-Theta Leonis,10,3.33,0,95
-Beta Leo Minoris,11,4.34,0,76
-21 Leo Minoris,11,4.53,0,78
-10 Leo Minoris,11,4.69,0,63
-46 Leo Minoris,11,3.94,0,100
-30 Leo Minoris,11,4.78,0,77
-Omicron Ursae Majoris,12,3.5,0,69
-h Ursae Majoris,12,3.72,0,70
-Upsilon Ursae Majoris,12,3.84,0,71
-Phi Ursae Majoris,12,4.56,0,72
-Theta Ursa Majoris,12,3.27,0,73
-Iota Ursa Majoris,12,3.19,0,68
-Kappa Ursae Majoris,12,3.56,0,67
-Alpha Ursa Majoris,12,1.95,0,105
-Beta Ursa Majoris,12,2.34,0,104
-Gamma Ursa Majoris,12,2.42,0,103
-Chi Ursae Majoris,12,3.84,0,102
-Psi Ursa Majoris,12,3.16,0,101
-Lambda Ursae Majoris,12,3.45,0,74
-Mu Ursa Majoris,12,3.14,0,75
-Nu Ursae Majoris,12,3.63,0,99
-Xi Ursae Majoris A,12,4,0,98
-Delta Ursae Majoris,12,3.33,6,89
-Epsilon Ursa Majoris,12,1.75,6,88
-Zeta Ursa Majoris,12,2.25,6,87
-Eta Ursa Majoris,12,1.8,6,86
-2 Lyncis,13,4.44,1,125
-15 Lyncis,13,4.5,1,122
-21 Lyncis,13,4.59,1,120
-31 Lyncis,13,4.34,1,119
-10 Lyncis,13,3.96,0,66
-HD 77912,13,4.72,0,65
-38 Lyncis,13,3.81,0,64
-Alpha Lyncis,13,3.25,0,62
-12 Lyncis,13,4.88,1,123
-HD56169,13,5.03,1,121
-Theta Centauri,14,2.22,6,16
-Kappa Centauri,14,3.06,6,12
-Eta Centauri,14,2.27,6,15
-Iota Centauri,14,2.77,6,40
-d Centauri,14,4.06,6,39
-Nu Centauri,14,3.31,6,18
-Zeta Centauri,14,2.44,6,20
-Gamma Centauri,14,2.14,6,38
-Sigma Centauri,14,3.83,6,36
-Delta Centauri,14,2.52,6,35
-Epsilon Centauri,14,2.2,6,21
-Alpha Centauri A,14,1.24,6,4
-Beta Centauri,14,0.54,6,22
-a Centauri,14,4.59,0,6
-Lambda Centauri,14,3.09,0,5
-Phi Centauri,14,3.73,6,17
-Mu Centauri,14,3.39,6,19
-Tau Centauri,14,3.88,6,37
-Rho Centauri,14,3.91,6,34
-Epsilon Virginis,15,2.98,6,72
-Delta Virginis,15,3.44,6,50
-Eta Virginis,15,3.89,6,48
-Gamma Virginis,15,2.81,6,49
-Theta Virginis,15,4.34,6,51
-Alpha Virginis,15,0.89,6,53
-Zeta Virginis,15,3.41,6,54
-Kappa Virginis,15,4.31,6,58
-Iota Virginis,15,4.16,6,57
-Mu Virginis,15,3.95,6,65
-Tau Virginis,15,4.25,6,55
-CU Virginis,15,4.94,6,56
-109 Virginis,15,3.73,6,66
-Xi Virginis,15,4.88,0,93
-Nu Virginis,15,4.13,0,92
-Gaia DR2 553480551264062848 Camelopardalis,16,4.98,1,126
-Gamma Camelopardalis,16,4.63,2,126
-Alpha Camelopardalis,16,4.28,2,123
-BE Camelopardalis,16,4.38,2,124
-Beta Camelopardalis,16,4.16,2,122
-CS Camelopardalis,16,4.28,2,125
-7 Camelopardalis,16,4.44,2,121
-HD 117566 Camelopardalis,16,5.88,6,92
-CO Camelopardalis,16,5.22,6,91
-Gamma Draconis,17,2.36,5,125
-Beta Draconis,17,2.94,5,128
-Mu Draconis B,17,4.92,5,129
-Gaia DR2 1420972548150735744 Draconis,17,4.75,5,127
-Xi Draconis,17,3.89,5,126
-Delta Draconis,17,3.22,4,126
-Epsilon Draconis A,17,3.98,4,125
-Tau Draconis,17,4.59,4,127
-Chi Draconis,17,3.66,5,139
-Zeta Draconis,17,3.13,5,130
-Eta Draconis,17,2.86,5,131
-Theta Draconis,17,4.09,5,132
-Iota Draconis,17,3.45,5,133
-Alpha Draconis,17,3.64,6,93
-Kappa Draconis,17,3.83,6,90
-Lambda Draconis,17,3.91,0,106
-Delta Aurigae,18,3.88,1,124
-Beta Aurigae,18,1.9,1,110
-Alpha Aurigae,18,0.24,1,109
-Epsilon Aurigae,18,3.14,2,120
-Eta Aurigae,18,3.11,1,108
-Zeta Aurigae,18,3.84,2,119
-Theta Aurigae,18,2.61,1,111
-Iota Aurigae,18,2.83,2,118
-Gamma Aurigae,18,1.61,1,107
-Alpha Geminorum,19,1.58,1,118
-Beta Geminorum,19,1.29,1,117
-Kappa Geminorum,19,3.72,1,116
-Upsilon Geminorum,19,4.16,1,115
-Iota Geminorum,19,3.94,1,114
-Tau Geminorum,19,4.53,1,113
-Theta Geminorum,19,3.63,1,112
-Delta Geminorum,19,3.59,1,96
-Zeta Geminorum,19,4.16,1,97
-Lambda Geminorum,19,3.61,1,95
-Xi Geminorum,19,3.44,1,85
-Gamma Geminorum,19,1.92,1,84
-Epsilon Geminorum,19,3.19,1,98
-Nu Geminorum,19,4.09,1,99
-Mu Geminorum,19,2.91,1,100
-Eta Geminorum,19,3.28,1,101
-1 Geminorum,19,4.31,1,102
-Alpha Canis Minoris,20,0.46,1,93
-Beta Canis Minoris,20,2.84,1,94
-S Monocerotis,21,4.53,1,86
-13 Monocerotis,21,4.5,1,87
-Epsilon Monocerotis,21,4.44,1,88
-18 Monocerotis,21,4.63,1,89
-Delta Monocerotis,21,4.13,1,90
-Gamma Monocerotis,21,4.13,1,58
-Beta Monocerotis,21,3.78,1,57
-Alpha Monocerotis,21,4.09,1,55
-Zeta Monocerotis,21,4.5,1,91
-Chi2 Orionis,22,4.69,1,103
-Chi1 Orionis,22,4.5,1,104
-Xi Orionis,22,4.38,1,83
-Nu Orionis,22,4.34,1,82
-Lambda Orionis,22,3.33,1,79
-Mu Orionis,22,4.16,1,81
-Alpha Orionis,22,0.5,1,80
-Gamma Orionis,22,1.55,1,78
-Delta Orionis,22,2.13,1,77
-Epsilon Orionis,22,1.62,1,76
-Zeta Orionis,22,1.68,1,75
-Kappa Orionis,22,2,1,59
-Beta Orionis,22,0.19,1,72
-Pi1 Orionis,22,4.66,2,111
-Pi2 Orionis,22,4.34,2,110
-Pi3 Orionis,22,3.28,2,109
-Pi4 Orionis,22,3.61,2,108
-Pi5 Orionis,22,3.64,2,107
-Pi6 Orionis,22,4.63,2,106
-John Spencer,22,13,1,105
-Eta Orionis,22,3.28,1,74
-Tau Orionis,22,3.55,1,71
-Theta Canis Majoris,23,4.19,1,56
-Alpha Canis Majoris,23,-1.09,1,52
-Gamma Canis Majoris,23,4.06,1,54
-Iota Canis Majoris,23,4.34,1,53
-Beta Canis Majoris,23,1.89,1,50
-Nu2 Canis Majoris,23,4.09,1,51
-Omicron2 Canis Majoris,23,3,1,46
-Xi2 Canis Majoris,23,4.53,1,49
-Omicron1 Canis Majoris,23,4,1,47
-Delta Canis Majoris,23,1.96,1,39
-Omega Canis Majoris,23,3.98,1,40
-Eta Canis Majoris,23,2.41,1,41
-Sigma Canis Majoris,23,3.58,1,38
-Epsilon Canis Majoris,23,1.41,1,37
-Zeta Canis Majoris,23,2.94,1,35
-Kappa Canis Majoris,23,3.45,1,36
-Pi Canis Majoris,23,4.72,1,48
-Lambda Leporis,24,4.19,1,70
-Kappa Leporis,24,4.31,1,69
-Mu Leporis,24,3.25,1,68
-Alpha Leporis,24,2.64,1,65
-Beta Leporis,24,2.95,1,66
-Epsilon Leporis,24,3.31,1,67
-Eta Leporis,24,3.78,1,61
-Theta Leporis,24,4.69,1,60
-Zeta Leporis,24,3.56,1,62
-Delta Leporis,24,3.92,1,63
-Gamma Leporis,24,3.69,1,64
-Alpha Columbae,25,2.61,1,31
-Epsilon Columbae,25,4.03,1,30
-Beta Columbae,25,3.28,1,29
-Eta Columbae,25,4.09,1,27
-Gamma Columbae,25,4.28,1,28
-Kappa Columbae,25,4.53,1,33
-Lambda Columbae,25,4.81,1,32
-Delta Columbae,25,3.98,1,34
-Rho Puppis,26,2.91,1,43
-Xi Puppis,26,3.5,1,44
-Zeta Puppis,26,2.13,1,13
-Pi Puppis,26,2.83,1,15
-Sigma Puppis,26,3.38,1,16
-Nu Puppis,26,3.13,1,18
-L2 Puppis,26,4.13,1,17
-Tau Puppis,26,3.09,1,19
-Omicron Puppis,26,4.44,1,45
-3 Puppis,26,4,1,42
-a Puppis,26,3.86,1,14
-Beta Pictoris,27,3.91,1,26
-Gamma Pictoris,27,4.66,1,21
-Alpha Pictoris,27,3.3,1,2
-Gamma Doradus,28,4.31,2,13
-Alpha Doradus,28,3.23,2,12
-Zeta Doradus,28,4.81,1,25
-HD 40409,28,4.78,1,22
-Beta Doradus,28,3.89,1,24
-Delta Doradus,28,4.38,1,23
-Alpha Mensae,29,5.19,1,1
-Gamma Mensae,29,5.31,1,0
-Eta Mensae,29,5.56,2,0
-Beta Mensae,29,5.47,2,1
-Beta Tauri,30,1.61,1,107
-Zeta Tauri,30,2.91,1,106
-Tau Tauri,30,4.22,2,117
-Eta Tauri,30,2.84,2,100
-Epsilon Tauri,30,3.69,2,116
-Delta Tauri,30,3.92,2,115
-Gamma Tauri,30,3.8,2,114
-Lambda Tauri,30,3.38,2,101
-Xi Tauri,30,3.7,2,61
-Alpha Tauri,30,1,2,112
-Theta Tauri,30,3.45,2,113
-Eta Persei,31,3.89,2,78
-Gamma Persei A,31,3.05,2,80
-Tau Persei,31,4.06,2,79
-Alpha Persei,31,1.89,2,87
-Gaia DR2,31,4.16,2,81
-Delta Persei,31,2.97,2,88
-Kappa Persei,31,3.95,2,82
-Beta Persei,31,2.09,2,83
-Pi Persei,31,4.69,2,84
-Rho Persei,31,3.28,2,85
-Omega Persei,31,4.78,2,86
-Nu Persei,31,3.86,2,92
-Epsilon Persei,31,2.83,2,93
-Xi Persei,31,4,2,94
-Zeta Persei,31,2.89,2,95
-Omicron Persei A,31,3.84,2,96
-Mu Persei,31,4.28,2,90
-Lambda Persei,31,4.25,2,89
-48 Persei,31,3.98,2,91
-Beta Trianguli,32,3.06,2,75
-Gamma Trianguli,32,4,2,74
-Alpha Trianguli,32,3.52,2,73
-41 Arietis,33,3.58,2,97
-Alpha Arietis,33,2.17,2,72
-Beta Arietis,33,2.7,2,71
-Gamma Arietis,33,3.84,2,70
-Epsilon Arietis,33,4.63,2,98
-Delta Arietis,33,4.5,2,99
-Alpha Fornacis,34,3.97,2,44
-Beta Fornacis,34,4.59,2,43
-Nu Fornacis,34,4.63,2,38
-Gamma Caeli,35,4.69,2,19
-Beta Caeli,35,5.13,2,18
-Alpha Caeli,35,4.5,2,17
-Delta Caeli,35,5,2,14
-Alpha Horologii,36,4,2,15
-Iota Horologii,36,5.5,2,31
-Eta Horologii,36,5.34,2,32
-Zeta Horologii,36,5.28,2,33
-Mu Horologii,36,5.19,2,7
-Beta Horologii,36,5,2,6
-Delta Horologii,36,5,2,16
-Epsilon Reticuli,37,4.59,2,11
-Alpha Reticuli,37,3.33,2,10
-Delta Reticuli,37,4.56,2,9
-Beta Reticuli,37,4,2,8
-Epsilon Cassiopeiae,38,3.3,2,77
-Delta Cassiopeiae,38,2.7,3,91
-Gamma Cassiopeiae,38,2.13,3,92
-Beta Cassiopeiae,38,2.34,3,96
-Alpha Cassiopeiae,38,2.41,3,93
-Zeta Cassiopeiae,38,3.61,3,94
-Lambda Cassiopeiae A,38,4.69,3,95
-Beta Eridani,39,2.81,1,73
-Mu Eridani,39,3.97,2,105
-Nu Eridani,39,3.86,2,104
-Omicron1 Eridani,39,4.13,2,102
-Omicron² Eridani,39,4.53,2,103
-Gamma Eridani,39,3.06,2,50
-Pi Eridani,39,4.5,2,51
-Delta Eridani,39,3.67,2,52
-Epsilon Eridani,39,3.86,2,53
-Zeta Eridani,39,4.84,2,54
-Eta Eridani,39,4.03,2,55
-Tau1 Eridani,39,4.56,2,40
-Tau2 Eridani,39,4.91,2,41
-Tau3 Eridani,39,4.13,2,42
-Tau4 Eridani,39,3.72,2,45
-Tau5 Eridani,39,4.22,2,46
-Tau6 Eridani,39,4.31,2,47
-Tau8 Eridani,39,4.59,2,48
-Tau9 Eridani,39,4.56,2,49
-Upsilon1 Eridani,39,4.66,2,21
-Upsilon2 Eridani,39,3.97,2,20
-Upsilon3 Eridani,39,4.09,2,22
-Upsilon4 Eridani,39,3.52,2,23
-HD 24072,39,4.25,2,24
-y Eridani,39,4.72,2,25
-e Eridani,39,4.38,2,26
-Theta Eridani,39,2.94,2,27
-Iota Eridani,39,4.25,2,28
-s Eridani,39,4.75,2,29
-Kappa Eridani,39,4.19,2,30
-Phi Eridani,39,3.52,2,35
-Chi Eridani,39,3.84,2,36
-Alpha Eridani,39,0.42,3,7
-Alpha Hydri,40,2.92,2,34
-Epsilon Hydri,40,4.06,2,5
-Delta Hydri,40,4.09,2,4
-Beta Hydri,40,2.92,3,1
-Gamma Hydri,40,3.33,2,2
-Nu Hydri,40,4.91,2,3
-Mu Ceti,41,4.09,2,63
-Lambda Ceti,41,4.66,2,62
-Xi2 Ceti,41,4.25,2,64
-Alpha Ceti,41,2.61,2,60
-Gamma Ceti,41,3.5,2,59
-Delta Ceti,41,4,2,58
-Omicron Ceti,41,4.97,2,57
-Zeta Ceti,41,3.91,2,56
-Theta Ceti,41,3.77,3,41
-Eta Ceti,41,3.61,3,42
-Iota Ceti,41,3.72,3,45
-Beta Ceti,41,2.2,3,43
-Tau Ceti,41,3.63,3,40
-Upsilon Ceti,41,4.09,2,39
-Phi1 Ceti,41,4.91,3,44
-Sigma Piscium,42,5.47,3,74
-Upsilon Piscium,42,4.75,3,73
-Phi Piscium A,42,4.81,3,75
-Eta Piscium,42,3.78,3,72
-Omicron Piscium,42,4.41,2,68
-Alpha Piscium,42,3.81,2,66
-Xi Piscium,42,4.75,2,67
-Nu Piscium,42,4.56,3,71
-Epsilon Piscium,42,4.41,3,70
-Delta Piscium,42,3.77,3,69
-Omega Piscium,42,4.03,3,67
-Iota Piscium,42,4.22,3,66
-Theta Piscium,42,4.44,3,65
-Gamma Piscium,42,3.84,3,62
-Kappa Piscium,42,4.94,3,63
-Lambda Piscium,42,4.53,3,64
-Alpha Ursa Minoris,43,2.09,2,127
-Delta Ursa Minoris,43,4.34,5,138
-Epsilon Ursa Minoris,43,4.34,5,137
-Zeta Ursa Minoris,43,4.28,5,135
-Beta Ursa Minoris,43,2.2,6,94
-Gamma Ursa Minoris,43,3.03,5,134
-Eta Ursa Minoris,43,4.95,5,136
-51 Andromedae,44,3.75,3,90
-Phi Andromedae,44,4.22,3,89
-Nu Andromedae,44,4.47,3,84
-Gamma Andromedae,44,2.23,2,76
-Upsilon Andromedae,44,4.19,3,88
-Mu Andromedae,44,3.89,3,85
-Beta Andromedae,44,2.17,3,86
-Pi Andromedae,44,4.28,3,80
-Delta Andromedae,44,3.42,3,79
-Alpha Andromedae,44,2.03,3,81
-Epsilon Andromedae,44,4.47,3,78
-Zeta Andromedae,44,4.22,3,77
-Eta Andromedae,44,4.53,3,76
-Theta Andromedae,44,4.63,3,83
-Iota Andromedae,44,4.25,3,99
-Kappa Andromedae,44,4.13,3,98
-Lambda Andromedae,44,3.97,3,97
-Omnicron Andromedae,44,3.59,3,100
-Tau Andromedae,44,4.94,3,87
-Sigma Andromedae,44,4.53,3,82
-Alpha Phoenicis,45,2.55,3,15
-Kappa Phoenicis,45,3.98,3,14
-Beta Phoenicis,45,3.45,3,11
-Zeta Phoenicis,45,3.92,3,6
-Eta Phoenicis,45,4.34,3,5
-Epsilon Phoenicis,45,4.03,3,16
-Iota Phoenicis,45,4.72,3,18
-Gamma Phoenicis,45,3.53,3,9
-Psi Phoenicis,45,4.41,2,37
-Delta Phoenicis,45,4.09,3,8
-Nu Phoenicis,45,5.06,3,10
-HD 222095 Phoenicis,45,4.75,3,17
-Mu Phoenicis,45,4.75,3,12
-Lambda1 Phoenicis,45,4.75,3,13
-Beta Tucanae,46,4.31,3,4
-Zeta Tucanae,46,4.34,3,3
-Epsilon Tucanae,46,4.47,3,2
-Gamma Tucanae,46,4.06,3,23
-Alpha Tucanae,46,3,3,26
-Delta Tucanae,46,4.47,3,25
-Nu Tucanae,46,4.91,3,24
-Alpha Sculptoris,47,4.25,3,39
-Iota Sculptoris,47,5.31,3,38
-Delta Sculptoris,47,4.56,3,37
-Gamma Sculptoris,47,4.56,3,36
-Beta Sculptoris,47,4.34,3,19
-Gamma Gruis,48,2.97,4,7
-Lambda Gruis,48,4.59,4,6
-Mu1 Gruis,48,4.94,4,5
-Delta1 Gruis,48,4.13,3,30
-Delta2 Gruis,48,4.13,3,29
-Beta Gruis,48,2.06,3,28
-Alpha Gruis,48,1.7,4,4
-Epsilon Gruis,48,3.52,3,27
-Zeta Gruis,48,4.25,3,22
-Iota Gruis,48,4.03,3,21
-Theta Gruis,48,4.38,3,20
-Epsilon Piscis Austrini,49,4.16,3,32
-Theta Piscis Austrini,49,5.03,4,9
-Beta Piscis Austrini,49,4.28,3,31
-Iota Piscis Austrini,49,4.31,4,10
-Mu Piscis Austrini,49,4.5,4,8
-Gamma Piscis Austrini,49,4.44,3,33
-Delta Piscis Austrini,49,4.34,3,34
-Alpha Piscis Austrini,49,1.18,3,35
-Pi Aquarii,50,4.72,3,57
-Alpha Aquarii,50,3.09,4,62
-Beta Aquarii,50,3.03,4,60
-Epsilon Aquarii,50,3.78,4,59
-Gamma Aquarii,50,3.83,3,55
-Theta Aquarii,50,4.31,3,54
-Iota Aquarii,50,4.25,4,54
-Eta Aquarii,50,4,3,58
-Zeta Aquarii,50,3.73,3,56
-Phi Aquarii,50,4.31,3,51
-Psi1 Aquarii,50,4.41,3,50
-98 Aquarii,50,4.09,3,46
-Lambda Aquarii,50,3.8,3,53
-Tau Aquarii,50,4.13,3,49
-Delta Aquarii,50,3.28,3,48
-88 Aquarii,50,3.84,3,47
-Omicron Aquarii,50,4.66,4,61
-Pi Pegasi,51,4.38,4,119
-Eta Pegasi,51,3.08,3,105
-Beta Pegasi,51,2.48,3,101
-Delta Pegasi,51,2.03,3,81
-Mu Pegasi,51,3.66,3,102
-Lambda Pegasi,51,4.13,3,103
-Iota Pegasi,51,3.86,4,118
-Kappa Pegasi,51,4.22,4,117
-Gamma Pegasi,51,2.75,3,68
-Alpha Pegasi,51,2.47,3,61
-Xi Pegasi,51,4.28,3,60
-Zeta Pegasi,51,3.38,3,59
-Epsilon Pegasi,51,2.53,4,64
-Theta Pegasi,51,3.55,4,63
-Omicron Pegasi,51,4.78,3,104
-Gamma Cephei,52,3.38,3,115
-Iota Cephei,52,3.66,3,114
-Delta Cephei A,52,4.25,3,113
-Epsilon Cephei,52,4.18,4,120
-Zeta Cephei,52,3.5,4,121
-Mu Cephei,52,3.91,4,122
-Alpha Cepheus,52,2.5,4,123
-Beta Cephei,52,3.14,4,124
-Beta Lacertae,53,4.56,3,112
-Alpha Lacertae,53,3.78,3,111
-4 Lacertae,53,4.59,3,110
-5 Lacertae,53,4.41,3,109
-2 Lacertae,53,4.5,3,108
-6 Lacertae,53,4.47,3,107
-1 Lacertae,53,4.28,3,106
-Nu Octantis,54,3.89,4,0
-Beta Octantis,54,4.19,3,0
-Delta Octantis,54,4.44,6,0
-Alpha Pavonis,55,1.85,4,18
-Gamma Pavonis,55,4.31,4,1
-Beta Pavonis,55,3.47,4,20
-Lambda Pavonis,55,4.16,4,24
-Delta Pavonis,55,3.69,4,21
-Epsilon Pavonis,55,3.94,4,22
-Zeta Pavonis,55,4.16,5,54
-Kappa Pavonis,55,4.47,4,23
-Xi Pavonis,55,4.47,5,55
-Pi Pavonis,55,4.38,5,53
-Eta Pavonis,55,3.77,5,52
-Alpha Indi,56,3.27,4,16
-Eta Indi,56,4.56,4,17
-Theta Indi A,56,4.44,4,2
-Beta Indi,56,3.83,4,19
-Delta Indi,56,4.47,4,3
-Gamma Microscopii,57,4.81,4,13
-Epsilon Microscopii,57,4.72,4,12
-Alpha Microscopii,57,5.03,4,14
-Theta Microscopii,57,4.81,4,11
-Iota Microscopii,57,5.19,4,15
-Nu Capricorni,58,4.72,4,47
-Alpha Capricorni,58,3.73,4,46
-Beta Capricorni,58,3.2,4,48
-Theta Capricorni,58,4.06,4,58
-Iota Capricorni,58,4.44,4,57
-Delta Capricorni,58,2.94,4,55
-Gamma Capricorni,58,3.77,4,56
-Epsilon Capricorni,58,4.44,4,53
-Zeta Capricorni,58,3.92,4,52
-24 Capricorni,58,4.59,4,51
-Psi Capricorni,58,4.22,4,49
-Omega Capricorni,58,4.22,4,50
-Omnicron2 Cygni,59,4.09,4,109
-Alpha Cygni,59,1.29,4,110
-Omnicron1 Cygni,59,3.91,4,108
-Kappa Cygni,59,3.94,4,104
-Iota Cygni,59,3.81,4,105
-Delta Cygni,59,2.86,4,106
-Gamma Cygni,59,2.34,4,107
-Nu Cygni,59,3.94,4,111
-Upsilon Cygni,59,4.34,4,112
-Epsilon Cygni,59,2.64,4,114
-Zeta Cygni,59,3.36,4,115
-Mu Cygni,59,4.59,4,116
-Eta Cygni,59,4.03,4,100
-Beta Cygni,59,3.2,4,91
-Lambda Cygni,59,4.5,4,113
-Alpha Lyrae,60,0.09,5,120
-Epsilon Lyrae,60,4.94,5,119
-Delta Lyrae,60,4.19,4,103
-Zeta Lyrae,60,4.38,5,118
-Gamma Lyrae,60,3.22,4,101
-Beta Lyrae,60,3.55,4,102
-23 Vulpeculae,61,4.63,4,99
-15 Vulpeculae,61,4.69,4,98
-12 Vulpeculae,61,4.84,4,96
-Alpha Vulpeculae,61,4.44,4,90
-1 Vulpeculae,61,4.72,4,89
-13 Vulpeculae B,61,4.56,4,97
-Gamma Sagittae,62,3.61,4,95
-Delta Sagittae,62,3.83,4,94
-Alpha Sagittae,62,4.5,4,92
-Beta Sagittae,62,4.53,4,93
-Gamma Delphini,63,4.27,4,70
-Delta Delphini,63,4.5,4,69
-Alpha Delphini,63,3.75,4,71
-Zeta Delphini,63,4.69,4,72
-Beta Delphini,63,3.72,4,73
-Epsilon Delphini,63,3.98,4,74
-Delta Equulei,64,4.56,4,67
-Gamma Equulei,64,4.75,4,68
-Beta Equulei,64,5.16,4,65
-Alpha Equulei,64,4.03,4,66
-Gamma Aquilae,65,2.86,4,86
-Alpha Aquilae,65,0.82,4,85
-Beta Aquilae,65,3.86,4,84
-Epsilon Aquilae,65,4.16,4,88
-Zeta Aquilae,65,2.98,4,87
-Delta Aquilae,65,3.44,4,82
-Eta Aquilae,65,4.03,4,76
-Theta Aquilae,65,3.22,4,75
-Iota Aquilae,65,4.31,4,77
-Lambda Aquilae,65,3.39,4,79
-Mu Aquilae ,65,4.59,4,83
-Nu Aquilae,65,4.75,4,78
-12 Aquilae,65,4.16,4,80
-Gamma Coronae Australis,66,4.28,4,29
-Epsilon Coronae Australis,66,4.91,4,30
-Alpha Coronae Australis,66,4.13,4,28
-Beta Coronae Australis,66,4.25,4,27
-Delta Coronae Australis,66,4.72,4,26
-Zeta Coronae Australis,66,4.72,4,25
-Upsilon Sagittarii,67,4.56,4,45
-Rho1 Sagittarii,67,3.98,4,44
-Pi Sagittarii,67,2.95,4,42
-Omicron Sagittarii,67,3.91,4,41
-Sigma Sagittarii,67,2,4,40
-Tau Sagittarii,67,3.47,4,38
-Zeta Sagittarii,67,2.61,4,39
-Phi Sagittarii,67,3.13,5,71
-52 Sagittarii,67,4.56,4,37
-62 Sagittarii,67,4.44,4,36
-Theta1 Sagittarii,67,4.28,4,34
-Iota Sagittarii,67,4.25,4,33
-Alpha Sagittarii,67,3.92,4,31
-Beta1 Sagittarii,67,3.92,4,32
-Mu Sagittarii,67,3.86,5,74
-Lambda Sagittarii,67,2.97,5,72
-Delta Sagittarii,67,2.86,5,70
-Gamma2 Sagittarii,67,3.13,5,67
-Epsilon Sagittarii,67,1.8,5,69
-Eta Sagittarii,67,3.14,5,68
-Alpha Telescopii,68,3.42,5,58
-Epsilon Telescopii,68,4.66,5,59
-Zeta Telescopii,68,4.25,5,57
-Beta Scuti,69,4.38,5,79
-Alpha Scuti,69,4,5,77
-Zeta Scuti,69,4.81,5,76
-Gamma Scuti,69,4.69,5,75
-Delta Scuti,69,4.78,5,78
-Iota Herculis,70,3.73,5,124
-Theta Herculis,70,4,5,121
-Rho Herculis,70,4.13,5,122
-Pi Herculis,70,3.3,5,123
-Eta Herculis,70,3.64,5,109
-Sigma Herculis,70,4.19,5,108
-Tau Herculis,70,3.84,5,107
-Phi Herculis,70,4.22,5,106
-Chi Herculis,70,4.72,5,105
-Zeta Herculis,70,2.92,5,110
-Epsilon Herculis,70,3.91,5,111
-Delta Herculis,70,3.14,5,112
-Lambda Herculis,70,4.53,5,113
-Mu Herculis,70,3.55,5,114
-Xi Herculis,70,3.84,5,115
-Omicron Herculis,70,3.83,5,117
-Nu Herculis,70,4.47,5,116
-Beta Herculis,70,2.94,5,97
-Gamma Herculis,70,3.81,5,96
-Omega Herculis,70,4.56,5,92
-Alpha Herculis,70,2.91,5,90
-Iota Coronae Borealis,71,4.94,5,98
-Epsilon Coronae Borealis,71,4.28,5,99
-Delta Coronae Borealis,71,4.72,5,100
-Gamma Coronae Borealis,71,3.89,5,101
-Alpha Coronae Borealis,71,2.22,5,102
-Beta Coronae Borealis,71,3.73,5,103
-Theta Coronae Borealis,71,4.09,5,104
-Theta1 Serpentis,72,4.66,4,81
-Eta Serpentis,72,3.39,5,80
-Omicron Serpentis,72,4.25,5,82
-Xi Serpentis,72,3.59,5,83
-Nu Serpentis,72,4.38,5,85
-Kappa Serpentis,73,4.19,5,95
-Gamma Serpentis,73,3.94,5,93
-Beta Serpentis,73,3.67,5,94
-Delta Serpentis,73,3.86,5,28
-Alpha Serpentis,73,2.8,5,29
-Epsilon Serpentis,73,3.75,5,30
-Mu Serpentis,73,3.53,5,27
-Alpha Ophiuchi,74,2.13,5,89
-Kappa Ophiuchi,74,3.36,5,91
-Beta Ophiuchi,74,2.92,5,88
-Gamma Ophiuchi,74,3.75,5,87
-Lambda Ophiuchi,74,3.81,5,31
-Delta Ophiuchi,74,2.83,5,32
-Epsilon Ophiuchi,74,3.38,5,33
-Nu Ophiuchi,74,3.48,5,81
-Zeta Ophiuchi,74,2.56,5,34
-Phi Ophiuchi,74,4.44,5,35
-Eta Ophiuchi,74,2.44,5,84
-44 Ophiuchi,74,4.22,5,66
-Theta Ophiuchi,74,3.19,5,65
-45 Ophiuchi,74,4.34,5,64
-47 Ophiuchi,74,4.59,5,86
-Chi Ophiuchi,74,4.28,5,36
-Psi Ophiuchi,74,4.63,5,37
-Omega Ophiuchi,74,4.47,5,38
-Theta Bootis,75,4.13,6,85
-Lambda Bootis,75,4.19,6,84
-Beta Bootis,75,3.64,6,82
-Gamma Bootis,75,3.09,6,83
-Mu Bootis,75,4.38,6,81
-Delta Bootis,75,3.63,6,80
-Rho Bootis,75,3.72,6,78
-Epsilon Bootis,75,2.52,6,79
-Alpha Bootis,75,0.11,6,69
-Eta Bootis,75,2.78,6,70
-Upsilon Bootis,75,4.16,6,71
-Zeta Bootis,75,3.8,6,68
-31 Bootis,75,5,6,67
-Beta Canes Venaticorum,76,4.34,6,75
-Alpha Canes Venaticorum,76,2.84,6,76
-Gamma Comae Berenices,77,4.5,6,74
-Beta Comae Berenices,77,4.34,6,77
-Alpha Comae Berenices,77,4.41,6,73
-Eta Corvi,78,4.38,6,47
-Delta Corvi,78,2.94,6,46
-Gamma Corvi,78,2.55,6,45
-Epsilon Corvi,78,3.17,6,44
-Beta Corvi,78,2.8,6,42
-Alpha Corvi,78,4.09,6,43
-Gamma Crucis,79,1.63,6,31
-Delta Crucis,79,2.7,6,33
-Beta Crucis,79,1.15,6,30
-Alpha Crucis A,79,0.67,6,29
-Epsilon Crucis,79,3.72,6,32
-Lambda Muscae,80,3.67,6,28
-Beta Muscae,80,2.97,6,24
-Alpha Muscae,80,2.61,6,25
-Delta Muscae,80,3.77,6,23
-Gamma Muscae,80,3.78,6,26
-Beta Librae,81,2.56,6,64
-Gamma Librae,81,4.06,5,26
-Theta Librae,81,4.28,5,25
-48 Librae,81,4.91,5,24
-Alpha Librae,81,2.78,6,63
-Sigma Librae,81,3.3,6,61
-Upsilon Librae,81,3.73,5,18
-Tau Librae,81,3.59,5,17
-Alpha Arae,82,2.78,5,48
-Theta Arae,82,3.63,5,56
-Beta Arae,82,2.98,5,49
-Gamma Arae,82,3.27,5,50
-Delta Arae A,82,3.56,5,51
-Eta Arae,82,3.88,5,6
-Zeta Arae,82,3.23,5,7
-Epsilon Arae,82,4.19,5,8
-Lambda Arae,82,4.84,5,47
-Delta Normae,83,4.78,5,12
-Epsilon Normae,83,4.5,5,9
-Eta Normae,83,4.78,5,11
-Gamma Normae,83,4.16,5,10
-Alpha Circini,84,3.23,6,3
-Beta Circini,84,4.09,6,6
-Gamma Circini,84,4.53,6,5
-Beta Triangulum Australis,85,2.91,5,1
-Epsilon Triangulum Australis,85,4.25,5,0
-Gamma Triangulum Australis,85,2.88,6,2
-Alpha Triangulum Australis,85,2.08,5,5
-Beta Apodis,86,4.38,5,4
-Delta Apodis,86,4.66,5,2
-Gamma Apodis,86,4,5,3
-Alpha Apodis,86,3.97,6,1
-Nu Scorpii A,87,4.22,5,23
-Beta Scorpii,87,4.91,5,22
-Delta Scorpii,87,2.25,5,21
-Pi Scorpii,87,2.81,5,20
-Rho Scorpii,87,3.8,5,19
-Sigma Scorpii,87,2.92,5,39
-Alpha Scorpii,87,0.97,5,40
-Tau Scorpii,87,2.73,5,41
-Epsilon Scorpii,87,2.45,5,42
-Mu1 Scorpii,87,2.92,5,43
-Zeta2 Scorpii,87,3.75,5,44
-Eta Scorpii,87,3.41,5,45
-Theta Scorpii,87,1.92,5,46
-Iota1 Scorpii,87,3.09,5,60
-Kappa Scorpii,87,2.31,5,61
-Lambda Scorpii,87,1.52,5,62
-G Scorpii,87,3.34,5,63
-Chi Lupi,88,3.95,5,16
-Theta Lupi,88,4.16,5,13
-Eta Lupi,88,3.33,5,14
-Gamma Lupi,88,2.69,5,15
-Epsilon Lupi,88,3.31,6,9
-Mu Lupi,88,4.22,6,8
-Zeta Lupi,88,3.56,6,7
-Alpha Lupi,88,2.22,6,14
-Beta Lupi,88,2.59,6,13
-Delta Lupi,88,3.14,6,10
-Phi Lupi,88,3.69,6,11
-Sun,89,-10.0,0,86
-Mercury,89,-5.0,0,81
-Uranus,89,-5.0,2,69
-Moon,89,-5.0,2,65
-Neptune,89,-5.0,3,52
-Mars,89,-5.0,4,35
-Pluto,89,-5.0,4,43
-Saturn,89,-5.0,5,73
-Jupiter,89,-5.0,6,62
-Venus,89,-5.0,6,52
-
+Alpha Chamaeleontis,93,4.05,1,7
+Theta Chamaeleontis,93,4.34,1,6
+Gamma Chamaeleontis,93,4.11,0,1
+Delta Chamaeleontis,93,4.45,0,0
+Beta Chamaeleontis,93,4.24,6,27
+Alpha Volantis,95,4.00,0,15
+Beta Volantis,95,3.77,1,9
+Epsilon Volantis,95,4.35,1,8
+Delta Volantis,95,3.97,1,3
+Gamma Volantis,95,3.62,1,4
+Zeta Volantis,95,3.93,1,5
+Alpha Carinae,94,-0.72,1,20
+Chi Carinae,94,3.46,1,11
+Epsilon Carinae,94,1.86,1,10
+Iota Carinae,94,2.23,0,16
+q Carinae,94,3.52,0,11
+Rho Carinae,94,3.31,0,3
+Theta Carinae,94,2.74,0,4
+Omega Carinae,94,3.29,0,2
+l Carinae,94,3.94,0,13
+Upsilon Carinae,94,2.92,0,12
+Beta Carinae,94,1.67,0,14
+a Carinae,94,3.36,0,18
+d Carinae,94,4.25,0,19
+Gamma Velorum,91,1.83,1,12
+Delta Velorum,91,1.96,0,20
+Kappa Velorum,91,2.47,0,17
+Phi Velorum,91,3.52,0,10
+Mu Velorum,91,2.69,0,7
+p Velorum,91,3.91,0,8
+q Velorum,91,3.86,0,9
+Psi Velorum,91,3.66,0,23
+Lambda Velorum,91,2.21,0,22
+c Velorum,91,3.91,0,21
+Alpha Antliae,89,4.41,0,33
+Epsilon Antliae,89,4.66,0,24
+Iota Antliae,89,4.75,0,34
+Theta Antliae,89,4.88,0,32
+Beta Pyxidis,90,4.13,0,25
+Alpha Pyxidis,90,3.61,0,26
+Gamma Pyxidis,90,4.02,0,27
+Delta Pyxidis,90,4.91,0,28
+Kappa Pyxidis,90,4.72,0,29
+Theta Pyxidis,90,4.78,0,30
+Lambda Pyxidis,90,4.84,0,31
+Alpha Crateris,82,4.22,0,42
+Beta Crateris,82,4.47,0,41
+Gamma Crateris,82,4.13,0,39
+Delta Crateris,82,3.70,0,40
+Zeta Crateris,82,4.88,0,38
+Epsilon Crateris,82,4.91,0,90
+Theta Crateris,82,4.66,0,91
+Eta Crateris,82,5.16,0,37
+Alpha Sextantis,87,4.47,0,87
+Beta Sextantis,87,5.03,0,88
+Delta Sextantis,87,5.19,0,89
+Gamma Sextantis,87,5.06,0,48
+Epsilon Hydrae,34,3.50,0,57
+Delta Hydrae,34,4.13,0,56
+Sigma Hydrae,34,4.59,0,55
+Eta Hydrae,34,4.22,0,54
+Zeta Hydrae,34,3.27,0,52
+Rho Hydrae,34,4.34,0,53
+Theta Hydrae,34,3.78,0,51
+Iota Hydrae,34,4.03,0,50
+Alpha Hydrae,34,2.13,0,49
+Lambda Hydrae,34,3.77,0,45
+Upsilon2 Hydrae,34,4.56,0,46
+Upsilon1 Hydrae,34,4.25,0,47
+Mu Hydrae,34,3.95,0,44
+Nu Hydrae,34,3.27,0,43
+Xi Hydrae,34,3.69,0,35
+Beta Hydrae,34,4.25,0,36
+Gamma Hydrae,34,3.14,6,41
+Pi Hydrae,34,3.41,6,59
+E Hydrae ,undefined,4.53,6,60
+Iota Cancri,85,4.19,0,61
+Gamma Cancri,85,4.66,0,60
+Delta Cancri,85,4.09,0,59
+Alpha Cancri,85,4.28,0,58
+Beta Cancri,85,3.66,1,92
+Mu Leonis,88,4.03,0,79
+Epsilon Leonis,88,3.11,0,80
+Zeta Leonis,88,3.50,0,84
+Gamma Leonis,88,2.16,0,85
+Eta Leonis,88,3.50,0,83
+Alpha Leonis,88,1.32,0,82
+Delta Leonis,88,2.58,0,97
+b Leonis,88,4.41,0,96
+Beta Leonis,88,2.16,0,94
+Theta Leonis,88,3.33,0,95
+Beta Leo Minoris,73,4.34,0,76
+21 Leo Minoris,73,4.53,0,78
+10 Leo Minoris,73,4.69,0,63
+46 Leo Minoris,73,3.94,0,100
+30 Leo Minoris,73,4.78,0,77
+Omicron Ursae Majoris,10,3.50,0,69
+h Ursae Majoris,10,3.72,0,70
+Upsilon Ursae Majoris,10,3.84,0,71
+Phi Ursae Majoris,10,4.56,0,72
+Theta Ursa Majoris,10,3.27,0,73
+Iota Ursa Majoris,10,3.19,0,68
+Kappa Ursae Majoris,10,3.56,0,67
+Alpha Ursa Majoris,10,1.95,0,105
+Beta Ursa Majoris,10,2.34,0,104
+Gamma Ursa Majoris,10,2.42,0,103
+Chi Ursae Majoris,10,3.84,0,102
+Psi Ursa Majoris,10,3.16,0,101
+Lambda Ursae Majoris,10,3.45,0,74
+Mu Ursa Majoris,10,3.14,0,75
+Nu Ursae Majoris,10,3.63,0,99
+Xi Ursae Majoris A,10,4.00,0,98
+Delta Ursae Majoris,10,3.33,6,89
+Epsilon Ursa Majoris,10,1.75,6,88
+Zeta Ursa Majoris,10,2.25,6,87
+Eta Ursa Majoris,10,1.80,6,86
+2 Lyncis,72,4.44,1,125
+15 Lyncis,72,4.50,1,122
+21 Lyncis,72,4.59,1,120
+31 Lyncis,72,4.34,1,119
+10 Lyncis,72,3.96,0,66
+HD 77912,72,4.72,0,65
+38 Lyncis,72,3.81,0,64
+Alpha Lyncis,72,3.25,0,62
+12 Lyncis,72,4.88,1,123
+HD56169,72,5.03,1,121
+Theta Centauri,29,2.22,6,16
+Kappa Centauri,29,3.06,6,12
+Eta Centauri,29,2.27,6,15
+Iota Centauri,29,2.77,6,40
+d Centauri,29,4.06,6,39
+Nu Centauri,29,3.31,6,18
+Zeta Centauri,29,2.44,6,20
+Gamma Centauri,29,2.14,6,38
+Sigma Centauri,29,3.83,6,36
+Delta Centauri,29,2.52,6,35
+Epsilon Centauri,29,2.20,6,21
+Alpha Centauri A,29,1.24,6,4
+Beta Centauri,29,0.54,6,22
+a Centauri,29,4.59,0,6
+Lambda Centauri,29,3.09,0,5
+Phi Centauri,29,3.73,6,17
+Mu Centauri,29,3.39,6,19
+Tau Centauri,29,3.88,6,37
+Rho Centauri,29,3.91,6,34
+Epsilon Virginis,36,2.98,6,72
+Delta Virginis,36,3.44,6,50
+Eta Virginis,36,3.89,6,48
+Gamma Virginis,36,2.81,6,49
+Theta Virginis,36,4.34,6,51
+Alpha Virginis,36,0.89,6,53
+Zeta Virginis,36,3.41,6,54
+Kappa Virginis,36,4.31,6,58
+Iota Virginis,36,4.16,6,57
+Mu Virginis,36,3.95,6,65
+Tau Virginis,36,4.25,6,55
+CU Virginis,36,4.94,6,56
+109 Virginis,36,3.73,6,66
+Xi Virginis,36,4.88,0,93
+Nu Virginis,36,4.13,0,92
+Gaia DR2 553480551264062848 Camelopardalis,53,4.98,1,126
+Gamma Camelopardalis,53,4.63,2,126
+Alpha Camelopardalis,53,4.28,2,123
+BE Camelopardalis,53,4.38,2,124
+Beta Camelopardalis,53,4.16,2,122
+CS Camelopardalis,53,4.28,2,125
+7 Camelopardalis,53,4.44,2,121
+HD 117566 Camelopardalis,53,5.88,6,92
+CO Camelopardalis,53,5.22,6,91
+Gamma Draconis,42,2.36,5,125
+Beta Draconis,42,2.94,5,128
+Mu Draconis B,42,4.92,5,129
+Gaia DR2 1420972548150735744 Draconis,42,4.75,5,127
+Xi Draconis,42,3.89,5,126
+Delta Draconis,42,3.22,4,126
+Epsilon Draconis A,42,3.98,4,125
+Tau Draconis,42,4.59,4,127
+Chi Draconis,42,3.66,5,139
+Zeta Draconis,42,3.13,5,130
+Eta Draconis,42,2.86,5,131
+Theta Draconis,42,4.09,5,132
+Iota Draconis,42,3.45,5,133
+Alpha Draconis,42,3.64,6,93
+Kappa Draconis,42,3.83,6,90
+Lambda Draconis,42,3.91,0,106
+Delta Aurigae,undefined,3.88,1,124
+Beta Aurigae,undefined,1.90,1,110
+Alpha Aurigae,undefined,0.24,1,109
+Epsilon Aurigae,undefined,3.14,2,120
+Eta Aurigae,undefined,3.11,1,108
+Zeta Aurigae,undefined,3.84,2,119
+Theta Aurigae,undefined,2.61,1,111
+Iota Aurigae,undefined,2.83,2,118
+Gamma Aurigae,undefined,1.61,1,107
+Alpha Geminorum,75,1.58,1,118
+Beta Geminorum,75,1.29,1,117
+Kappa Geminorum,75,3.72,1,116
+Upsilon Geminorum,75,4.16,1,115
+Iota Geminorum,75,3.94,1,114
+Tau Geminorum,75,4.53,1,113
+Theta Geminorum,75,3.63,1,112
+Delta Geminorum,75,3.59,1,96
+Zeta Geminorum,75,4.16,1,97
+Lambda Geminorum,75,3.61,1,95
+Xi Geminorum,75,3.44,1,85
+Gamma Geminorum,75,1.92,1,84
+Epsilon Geminorum,75,3.19,1,98
+Nu Geminorum,75,4.09,1,99
+Mu Geminorum,75,2.91,1,100
+Eta Geminorum,75,3.28,1,101
+1 Geminorum,75,4.31,1,102
+Alpha Canis Minoris,78,0.46,1,93
+Beta Canis Minoris,78,2.84,1,94
+S Monocerotis,80,4.53,1,86
+13 Monocerotis,80,4.50,1,87
+Epsilon Monocerotis,80,4.44,1,88
+18 Monocerotis,80,4.63,1,89
+Delta Monocerotis,80,4.13,1,90
+Gamma Monocerotis,80,4.13,1,58
+Beta Monocerotis,80,3.78,1,57
+Alpha Monocerotis,80,4.09,1,55
+Zeta Monocerotis,80,4.50,1,91
+Chi2 Orionis,77,4.69,1,103
+Chi1 Orionis,77,4.50,1,104
+Xi Orionis,77,4.38,1,83
+Nu Orionis,77,4.34,1,82
+Lambda Orionis,77,3.33,1,79
+Mu Orionis,77,4.16,1,81
+Alpha Orionis,77,0.50,1,80
+Gamma Orionis,77,1.55,1,78
+Delta Orionis,77,2.13,1,77
+Epsilon Orionis,77,1.62,1,76
+Zeta Orionis,77,1.68,1,75
+Kappa Orionis,77,2.00,1,59
+Beta Orionis,77,0.19,1,72
+Pi1 Orionis,77,4.66,2,111
+Pi2 Orionis,77,4.34,2,110
+Pi3 Orionis,77,3.28,2,109
+Pi4 Orionis,77,3.61,2,108
+Pi5 Orionis,77,3.64,2,107
+Pi6 Orionis,77,4.63,2,106
+John Spencer,104,13.00,1,105
+Eta Orionis,77,3.28,1,74
+Tau Orionis,77,3.55,1,71
+Theta Canis Majoris,96,4.19,1,56
+Alpha Canis Majoris,96,-1.09,1,52
+Gamma Canis Majoris,96,4.06,1,54
+Iota Canis Majoris,96,4.34,1,53
+Beta Canis Majoris,96,1.89,1,50
+Nu2 Canis Majoris,96,4.09,1,51
+Omicron2 Canis Majoris,96,3.00,1,46
+Xi2 Canis Majoris,96,4.53,1,49
+Omicron1 Canis Majoris,96,4.00,1,47
+Delta Canis Majoris,96,1.96,1,39
+Omega Canis Majoris,96,3.98,1,40
+Eta Canis Majoris,96,2.41,1,41
+Sigma Canis Majoris,96,3.58,1,38
+Epsilon Canis Majoris,96,1.41,1,37
+Zeta Canis Majoris,96,2.94,1,35
+Kappa Canis Majoris,96,3.45,1,36
+Pi Canis Majoris,96,4.72,1,48
+Lambda Leporis,79,4.19,1,70
+Kappa Leporis,79,4.31,1,69
+Mu Leporis,79,3.25,1,68
+Alpha Leporis,79,2.64,1,65
+Beta Leporis,79,2.95,1,66
+Epsilon Leporis,79,3.31,1,67
+Eta Leporis,79,3.78,1,61
+Theta Leporis,79,4.69,1,60
+Zeta Leporis,79,3.56,1,62
+Delta Leporis,79,3.92,1,63
+Gamma Leporis,79,3.69,1,64
+Alpha Columbae,98,2.61,1,31
+Epsilon Columbae,98,4.03,1,30
+Beta Columbae,98,3.28,1,29
+Eta Columbae,98,4.09,1,27
+Gamma Columbae,98,4.28,1,28
+Kappa Columbae,98,4.53,1,33
+Lambda Columbae,98,4.81,1,32
+Delta Columbae,98,3.98,1,34
+Rho Puppis,97,2.91,1,43
+Xi Puppis,97,3.50,1,44
+Zeta Puppis,97,2.13,1,13
+Pi Puppis,97,2.83,1,15
+Sigma Puppis,97,3.38,1,16
+Nu Puppis,97,3.13,1,18
+L2 Puppis,97,4.13,1,17
+Tau Puppis,97,3.09,1,19
+Omicron Puppis,97,4.44,1,45
+3 Puppis,97,4.00,1,42
+a Puppis,97,3.86,1,14
+Beta Pictoris,100,3.91,1,26
+Gamma Pictoris,100,4.66,1,21
+Alpha Pictoris,100,3.30,1,2
+Gamma Doradus,101,4.31,2,13
+Alpha Doradus,101,3.23,2,12
+Zeta Doradus,101,4.81,1,25
+HD 40409,101,4.78,1,22
+Beta Doradus,101,3.89,1,24
+Delta Doradus,101,4.38,1,23
+Alpha Mensae,102,5.19,1,1
+Gamma Mensae,102,5.31,1,0
+Eta Mensae,102,5.56,2,0
+Beta Mensae,102,5.47,2,1
+Beta Tauri,76,1.61,1,107
+Zeta Tauri,76,2.91,1,106
+Tau Tauri,76,4.22,2,117
+Eta Tauri,76,2.84,2,100
+Epsilon Tauri,76,3.69,2,116
+Delta Tauri,76,3.92,2,115
+Gamma Tauri,76,3.80,2,114
+Lambda Tauri,76,3.38,2,101
+Xi Tauri,76,3.70,2,61
+Alpha Tauri,76,1.00,2,112
+Theta Tauri,76,3.45,2,113
+Eta Persei,60,3.89,2,78
+Gamma Persei A,60,3.05,2,80
+Tau Persei,60,4.06,2,79
+Alpha Persei,60,1.89,2,87
+Gaia DR2,60,4.16,2,81
+Delta Persei,60,2.97,2,88
+Kappa Persei,60,3.95,2,82
+Beta Persei,60,2.09,2,83
+Pi Persei,60,4.69,2,84
+Rho Persei,60,3.28,2,85
+Omega Persei,60,4.78,2,86
+Nu Persei,60,3.86,2,92
+Epsilon Persei,60,2.83,2,93
+Xi Persei,60,4.00,2,94
+Zeta Persei,60,2.89,2,95
+Omicron Persei A,60,3.84,2,96
+Mu Persei,60,4.28,2,90
+Lambda Persei,60,4.25,2,89
+48 Persei,60,3.98,2,91
+Beta Trianguli,59,3.06,2,75
+Gamma Trianguli,59,4.00,2,74
+Alpha Trianguli,59,3.52,2,73
+41 Arietis,64,3.58,2,97
+Alpha Arietis,64,2.17,2,72
+Beta Arietis,64,2.70,2,71
+Gamma Arietis,64,3.84,2,70
+Epsilon Arietis,64,4.63,2,98
+Delta Arietis,64,4.50,2,99
+Alpha Fornacis,66,3.97,2,44
+Beta Fornacis,66,4.59,2,43
+Nu Fornacis,66,4.63,2,38
+Gamma Caeli,99,4.69,2,19
+Beta Caeli,99,5.13,2,18
+Alpha Caeli,99,4.50,2,17
+Delta Caeli,99,5.00,2,14
+Alpha Horologii,67,4.00,2,15
+Iota Horologii,67,5.50,2,31
+Eta Horologii,67,5.34,2,32
+Zeta Horologii,67,5.28,2,33
+Mu Horologii,67,5.19,2,7
+Beta Horologii,67,5.00,2,6
+Delta Horologii,67,5.00,2,16
+Epsilon Reticuli,68,4.59,2,11
+Alpha Reticuli,68,3.33,2,10
+Delta Reticuli,68,4.56,2,9
+Beta Reticuli,68,4.00,2,8
+Epsilon Cassiopeiae,54,3.30,2,77
+Delta Cassiopeiae,54,2.70,3,91
+Gamma Cassiopeiae,54,2.13,3,92
+Beta Cassiopeiae,54,2.34,3,96
+Alpha Cassiopeiae,54,2.41,3,93
+Zeta Cassiopeiae,54,3.61,3,94
+Lambda Cassiopeiae A,54,4.69,3,95
+Beta Eridani,69,2.81,1,73
+Mu Eridani,69,3.97,2,105
+Nu Eridani,69,3.86,2,104
+Omicron1 Eridani,69,4.13,2,102
+Omicron² Eridani,69,4.53,2,103
+Gamma Eridani,69,3.06,2,50
+Pi Eridani,69,4.50,2,51
+Delta Eridani,69,3.67,2,52
+Epsilon Eridani,69,3.86,2,53
+Zeta Eridani,69,4.84,2,54
+Eta Eridani,69,4.03,2,55
+Tau1 Eridani,69,4.56,2,40
+Tau2 Eridani,69,4.91,2,41
+Tau3 Eridani,69,4.13,2,42
+Tau4 Eridani,69,3.72,2,45
+Tau5 Eridani,69,4.22,2,46
+Tau6 Eridani,69,4.31,2,47
+Tau8 Eridani,69,4.59,2,48
+Tau9 Eridani,69,4.56,2,49
+Upsilon1 Eridani,69,4.66,2,21
+Upsilon2 Eridani,69,3.97,2,20
+Upsilon3 Eridani,69,4.09,2,22
+Upsilon4 Eridani,69,3.52,2,23
+HD 24072,69,4.25,2,24
+y Eridani,69,4.72,2,25
+e Eridani,69,4.38,2,26
+Theta Eridani,69,2.94,2,27
+Iota Eridani,69,4.25,2,28
+s Eridani,69,4.75,2,29
+Kappa Eridani,69,4.19,2,30
+Phi Eridani,69,3.52,2,35
+Chi Eridani,69,3.84,2,36
+Alpha Eridani,69,0.42,3,7
+Alpha Hydri,19,2.92,2,34
+Epsilon Hydri,19,4.06,2,5
+Delta Hydri,19,4.09,2,4
+Beta Hydri,19,2.92,3,1
+Gamma Hydri,19,3.33,2,2
+Nu Hydri,19,4.91,2,3
+Mu Ceti,63,4.09,2,63
+Lambda Ceti,63,4.66,2,62
+Xi2 Ceti,63,4.25,2,64
+Alpha Ceti,63,2.61,2,60
+Gamma Ceti,63,3.50,2,59
+Delta Ceti,63,4.00,2,58
+Omicron Ceti,63,4.97,2,57
+Zeta Ceti,63,3.91,2,56
+Theta Ceti,63,3.77,3,41
+Eta Ceti,63,3.61,3,42
+Iota Ceti,63,3.72,3,45
+Beta Ceti,63,2.20,3,43
+Tau Ceti,63,3.63,3,40
+Upsilon Ceti,63,4.09,2,39
+Phi1 Ceti,63,4.91,3,44
+Sigma Piscium,65,5.47,3,74
+Upsilon Piscium,65,4.75,3,73
+Phi Piscium A,65,4.81,3,75
+Eta Piscium,65,3.78,3,72
+Omicron Piscium,65,4.41,2,68
+Alpha Piscium,65,3.81,2,66
+Xi Piscium,65,4.75,2,67
+Nu Piscium,65,4.56,3,71
+Epsilon Piscium,65,4.41,3,70
+Delta Piscium,65,3.77,3,69
+Omega Piscium,65,4.03,3,67
+Iota Piscium,65,4.22,3,66
+Theta Piscium,65,4.44,3,65
+Gamma Piscium,65,3.84,3,62
+Kappa Piscium,65,4.94,3,63
+Lambda Piscium,65,4.53,3,64
+Alpha Ursa Minoris,52,2.09,2,127
+Delta Ursa Minoris,52,4.34,5,138
+Epsilon Ursa Minoris,52,4.34,5,137
+Zeta Ursa Minoris,52,4.28,5,135
+Beta Ursa Minoris,52,2.20,6,94
+Gamma Ursa Minoris,52,3.03,5,134
+Eta Ursa Minoris,52,4.95,5,136
+51 Andromedae,55,3.75,3,90
+Phi Andromedae,55,4.22,3,89
+Nu Andromedae,55,4.47,3,84
+Gamma Andromedae,55,2.23,2,76
+Upsilon Andromedae,55,4.19,3,88
+Mu Andromedae,55,3.89,3,85
+Beta Andromedae,55,2.17,3,86
+Pi Andromedae,55,4.28,3,80
+Delta Andromedae,55,3.42,3,79
+Alpha Andromedae,55,2.03,3,81
+Epsilon Andromedae,55,4.47,3,78
+Zeta Andromedae,55,4.22,3,77
+Eta Andromedae,55,4.53,3,76
+Theta Andromedae,55,4.63,3,83
+Iota Andromedae,55,4.25,3,99
+Kappa Andromedae,55,4.13,3,98
+Lambda Andromedae,55,3.97,3,97
+Omnicron Andromedae,55,3.59,3,100
+Tau Andromedae,55,4.94,3,87
+Sigma Andromedae,55,4.53,3,82
+Alpha Phoenicis,17,2.55,3,15
+Kappa Phoenicis,17,3.98,3,14
+Beta Phoenicis,17,3.45,3,11
+Zeta Phoenicis,17,3.92,3,6
+Eta Phoenicis,17,4.34,3,5
+Epsilon Phoenicis,17,4.03,3,16
+Iota Phoenicis,17,4.72,3,18
+Gamma Phoenicis,17,3.53,3,9
+Psi Phoenicis,17,4.41,2,37
+Delta Phoenicis,17,4.09,3,8
+Nu Phoenicis,17,5.06,3,10
+HD 222095 Phoenicis,17,4.75,3,17
+Mu Phoenicis,17,4.75,3,12
+Lambda1 Phoenicis,17,4.75,3,13
+Beta Tucanae,18,4.31,3,4
+Zeta Tucanae,18,4.34,3,3
+Epsilon Tucanae,18,4.47,3,2
+Gamma Tucanae,18,4.06,3,23
+Alpha Tucanae,18,3.00,3,26
+Delta Tucanae,18,4.47,3,25
+Nu Tucanae,18,4.91,3,24
+Alpha Sculptoris,13,4.25,3,39
+Iota Sculptoris,13,5.31,3,38
+Delta Sculptoris,13,4.56,3,37
+Gamma Sculptoris,13,4.56,3,36
+Beta Sculptoris,13,4.34,3,19
+Gamma Gruis,14,2.97,4,7
+Lambda Gruis,14,4.59,4,6
+Mu1 Gruis,14,4.94,4,5
+Delta1 Gruis,14,4.13,3,30
+Delta2 Gruis,14,4.13,3,29
+Beta Gruis,14,2.06,3,28
+Alpha Gruis,14,1.70,4,4
+Epsilon Gruis,14,3.52,3,27
+Zeta Gruis,14,4.25,3,22
+Iota Gruis,14,4.03,3,21
+Theta Gruis,14,4.38,3,20
+Epsilon Piscis Austrini,12,4.16,3,32
+Theta Piscis Austrini,12,5.03,4,9
+Beta Piscis Austrini,12,4.28,3,31
+Iota Piscis Austrini,12,4.31,4,10
+Mu Piscis Austrini,12,4.50,4,8
+Gamma Piscis Austrini,12,4.44,3,33
+Delta Piscis Austrini,12,4.34,3,34
+Alpha Piscis Austrini,12,1.18,3,35
+Pi Aquarii,58,4.72,3,57
+Alpha Aquarii,58,3.09,4,62
+Beta Aquarii,58,3.03,4,60
+Epsilon Aquarii,58,3.78,4,59
+Gamma Aquarii,58,3.83,3,55
+Theta Aquarii,58,4.31,3,54
+Iota Aquarii,58,4.25,4,54
+Eta Aquarii,58,4.00,3,58
+Zeta Aquarii,58,3.73,3,56
+Phi Aquarii,58,4.31,3,51
+Psi1 Aquarii,58,4.41,3,50
+98 Aquarii,58,4.09,3,46
+Lambda Aquarii,58,3.80,3,53
+Tau Aquarii,58,4.13,3,49
+Delta Aquarii,58,3.28,3,48
+88 Aquarii,58,3.84,3,47
+Omicron Aquarii,58,4.66,4,61
+Pi Pegasi,56,4.38,4,119
+Eta Pegasi,56,3.08,3,105
+Beta Pegasi,56,2.48,3,101
+Delta Pegasi,56,2.03,3,81
+Mu Pegasi,56,3.66,3,102
+Lambda Pegasi,56,4.13,3,103
+Iota Pegasi,56,3.86,4,118
+Kappa Pegasi,56,4.22,4,117
+Gamma Pegasi,56,2.75,3,68
+Alpha Pegasi,56,2.47,3,61
+Xi Pegasi,56,4.28,3,60
+Zeta Pegasi,56,3.38,3,59
+Epsilon Pegasi,56,2.53,4,64
+Theta Pegasi,56,3.55,4,63
+Omicron Pegasi,56,4.78,3,104
+Gamma Cephei,50,3.38,3,115
+Iota Cephei,50,3.66,3,114
+Delta Cephei A,50,4.25,3,113
+Epsilon Cephei,50,4.18,4,120
+Zeta Cephei,50,3.50,4,121
+Mu Cephei,50,3.91,4,122
+Alpha Cepheus,50,2.50,4,123
+Beta Cephei,50,3.14,4,124
+Beta Lacertae,51,4.56,3,112
+Alpha Lacertae,51,3.78,3,111
+4 Lacertae,51,4.59,3,110
+5 Lacertae,51,4.41,3,109
+2 Lacertae,51,4.50,3,108
+6 Lacertae,51,4.47,3,107
+1 Lacertae,51,4.28,3,106
+Nu Octantis,20,3.89,4,0
+Beta Octantis,20,4.19,3,0
+Delta Octantis,20,4.44,6,0
+Alpha Pavonis,16,1.85,4,18
+Gamma Pavonis,16,4.31,4,1
+Beta Pavonis,16,3.47,4,20
+Lambda Pavonis,16,4.16,4,24
+Delta Pavonis,16,3.69,4,21
+Epsilon Pavonis,16,3.94,4,22
+Zeta Pavonis,16,4.16,5,54
+Kappa Pavonis,16,4.47,4,23
+Xi Pavonis,16,4.47,5,55
+Pi Pavonis,16,4.38,5,53
+Eta Pavonis,16,3.77,5,52
+Alpha Indi,15,3.27,4,16
+Eta Indi,15,4.56,4,17
+Theta Indi A,15,4.44,4,2
+Beta Indi,15,3.83,4,19
+Delta Indi,15,4.47,4,3
+Gamma Microscopii,8,4.81,4,13
+Epsilon Microscopii,8,4.72,4,12
+Alpha Microscopii,8,5.03,4,14
+Theta Microscopii,8,4.81,4,11
+Iota Microscopii,8,5.19,4,15
+Nu Capricorni,7,4.72,4,47
+Alpha Capricorni,7,3.73,4,46
+Beta Capricorni,7,3.20,4,48
+Theta Capricorni,7,4.06,4,58
+Iota Capricorni,7,4.44,4,57
+Delta Capricorni,7,2.94,4,55
+Gamma Capricorni,7,3.77,4,56
+Epsilon Capricorni,7,4.44,4,53
+Zeta Capricorni,7,3.92,4,52
+24 Capricorni,7,4.59,4,51
+Psi Capricorni,7,4.22,4,49
+Omega Capricorni,7,4.22,4,50
+Omnicron2 Cygni,46,4.09,4,109
+Alpha Cygni,46,1.29,4,110
+Omnicron1 Cygni,46,3.91,4,108
+Kappa Cygni,46,3.94,4,104
+Iota Cygni,46,3.81,4,105
+Delta Cygni,46,2.86,4,106
+Gamma Cygni,46,2.34,4,107
+Nu Cygni,46,3.94,4,111
+Upsilon Cygni,46,4.34,4,112
+Epsilon Cygni,46,2.64,4,114
+Zeta Cygni,46,3.36,4,115
+Mu Cygni,46,4.59,4,116
+Eta Cygni,46,4.03,4,100
+Beta Cygni,46,3.20,4,91
+Lambda Cygni,46,4.50,4,113
+Alpha Lyrae,43,0.09,5,120
+Epsilon Lyrae,43,4.94,5,119
+Delta Lyrae,43,4.19,4,103
+Zeta Lyrae,43,4.38,5,118
+Gamma Lyrae,43,3.22,4,101
+Beta Lyrae,43,3.55,4,102
+23 Vulpeculae,47,4.63,4,99
+15 Vulpeculae,47,4.69,4,98
+12 Vulpeculae,47,4.84,4,96
+Alpha Vulpeculae,47,4.44,4,90
+1 Vulpeculae,47,4.72,4,89
+13 Vulpeculae B,47,4.56,4,97
+Gamma Sagittae,44,3.61,4,95
+Delta Sagittae,44,3.83,4,94
+Alpha Sagittae,44,4.50,4,92
+Beta Sagittae,44,4.53,4,93
+Gamma Delphini,48,4.27,4,70
+Delta Delphini,48,4.50,4,69
+Alpha Delphini,48,3.75,4,71
+Zeta Delphini,48,4.69,4,72
+Beta Delphini,48,3.72,4,73
+Epsilon Delphini,48,3.98,4,74
+Delta Equulei,49,4.56,4,67
+Gamma Equulei,49,4.75,4,68
+Beta Equulei,49,5.16,4,65
+Alpha Equulei,49,4.03,4,66
+Gamma Aquilae,6,2.86,4,86
+Alpha Aquilae,6,0.82,4,85
+Beta Aquilae,6,3.86,4,84
+Epsilon Aquilae,6,4.16,4,88
+Zeta Aquilae,6,2.98,4,87
+Delta Aquilae,6,3.44,4,82
+Eta Aquilae,6,4.03,4,76
+Theta Aquilae,6,3.22,4,75
+Iota Aquilae,6,4.31,4,77
+Lambda Aquilae,6,3.39,4,79
+Mu Aquilae ,6,4.59,4,83
+Nu Aquilae,6,4.75,4,78
+12 Aquilae,6,4.16,4,80
+Gamma Coronae Australis,1,4.28,4,29
+Epsilon Coronae Australis,1,4.91,4,30
+Alpha Coronae Australis,1,4.13,4,28
+Beta Coronae Australis,1,4.25,4,27
+Delta Coronae Australis,1,4.72,4,26
+Zeta Coronae Australis,1,4.72,4,25
+Upsilon Sagittarii,0,4.56,4,45
+Rho1 Sagittarii,0,3.98,4,44
+Pi Sagittarii,0,2.95,4,42
+Omicron Sagittarii,0,3.91,4,41
+Sigma Sagittarii,0,2.00,4,40
+Tau Sagittarii,0,3.47,4,38
+Zeta Sagittarii,0,2.61,4,39
+Phi Sagittarii,0,3.13,5,71
+52 Sagittarii,0,4.56,4,37
+62 Sagittarii,0,4.44,4,36
+Theta1 Sagittarii,0,4.28,4,34
+Iota Sagittarii,0,4.25,4,33
+Alpha Sagittarii,0,3.92,4,31
+Beta1 Sagittarii,0,3.92,4,32
+Mu Sagittarii,0,3.86,5,74
+Lambda Sagittarii,0,2.97,5,72
+Delta Sagittarii,0,2.86,5,70
+Gamma2 Sagittarii,0,3.13,5,67
+Epsilon Sagittarii,0,1.80,5,69
+Eta Sagittarii,0,3.14,5,68
+Alpha Telescopii,2,3.42,5,58
+Epsilon Telescopii,2,4.66,5,59
+Zeta Telescopii,2,4.25,5,57
+Beta Scuti,5,4.38,5,79
+Alpha Scuti,5,4.00,5,77
+Zeta Scuti,5,4.81,5,76
+Gamma Scuti,5,4.69,5,75
+Delta Scuti,5,4.78,5,78
+Iota Herculis,45,3.73,5,124
+Theta Herculis,45,4.00,5,121
+Rho Herculis,45,4.13,5,122
+Pi Herculis,45,3.30,5,123
+Eta Herculis,45,3.64,5,109
+Sigma Herculis,45,4.19,5,108
+Tau Herculis,45,3.84,5,107
+Phi Herculis,45,4.22,5,106
+Chi Herculis,45,4.72,5,105
+Zeta Herculis,45,2.92,5,110
+Epsilon Herculis,45,3.91,5,111
+Delta Herculis,45,3.14,5,112
+Lambda Herculis,45,4.53,5,113
+Mu Herculis,45,3.55,5,114
+Xi Herculis,45,3.84,5,115
+Omicron Herculis,45,3.83,5,117
+Nu Herculis,45,4.47,5,116
+Beta Herculis,45,2.94,5,97
+Gamma Herculis,45,3.81,5,96
+Omega Herculis,45,4.56,5,92
+Alpha Herculis,45,2.91,5,90
+Iota Coronae Borealis,37,4.94,5,98
+Epsilon Coronae Borealis,37,4.28,5,99
+Delta Coronae Borealis,37,4.72,5,100
+Gamma Coronae Borealis,37,3.89,5,101
+Alpha Coronae Borealis,37,2.22,5,102
+Beta Coronae Borealis,37,3.73,5,103
+Theta Coronae Borealis,37,4.09,5,104
+Theta1 Serpentis,11,4.66,4,81
+Eta Serpentis,11,3.39,5,80
+Omicron Serpentis,11,4.25,5,82
+Xi Serpentis,11,3.59,5,83
+Nu Serpentis,11,4.38,5,85
+Kappa Serpentis,40,4.19,5,95
+Gamma Serpentis,40,3.94,5,93
+Beta Serpentis,40,3.67,5,94
+Delta Serpentis,40,3.86,5,28
+Alpha Serpentis,40,2.80,5,29
+Epsilon Serpentis,40,3.75,5,30
+Mu Serpentis,40,3.53,5,27
+Alpha Ophiuchi,41,2.13,5,89
+Kappa Ophiuchi,41,3.36,5,91
+Beta Ophiuchi,41,2.92,5,88
+Gamma Ophiuchi,41,3.75,5,87
+Lambda Ophiuchi,41,3.81,5,31
+Delta Ophiuchi,41,2.83,5,32
+Epsilon Ophiuchi,41,3.38,5,33
+Nu Ophiuchi,41,3.48,5,81
+Zeta Ophiuchi,41,2.56,5,34
+Phi Ophiuchi,41,4.44,5,35
+Eta Ophiuchi,41,2.44,5,84
+44 Ophiuchi,41,4.22,5,66
+Theta Ophiuchi,41,3.19,5,65
+45 Ophiuchi,41,4.34,5,64
+47 Ophiuchi,41,4.59,5,86
+Chi Ophiuchi,41,4.28,5,36
+Psi Ophiuchi,41,4.63,5,37
+Omega Ophiuchi,41,4.47,5,38
+Theta Bootis,undefined,4.13,6,85
+Lambda Bootis,undefined,4.19,6,84
+Beta Bootis,undefined,3.64,6,82
+Gamma Bootis,undefined,3.09,6,83
+Mu Bootis,undefined,4.38,6,81
+Delta Bootis,undefined,3.63,6,80
+Rho Bootis,undefined,3.72,6,78
+Epsilon Bootis,undefined,2.52,6,79
+Alpha Bootis,undefined,0.11,6,69
+Eta Bootis,undefined,2.78,6,70
+Upsilon Bootis,undefined,4.16,6,71
+Zeta Bootis,undefined,3.80,6,68
+31 Bootis,undefined,5.00,6,67
+Beta Canes Venaticorum,39,4.34,6,75
+Alpha Canes Venaticorum,39,2.84,6,76
+Gamma Comae Berenices,38,4.50,6,74
+Beta Comae Berenices,38,4.34,6,77
+Alpha Comae Berenices,38,4.41,6,73
+Eta Corvi,33,4.38,6,47
+Delta Corvi,33,2.94,6,46
+Gamma Corvi,33,2.55,6,45
+Epsilon Corvi,33,3.17,6,44
+Beta Corvi,33,2.80,6,42
+Alpha Corvi,33,4.09,6,43
+Gamma Crucis,28,1.63,6,31
+Delta Crucis,28,2.70,6,33
+Beta Crucis,28,1.15,6,30
+Alpha Crucis A,28,0.67,6,29
+Epsilon Crucis,28,3.72,6,32
+Lambda Muscae,30,3.67,6,28
+Beta Muscae,30,2.97,6,24
+Alpha Muscae,30,2.61,6,25
+Delta Muscae,30,3.77,6,23
+Gamma Muscae,30,3.78,6,26
+Beta Librae,35,2.56,6,64
+Gamma Librae,35,4.06,5,26
+Theta Librae,35,4.28,5,25
+48 Librae,35,4.91,5,24
+Alpha Librae,35,2.78,6,63
+Sigma Librae,35,3.30,6,61
+Upsilon Librae,35,3.73,5,18
+Tau Librae,35,3.59,5,17
+Alpha Arae,23,2.78,5,48
+Theta Arae,23,3.63,5,56
+Beta Arae,23,2.98,5,49
+Gamma Arae,23,3.27,5,50
+Delta Arae A,23,3.56,5,51
+Eta Arae,23,3.88,5,6
+Zeta Arae,23,3.23,5,7
+Epsilon Arae,23,4.19,5,8
+Lambda Arae,23,4.84,5,47
+Delta Normae,24,4.78,5,12
+Epsilon Normae,24,4.50,5,9
+Eta Normae,24,4.78,5,11
+Gamma Normae,24,4.16,5,10
+Alpha Circini,27,3.23,6,3
+Beta Circini,27,4.09,6,6
+Gamma Circini,27,4.53,6,5
+Beta Triangulum Australis,22,2.91,5,1
+Epsilon Triangulum Australis,22,4.25,5,0
+Gamma Triangulum Australis,22,2.88,6,2
+Alpha Triangulum Australis,22,2.08,5,5
+Beta Apodis,21,4.38,5,4
+Delta Apodis,21,4.66,5,2
+Gamma Apodis,21,4.00,5,3
+Alpha Apodis,21,3.97,6,1
+Nu Scorpii A,25,4.22,5,23
+Beta Scorpii,25,4.91,5,22
+Delta Scorpii,25,2.25,5,21
+Pi Scorpii,25,2.81,5,20
+Rho Scorpii,25,3.80,5,19
+Sigma Scorpii,25,2.92,5,39
+Alpha Scorpii,25,0.97,5,40
+Tau Scorpii,25,2.73,5,41
+Epsilon Scorpii,25,2.45,5,42
+Mu1 Scorpii,25,2.92,5,43
+Zeta2 Scorpii,25,3.75,5,44
+Eta Scorpii,25,3.41,5,45
+Theta Scorpii,25,1.92,5,46
+Iota1 Scorpii,25,3.09,5,60
+Kappa Scorpii,25,2.31,5,61
+Lambda Scorpii,25,1.52,5,62
+G Scorpii,25,3.34,5,63
+Chi Lupi,26,3.95,5,16
+Theta Lupi,26,4.16,5,13
+Eta Lupi,26,3.33,5,14
+Gamma Lupi,26,2.69,5,15
+Epsilon Lupi,26,3.31,6,9
+Mu Lupi,26,4.22,6,8
+Zeta Lupi,26,3.56,6,7
+Alpha Lupi,26,2.22,6,14
+Beta Lupi,26,2.59,6,13
+Delta Lupi,26,3.14,6,10
+Phi Lupi,26,3.69,6,11
+Sun,86,-10.00,0,86
+Mercury,84,-5.00,0,81
+Uranus,62,-5.00,2,69
+Moon,61,-5.00,2,65
+Neptune,57,-5.00,3,52
+Mars,3,-5.00,4,35
+Pluto,103,-5.00,4,43
+Saturn,4,-5.00,5,73
+Jupiter,31,-5.00,6,62
+Venus,32,-5.00,6,52

@@ -67,12 +67,12 @@ void append_animation(int animation_position, byte colour[3], int star_number, i
 void activateAnimation(int animation_position) {
   unsigned long temp_millis = millis();
   // so, this takes a few seconds to run
-  temp_millis += 100;
+  //temp_millis += 100;
 
   //where is our animation up to
   int current = active_array[0].count;
 
-   if(DEBUG && 0) {
+   if(DEBUG && false) {
     display_println(F("Setup animation."));
     Serial.println(current);
     Serial.println(animation_position);
@@ -118,7 +118,7 @@ void activateAnimation(int animation_position) {
 void activateConstellation(byte animation_position, byte colour[3], int show) {
   unsigned long temp_millis = millis();
   // so, this takes a few seconds to run
-  temp_millis += 100;
+  //temp_millis += 100;
 
   //where is our animation up to
   int current = active_array[0].count;
@@ -152,17 +152,11 @@ void activateConstellation(byte animation_position, byte colour[3], int show) {
 
 void openAnimation() {
 
-  /*
-  if(DEBUG && active_array[0].count) {
-    display_println("Opening Annimation");
-  }
-  */
-
   // should be slightly more efficient to run this backwards.
   // by that I mean when doing a trim we won't be moving leds that 
   // would be removed later anyway.
   for(int i=active_array[0].count-1; i >= 0; i--) {
-      
+
       if(active_array[0].update[i] <= millis()) {
         // we're go to start the sequence.
         // increase/decrease the brightness depending on the rising flag.
@@ -177,7 +171,7 @@ void openAnimation() {
 
         if(active_array[0].brightness[i] >= 100) {
           active_array[0].rising[i] = -2; // we've hit the top, back down we go.
-          active_array[0].update[i] = long(millis() + active_array[0].show);// don't forget to wait a bit!
+          active_array[0].update[i] = long(active_array[0].show[i]) + millis();// don't forget to wait a bit at max brightness!
         } else if(active_array[0].brightness[i] <= 0) {
           // trigger a cleanup to remove this LED from the active array.
           // probably going to be slow.
@@ -215,7 +209,8 @@ void trim_active(int to_trim) {
 
   active_array[0].count--;
 
-  Serial.println(". Trim complete.");
+  if(DEBUG)
+    Serial.println(". Trim complete.");
 
 }
 

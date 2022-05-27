@@ -8,7 +8,7 @@ void setup_fileops() {
 
   // declaring these here let me load them in to PSRAM
   star_array = (stars *) ps_calloc(843, sizeof(stars));
-  constellation_array = (constellations *) ps_calloc(90, sizeof(constellations));
+  constellation_array = (constellations *) ps_calloc(104, sizeof(constellations));
   fortune = (fortunes *) ps_calloc(1, sizeof(fortunes));
   
 }

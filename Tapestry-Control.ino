@@ -42,7 +42,7 @@ byte BRIGHTNESS = 64; // 0-255.  This is editable on the fly
 
 // Set our version number.  Don't forget to update when featureset changes
 #define PROJECT "Tapestry-Control"
-#define VERSION "V.0.23"
+#define VERSION "V.0.24"
 #define DEBUG 1
 char NAME[10];
 
@@ -248,7 +248,7 @@ void setup() {
   button_setup();
 
   // this is a test for more than 40 characters
-  display_print("1234567890123456789012345678901234567890111");
+  //display_print("1234567890123456789012345678901234567890111");
 
 }
 
@@ -311,16 +311,23 @@ void loop() {
     if(random_screensaver == -1) {
       random_screensaver = random(0, animation_counter);
       screensaver_time = millis();
+      //if(DEBUG) {
+      //  display_println("Starting Screensaver: " + random_screensaver);
+        //display_println(random_screensaver);
+      //}
     }
 
-    if(random_screensaver == 0) {
+    if(random_screensaver == 0 || animation_array[random_screensaver-1].count == 0) {
       // Special case, display the splashing blue lights.
       static uint8_t startIndex = 0;
       startIndex = startIndex + 1; /* motion speed */
       FillLEDsFromPaletteColors( startIndex);
 
-      if(screensaver_time < millis() - 60000)
+      // runs for a minute.  a bit long?
+      if(screensaver_time < millis() - 60000) {
         random_screensaver = -1;
+        FastLED.clear ();
+      }
 
     } else if (random_screensaver > 0 && screensaver_time < millis() - 30000 && active_array[0].count < 10) {
         // every 30 seconds, add new random animation to the display.
@@ -332,7 +339,7 @@ void loop() {
     }
   }
   
-  if(random_screensaver != 0 ) {
+  if(!screensaver || random_screensaver != 0 ) {
     EVERY_N_MILLISECONDS(30) {
       openAnimation();
     }
