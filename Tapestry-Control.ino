@@ -38,7 +38,7 @@ byte BRIGHTNESS = 64; // 0-255.  This is editable on the fly
 
 // Set our version number.  Don't forget to update when featureset changes
 #define PROJECT "Tapestry-Control"
-#define VERSION "V.0.25"
+#define VERSION "V.0.26"
 #define DEBUG 1
 char NAME[10];
 

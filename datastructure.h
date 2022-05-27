@@ -62,10 +62,10 @@ active *active_array;
 // Fortune.  We store quotes to display.  Limited character count.
 // Some Fortunes are linked to a constellation, planet or annimation.
 typedef struct {
-  stars *star_list[200];
-  constellations *constellation_list[200];
-  animation *animation_list[200];
-  char text[200][100];
+  stars *star_list;
+  constellations *constellation_list;
+  animation *animation_list;
+  char text[100];
 } fortunes;
 
-fortunes *fortune;
+fortunes *fortune_array;

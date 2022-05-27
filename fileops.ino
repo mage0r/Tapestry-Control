@@ -9,7 +9,7 @@ void setup_fileops() {
   // declaring these here let me load them in to PSRAM
   star_array = (stars *) ps_calloc(843, sizeof(stars));
   constellation_array = (constellations *) ps_calloc(104, sizeof(constellations));
-  fortune = (fortunes *) ps_calloc(1, sizeof(fortunes));
+  fortune_array = (fortunes *) ps_calloc(105, sizeof(fortunes));
   
 }
 
@@ -327,23 +327,23 @@ void loadFortune(fs::FS &fs, const char * path){
 
         byte temp = file.read();
 
-        if(temp == ',') {
+        if(counter1 < 3 && temp == ',') {
           counter1++;
         } else if(temp == '\n') {
 
           if(temp_star_id > -1) {
-            fortune->star_list[fortune_counter] = &star_array[temp_star_id];
+            fortune_array[fortune_counter].star_list = &star_array[temp_star_id];
           }
 
           if(temp_constellation_id > -1) {
-            fortune->constellation_list[fortune_counter] = &constellation_array[temp_constellation_id];
+            fortune_array[fortune_counter].constellation_list = &constellation_array[temp_constellation_id];
           }
 
           if(temp_animation_id > -1) {
-            fortune->animation_list[fortune_counter] = &animation_array[temp_animation_id];
+            fortune_array[fortune_counter].animation_list = &animation_array[temp_animation_id];
           }
 
-          fortune->text[fortune_counter][char_pos] = '\0';
+          fortune_array[fortune_counter].text[char_pos] = '\0';
 
           fortune_counter++;
           char_pos = 0;
@@ -364,9 +364,11 @@ void loadFortune(fs::FS &fs, const char * path){
           // third section is animation_id
           temp_animation_id = temp_animation_id*10 + (temp-48);
         } else if (counter1 == 3) {
-          // forth section is the text.  
-          fortune->text[fortune_counter][char_pos] = temp;
-          char_pos++;
+          // forth section is the text.
+          if(char_pos < 100) {
+            fortune_array[fortune_counter].text[char_pos] = temp;
+            char_pos++;
+          }
         }
         
     }

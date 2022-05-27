@@ -134,10 +134,12 @@ class MyCallbacks: public BLECharacteristicCallbacks {
             animation_array[animation_counter].count = 0; // reset it to zero.
           }
 
-          display_print("New Session for Tablet ");
-          display_print(String(value[0]));
-          display_print(":");
-          display_println(String(last_animation_counter[value[0]-48]));
+          if(DEBUG) {
+            display_print("New Session for Tablet ");
+            display_print(String(value[0]));
+            display_print(":");
+            display_println(String(last_animation_counter[value[0]-48]));
+          }
  
           pCharacteristic->setValue(temp.c_str());
         } else if (value[1] == 'N') {
@@ -153,8 +155,6 @@ class MyCallbacks: public BLECharacteristicCallbacks {
           // start up the screensaver.
           screensaver = 1;
         }
-
-        //FastLED.show();
 
       }
     }
