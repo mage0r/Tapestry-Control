@@ -42,9 +42,9 @@ typedef struct {
   unsigned int times[500]; // how long before starting the next led.
   unsigned int show[500]; // how long to hold the led's on.
   byte colour[500][3];
-} animation;
+} animations;
 
-animation *animation_array; // = (animation *) ps_malloc(10 * sizeof(animation));
+animations *animation_array; // = (animation *) ps_malloc(10 * sizeof(animation));
 
 // ok, if we keep an array of stars we are 
 typedef struct {
@@ -62,10 +62,10 @@ active *active_array;
 // Fortune.  We store quotes to display.  Limited character count.
 // Some Fortunes are linked to a constellation, planet or annimation.
 typedef struct {
-  stars *star_list;
-  constellations *constellation_list;
-  animation *animation_list;
-  char text[100];
+  int star;
+  int constellation;
+  int animation;
+  char text[120];
 } fortunes;
 
 fortunes *fortune_array;

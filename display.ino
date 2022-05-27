@@ -83,9 +83,8 @@ void safe_append(String temp) {
     }
 
     display_strings[13][0] = '\0';
-    display_update();
 
-    temp = temp.substring(count);
+    temp = temp.substring(count-1);
     safe_append(temp);
   }  
   

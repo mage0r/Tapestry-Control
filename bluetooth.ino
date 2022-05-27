@@ -45,6 +45,7 @@ class MyCallbacks: public BLECharacteristicCallbacks {
           BRIGHTNESS = value[2];
         } else if(value[1] == 's') {
           // Individual Star, ID
+          // not really used, we could get rid of this whole subsection.
           if(screensaver) {
             FastLED.clear ();
             screensaver = 0;
@@ -55,11 +56,7 @@ class MyCallbacks: public BLECharacteristicCallbacks {
           // broken
           *star_array[temp].led = CRGB(value[2],value[3],value[4]);
 
-          // just check if this is a Planet
-          if(constellation_array[star_array[temp].constellation].name == "Planets")
-            display_print(F("Display Planet:"));
-          else
-            display_print(F("Display Star:"));
+          display_print(F("Display Star:"));
           display_println(star_array[temp].name);
           
         } else if(value[1] == 'a' && value.length() > 3) {
@@ -109,10 +106,11 @@ class MyCallbacks: public BLECharacteristicCallbacks {
           byte temp_byte[3] = {value[2],value[3],value[4]};
 
           int show = (value[6] << 8) + value[7]; // timing delay
-          activateConstellation(value[5], temp_byte, show);
 
           display_print(F("Display Constellation:"));
           display_println(constellation_array[value[5]].name);
+
+          activateConstellation(value[5], temp_byte, show);
 
         } else if(value[1] == 'n') {
           // get the next available annimation session.
@@ -163,14 +161,16 @@ class MyCallbacks: public BLECharacteristicCallbacks {
 class MyServerCallbacks: public BLEServerCallbacks {
     void onConnect(BLEServer* pServer) {
       bluetooth_connect++;
-      display_println(F("New device connected."));
+      if(DEBUG)
+        display_println(F("New device connected."));
       BLEDevice::startAdvertising(); // this advertises the characteristic
       display_header();
     };
 
     void onDisconnect(BLEServer* pServer) {
       bluetooth_connect--;
-      display_println(F("Device disconnected."));
+      if(DEBUG)
+        display_println(F("Device disconnected."));
       display_header();
     }
 

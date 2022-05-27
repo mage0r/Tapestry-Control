@@ -8,8 +8,8 @@ void setup_fileops() {
 
   // declaring these here let me load them in to PSRAM
   star_array = (stars *) ps_calloc(843, sizeof(stars));
-  constellation_array = (constellations *) ps_calloc(104, sizeof(constellations));
-  fortune_array = (fortunes *) ps_calloc(105, sizeof(fortunes));
+  constellation_array = (constellations *) ps_calloc(105, sizeof(constellations));
+  fortune_array = (fortunes *) ps_calloc(102, sizeof(fortunes));
   
 }
 
@@ -317,9 +317,6 @@ void loadFortune(fs::FS &fs, const char * path){
     int char_pos = 0;
 
     // collect variables.
-    int temp_animation_id = -1;
-    int temp_star_id = -1;
-    int temp_constellation_id = -1;
     int fortune_counter = 0;
      
     
@@ -331,41 +328,26 @@ void loadFortune(fs::FS &fs, const char * path){
           counter1++;
         } else if(temp == '\n') {
 
-          if(temp_star_id > -1) {
-            fortune_array[fortune_counter].star_list = &star_array[temp_star_id];
-          }
-
-          if(temp_constellation_id > -1) {
-            fortune_array[fortune_counter].constellation_list = &constellation_array[temp_constellation_id];
-          }
-
-          if(temp_animation_id > -1) {
-            fortune_array[fortune_counter].animation_list = &animation_array[temp_animation_id];
-          }
-
           fortune_array[fortune_counter].text[char_pos] = '\0';
 
           fortune_counter++;
           char_pos = 0;
           counter1 = 0;
-          temp_animation_id = -1;
-          temp_star_id = -1;
-          temp_constellation_id = -1;
           
         } else if (temp == '\r') {
           // skip carriage return
         } else if(counter1 == 0) {
           // first section is star_id
-          temp_star_id = temp_star_id*10 + (temp-48);
+          fortune_array[fortune_counter].star = fortune_array[fortune_counter].star*10 + (temp-48);
         } else if (counter1 == 1) {
           // second section is constellation_id
-          temp_constellation_id = temp_constellation_id*10 + (temp-48);
+          fortune_array[fortune_counter].constellation = fortune_array[fortune_counter].constellation*10 + (temp-48);
         } else if (counter1 == 2) {
           // third section is animation_id
-          temp_animation_id = temp_animation_id*10 + (temp-48);
+          fortune_array[fortune_counter].animation = fortune_array[fortune_counter].animation*10 + (temp-48);
         } else if (counter1 == 3) {
           // forth section is the text.
-          if(char_pos < 100) {
+          if(char_pos < 120) {
             fortune_array[fortune_counter].text[char_pos] = temp;
             char_pos++;
           }

@@ -1,18 +1,17 @@
 Software:
 Screensaver
-	weird race condition where it doesn't start the screensaver first up.
+	weird race condition where it doesn't always start the screensaver first up.
 Add constellation in as an animation
 Save animations
+	rotating 500.  How do we save this?
+	It's an array of linked lists.  Can we just dump out the whole datastructure?
 Load animations
 Fortune sayings
-	load in
-	execute when stars or constellations are lit
+	execute when specific stars are lit
+	execute random sayings.
+Algorithim to not split words for display.
+Brightness setting saved to config file?
 
 Hardware:
-6x cable splitters.
+4x cable splitters.
 2x extended length power cables.
-2x Power Unit
-
-Hackerspace:
-1x Primary Case.
-2x Power Unit Case.

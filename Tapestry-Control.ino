@@ -71,7 +71,7 @@ unsigned int last_animation_counter[20]; //keep a record of which device has whi
 
 // TFT screen
 TFT_eSPI myGLCD = TFT_eSPI();       // Invoke custom library
-#define DISPLAY_WIDTH 46
+#define DISPLAY_WIDTH 50
 char display_strings[14][DISPLAY_WIDTH]; // This repesents our entire display screen.
 char display_temp[DISPLAY_WIDTH];
 
