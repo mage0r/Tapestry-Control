@@ -83,20 +83,23 @@ class MyCallbacks: public BLECharacteristicCallbacks {
           // strip bytes 2 and 3 in to a high-low int.
           int sessionID = (value[2] << 8) + value[3];
 
-          fade_time = millis();
-          if(screensaver) {
-            active_array[0].count = 0;
-            FastLED.clear ();
-            screensaver = 0;
+          if(sessionID < max_animation_counter) {
+            fade_time = millis();
+            if(screensaver) {
+              active_array[0].count = 0;
+              FastLED.clear ();
+              screensaver = 0;
+            }
+            screensaver_time = millis(); // always need to reset this one.
+            activateAnimation(sessionID, false);
           }
-          screensaver_time = millis(); // always need to reset this one.
-          activateAnimation(sessionID, false);
         } else if(value[1] == 'D') {
           // clear a saved animation.
           // strip bytes 2 and 3 in to a high-low int.
           int sessionID = (value[2] << 8) + value[3];
 
-          animation_array[sessionID].count = 0;
+          if(sessionID < max_animation_counter)
+            animation_array[sessionID].count = 0;
         } else if(value[1] == 'c') {
           // Light up a constellation by constellation_id
           fade_time = millis();
@@ -163,9 +166,11 @@ class MyCallbacks: public BLECharacteristicCallbacks {
           active_array[0].count = 0;
           FastLED.clear();
           
-          if(screensaver = 2) {
+          if(screensaver == 2) {
             screensaver = 1;
-            display_println("Dreaming!");
+            random_screensaver = -1;
+            screensaver_time = millis();
+            //display_println("Dreaming!");
           } else {
             screensaver = 2;
             display_println("Twinkle Twinkle!");

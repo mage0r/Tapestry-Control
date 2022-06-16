@@ -203,12 +203,12 @@ void setup() {
 void loop() {
 
   // pulse report every 5 minutes.
-  if(DEBUG && millis() > 300000 && update_time < millis() - 300000) {
+  if( millis() > 300000 && update_time < millis() - 300000) {
     // particularly during development, RAM needs to be monitored
-    display_print(F("Free Ram: "));
-    display_print(String(ESP.getFreeHeap()));
-    display_print(F(". Free PSRam: "));
-    display_println(String(ESP.getFreePsram()));
+    Serial.print(F("Free Ram: "));
+    Serial.print(String(ESP.getFreeHeap()));
+    Serial.print(F(". Free PSRam: "));
+    Serial.println(String(ESP.getFreePsram()));
     
     update_time = millis();
   }

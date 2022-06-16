@@ -145,17 +145,8 @@ void activateConstellation(byte animation_position, byte colour[3], int show) {
 
     activateAnimation(temp_animation, true);
 
-    // just check that our animation array isn't full.
-    // doing this at the top just in case it's full from the onset.
-    if(current > MAX_ACTIVE_STARS) {
-      display_println(F("Animation buffer exhausted."));
-      break;
-    } else {
-      current++;
-    }
   }
 
-  active_array[0].count = current;
 
   display_fortune(animation_position, true);
 

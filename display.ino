@@ -65,6 +65,7 @@ void safe_append(String temp) {
 
   // if this is a long string, work out where our spaces are.
   // how many slots left on the current line?
+  /*
   int temp_backwards = (DISPLAY_WIDTH - strlen(display_strings[13]));
   int max_copy = temp_backwards;
 
@@ -76,10 +77,11 @@ void safe_append(String temp) {
     for(int i = temp_backwards; i > 0; i--) {
       if(temp.charAt(i) == ' ') {
         max_copy = i;
-        break;
+        i = 0;
       }
     }    
   }
+  */
 
   //Serial.println(max_copy);
 
@@ -89,14 +91,15 @@ void safe_append(String temp) {
     display_strings[13][i] = temp.charAt(count);
     count++;
     count2 = i;
-    if(count > temp.length() || count >= max_copy)
-      break;
+    if(count > temp.length()) // || count >= max_copy)
+      i = DISPLAY_WIDTH;
     
   }
 
   display_strings[13][count2+1] = '\0';
 
   // send the leftover string to a new line.
+  /*
   if(count < temp.length()) {
 
     // Do the shuffle.
@@ -108,7 +111,8 @@ void safe_append(String temp) {
 
     temp = temp.substring(count+1);
     safe_append(temp);
-  }  
+  } 
+  */
   
 }
 

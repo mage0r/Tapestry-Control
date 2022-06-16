@@ -3,7 +3,6 @@ Algorithim to not split words for display.
 	Random lines of a single character.
 	Buckaroo Banzi does this consistently.
 	an extra printline?
-Test with debug off.
 Brightness setting saved to config file?
 Crashed when loaded Scorpius?
 	it's the fortune.  fucking fortune.
@@ -11,11 +10,12 @@ Crashed when loaded Scorpius?
 Crash after session ID mismatch
 	lots of errors.  Eventual crash.
 Overrun of max limit?
+	fixed I think
 Random fucking resets
-New Screensaver mode.
-Screensaver not running continuously
 Return value for N.  if it's not set.
 	Need to advance the next element
+screensaver
+	dreaming doesn't work
 
 
 Hardware:
