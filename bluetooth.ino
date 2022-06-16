@@ -162,11 +162,14 @@ class MyCallbacks: public BLECharacteristicCallbacks {
 
           active_array[0].count = 0;
           FastLED.clear();
-          screensaver = 2;
-
-          //Serial.println("twinkle twinkle: ");
-
-          display_println("Twinkle Twinkle!");
+          
+          if(screensaver = 2) {
+            screensaver = 1;
+            display_println("Dreaming!");
+          } else {
+            screensaver = 2;
+            display_println("Twinkle Twinkle!");
+          }
         }
 
       }

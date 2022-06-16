@@ -54,7 +54,7 @@ typedef struct {
   byte rising[MAX_ACTIVE_STARS]; // we fading in or fading out?  Could be a bool
   byte colour[MAX_ACTIVE_STARS][3]; // What colour is our goal?
   unsigned long update[MAX_ACTIVE_STARS]; // when are we next updating this star.  Basically the trigger time.
-  unsigned int show[MAX_ANIMATIONS];
+  unsigned int show[MAX_ACTIVE_STARS];
   byte brightness[MAX_ACTIVE_STARS];
 } active;
 

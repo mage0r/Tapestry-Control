@@ -25,8 +25,6 @@
 #include <BLE2902.h>
 #include "esp32-hal-psram.h" // do not forget this.
 
-#include "datastructure.h"
-
 #define FORMAT_SPIFFS_IF_FAILED true
 
 #define NUM_STRIPS 8
@@ -36,16 +34,18 @@
 #define COLOR_ORDER GRB
 byte BRIGHTNESS = 64; // 0-255.  This is editable on the fly
 
+// Define some of our array sizes.
+#define MAX_ACTIVE_STARS 1000
+#define MAX_SESSION_STARS 500
+#define MAX_SESSIONS 500
+
 // Set our version number.  Don't forget to update when featureset changes
 #define PROJECT "Tapestry-Control"
 #define VERSION "V.0.34"
 #define DEBUG 1
 char NAME[10];
 
-// Define some of our array sizes.
-#define MAX_ACTIVE_STARS 1000
-#define MAX_SESSION_STARS 500
-#define MAX_SESSIONS 500
+
 
 // give us an update every 5 minutes.
 unsigned long update_time;
@@ -97,6 +97,9 @@ uint32_t value = 0;
 const int buttonPin = 21;
 unsigned long discovery_time = 0;
 byte beacon_on = -1; // -1 = always off, 0 = off, 1 = on.
+
+// interestingly, if this isn't defined here the datastructures don't load properly.
+#include "datastructure.h"
 
 void assign_config(String name, String value) {
   if(name == "device_name")
