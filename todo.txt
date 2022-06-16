@@ -1,17 +1,35 @@
 Software:
-Screensaver
-	weird race condition where it doesn't always start the screensaver first up.
-Add constellation in as an animation
-Save animations
-	rotating 500.  How do we save this?
-	It's an array of linked lists.  Can we just dump out the whole datastructure?
-Load animations
-Fortune sayings
-	execute when specific stars are lit
-	execute random sayings.
 Algorithim to not split words for display.
+	Random lines of a single character.
+	Buckaroo Banzi does this consistently.
+	an extra printline?
+Test with debug off.
 Brightness setting saved to config file?
+Crashed when loaded Scorpius?
+	it's the fortune.  fucking fortune.
+	disable for the minute.
+Crash after session ID mismatch
+	lots of errors.  Eventual crash.
+Overrun of max limit?
+Random fucking resets
+New Screensaver mode.
+Screensaver not running continuously
+Return value for N.  if it's not set.
+	Need to advance the next element
+
 
 Hardware:
-4x cable splitters.
-2x extended length power cables.
+power cable plug
+4x power splitters with no diode.
+
+49
+53
+49
+7
+Howe's Law: Everyone has a scheme that will not work.
+
+Lubarsky's Law of Cybernetic Entomology: There'
+s always one more bug.
+
+Angus McInnes. Seriously, what a guy. Did you know he can count up to 1023 on two hands?
+he can count up to 1023 on two hands?

@@ -29,7 +29,7 @@ void setup_animations() {
   // probably need to be shared between units.  future problem.
 
   // By loading these in to PSRAM we can create a lot of them.
-  animation_array = (animations *) ps_calloc(500, sizeof(animations)); //any more than this and we run out of ram.
+  animation_array = (animations *) ps_calloc(MAX_SESSIONS, sizeof(animations)); //any more than this and we run out of ram.
 
   // Crunch time.  This doesn't need to be an array, but it does need to be allocated to lock
   // up the RAM.  Don't have time to get this fixed
@@ -45,7 +45,7 @@ void setup_animations() {
 // add new stars to the animation arrays.
 void append_animation(int animation_position, byte colour[3], int star_number, int timer, int show) {
 
-  if(animation_array[animation_position].count > 1000) {
+  if(animation_array[animation_position].count > MAX_SESSION_STARS) {
     display_print(F("Too many stars!"));
 
   } else {
@@ -58,14 +58,12 @@ void append_animation(int animation_position, byte colour[3], int star_number, i
     animation_array[animation_position].show[animation_array[animation_position].count] = show;
     animation_array[animation_position].count++;
 
-    //appendAnimation(SPIFFS, "/ani.csv", ,animation_position);
-
   }
 
 }
 
 // This copies the requsted sequence in to the active stars array.
-void activateAnimation(int animation_position) {
+void activateAnimation(int animation_position, boolean test_display) {
   unsigned long temp_millis = millis();
   // so, this takes a few seconds to run
   //temp_millis += 100;
@@ -84,13 +82,12 @@ void activateAnimation(int animation_position) {
 
     // just check that our animation array isn't full.
     // doing this at the top just in case it's full from the onset.
-    if(current >= 500) {
-      display_print(F("Animation buffer exhausted."));
+    if(current >= MAX_ACTIVE_STARS) {
+      display_println(F("Animation Buffer Exhausted."));
       break;
     }
 
     temp_millis += animation_array[animation_position].times[i];
-    //temp_millis += 700;
 
     active_array[0].star_list[current] = animation_array[animation_position].star_list[i]; // copy the LED
     active_array[0].rising[current] = 1; // fading in.
@@ -102,20 +99,20 @@ void activateAnimation(int animation_position) {
     active_array[0].brightness[current] = 0;
 
     current++;
+
+    if(!test_display)
+      test_display = display_fortune(animation_position, false);
+    
   }
 
   active_array[0].count = current;
 
-  // do we have a custom message to display?
-  // pick one at random?  
-
-  // super, super temporary.
-  // when we play the animation, clear the record of it.
-  //animation_array[animation_position].count = 0;
+  if(!test_display)
+    display_fortune(animation_position, false);
 }
 
 // This copies the requsted constellation in to the active stars array.
-// functionally very similar to activateAnimation, but a lot simpiler.
+// functionally very similar to activateAnimation
 void activateConstellation(byte animation_position, byte colour[3], int show) {
   unsigned long temp_millis = millis();
   // so, this takes a few seconds to run
@@ -124,30 +121,33 @@ void activateConstellation(byte animation_position, byte colour[3], int show) {
   //where is our animation up to
   int current = active_array[0].count;
 
-  Serial.println(animation_position);
-  Serial.println(constellation_array[animation_position].star_count);
+  // When displaying a constellation, we also copy it in to the session information.
+  unsigned int temp_animation = animation_counter;
+  animation_counter++;
+  if(animation_counter >= MAX_SESSIONS)
+    animation_counter = 0;
+
+  if(max_animation_counter < MAX_SESSIONS)
+    max_animation_counter++;
 
   for(int i=0; i < constellation_array[animation_position].star_count; i++) {
-
-    
 
     // copy our constellation to the animation list.
     // we need to keep a record of our animation list so we can play it back. 
 
-    active_array[0].star_list[current] = constellation_array[animation_position].star_list[i];
-    active_array[0].rising[current] = 1; // fading in.
-    active_array[0].colour[current][0] = colour[0];
-    active_array[0].colour[current][1] = colour[1];
-    active_array[0].colour[current][2] = colour[2];
-    active_array[0].update[current] = temp_millis;
-    active_array[0].show[current] = show;
-    active_array[0].brightness[current] = 0;
+    animation_array[temp_animation].star_list[animation_array[temp_animation].count] = constellation_array[animation_position].star_list[i];
+    animation_array[temp_animation].colour[animation_array[temp_animation].count][0] = colour[0];
+    animation_array[temp_animation].colour[animation_array[temp_animation].count][1] = colour[1];
+    animation_array[temp_animation].colour[animation_array[temp_animation].count][2] = colour[2];
+    animation_array[temp_animation].times[animation_array[temp_animation].count] = 0;
+    animation_array[temp_animation].show[animation_array[temp_animation].count] = show;
+    animation_array[temp_animation].count++;
 
-    
+    activateAnimation(temp_animation, true);
 
     // just check that our animation array isn't full.
     // doing this at the top just in case it's full from the onset.
-    if(current > 1000) {
+    if(current > MAX_ACTIVE_STARS) {
       display_println(F("Animation buffer exhausted."));
       break;
     } else {
@@ -157,14 +157,7 @@ void activateConstellation(byte animation_position, byte colour[3], int show) {
 
   active_array[0].count = current;
 
-  // special case!  If we have a special comment related to our constellation, throw it up!.
-  // cheat a little here.  We only have 4 fortunes specific to constellations or stars, don't bother checking
-  // the whole array.
-  for(int i = 0; i < 5; i++) {
-    if(fortune_array[i].constellation == animation_position) {
-      display_println(fortune_array[i].text);
-    }
-  }
+  display_fortune(animation_position, true);
 
 }
 
@@ -207,7 +200,7 @@ void trim_active(int to_trim) {
   int temp_array_count = active_array[0].count - 1;
 
 
-  if(DEBUG) {
+  if(DEBUG && false) {
     Serial.print("Trimming: ");
     Serial.print(to_trim);
     Serial.print(". Active: ");
@@ -227,7 +220,7 @@ void trim_active(int to_trim) {
 
   active_array[0].count--;
 
-  if(DEBUG)
+  if(DEBUG && false)
     Serial.println(". Trim complete.");
 
 }

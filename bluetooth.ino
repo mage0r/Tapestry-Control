@@ -47,6 +47,7 @@ class MyCallbacks: public BLECharacteristicCallbacks {
           // Individual Star, ID
           // not really used, we could get rid of this whole subsection.
           if(screensaver) {
+            active_array[0].count = 0;
             FastLED.clear ();
             screensaver = 0;
           }
@@ -84,11 +85,12 @@ class MyCallbacks: public BLECharacteristicCallbacks {
 
           fade_time = millis();
           if(screensaver) {
+            active_array[0].count = 0;
             FastLED.clear ();
             screensaver = 0;
           }
           screensaver_time = millis(); // always need to reset this one.
-          activateAnimation(sessionID);
+          activateAnimation(sessionID, false);
         } else if(value[1] == 'D') {
           // clear a saved animation.
           // strip bytes 2 and 3 in to a high-low int.
@@ -99,7 +101,8 @@ class MyCallbacks: public BLECharacteristicCallbacks {
           // Light up a constellation by constellation_id
           fade_time = millis();
           if(screensaver) {
-            FastLED.clear ();
+            active_array[0].count = 0;
+            FastLED.clear();
             screensaver = 0;
           }
           screensaver_time = millis(); // always need to reset this one.
@@ -107,7 +110,7 @@ class MyCallbacks: public BLECharacteristicCallbacks {
 
           int show = (value[6] << 8) + value[7]; // timing delay
 
-          display_print(F("Display Constellation:"));
+          display_print(F("Display Constellation: "));
           display_println(constellation_array[value[5]].name);
 
           activateConstellation(value[5], temp_byte, show);
@@ -129,6 +132,11 @@ class MyCallbacks: public BLECharacteristicCallbacks {
             animation_counter++;
             if(animation_counter >= 500)
               animation_counter = 0;
+
+            // because we cycle around when we hit 500 entries, we need to keep an eye on that.
+            if(max_animation_counter < 500)
+              max_animation_counter++;
+
             animation_array[animation_counter].count = 0; // reset it to zero.
           }
 
@@ -146,12 +154,19 @@ class MyCallbacks: public BLECharacteristicCallbacks {
           temp += last_animation_counter[value[0]-48];
 
           pCharacteristic->setValue(temp.c_str());
+          
         } else if (value[1] == 'S') {
           // fire up the screensaver.
-          // clean up the active array.
-          active_array[0].count = 0;
           // start up the screensaver.
-          screensaver = 1;
+          // special mode.  Play the raindrops screensaver.
+
+          active_array[0].count = 0;
+          FastLED.clear();
+          screensaver = 2;
+
+          //Serial.println("twinkle twinkle: ");
+
+          display_println("Twinkle Twinkle!");
         }
 
       }

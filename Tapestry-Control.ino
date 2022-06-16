@@ -38,12 +38,18 @@ byte BRIGHTNESS = 64; // 0-255.  This is editable on the fly
 
 // Set our version number.  Don't forget to update when featureset changes
 #define PROJECT "Tapestry-Control"
-#define VERSION "V.0.26"
+#define VERSION "V.0.34"
 #define DEBUG 1
 char NAME[10];
 
+// Define some of our array sizes.
+#define MAX_ACTIVE_STARS 1000
+#define MAX_SESSION_STARS 500
+#define MAX_SESSIONS 500
+
 // give us an update every 5 minutes.
 unsigned long update_time;
+unsigned long save_animations_time;
 
 // Setup for our LEDs
 CRGB leds[NUM_STRIPS][NUM_LEDS_PER_STRIP];
@@ -55,7 +61,7 @@ extern CRGBPalette16 myRedWhiteBluePalette;
 extern const TProgmemPalette16 myRedWhiteBluePalette_p PROGMEM;
 
 unsigned long screensaver_time = 0;
-unsigned long screensaver_timeout = 90000;
+unsigned long screensaver_timeout = 60000;
 byte screensaver = 1;
 unsigned long fade_time;
 unsigned long fade_timeout = 60000; // when to begin fadeout.
@@ -67,6 +73,7 @@ unsigned int star_counter = 0;
 unsigned int constellation_counter = 0;
 unsigned int planet_counter = 0;
 unsigned int animation_counter = 0;
+unsigned int max_animation_counter = 0; // need an extra counter for when we max out the array
 unsigned int last_animation_counter[20]; //keep a record of which device has which animation. 20 is widly optimistic.
 
 // TFT screen
@@ -135,46 +142,55 @@ void setup() {
   // needs to happen before loading our stars to ensure the LED pointers are available.
   leds_setup();
 
-  display_print(F("Free Ram: "));
-  display_print(String(ESP.getFreeHeap()));
-  display_print(F(". Free PSRam: "));
-  display_println(String(ESP.getFreePsram()));
-
-  setup_animations();
-  
-  display_print(F("Free Ram: "));
-  display_print(String(ESP.getFreeHeap()));
-  display_print(F(". Free PSRam: "));
-  display_println(String(ESP.getFreePsram()));
-
-  setup_fileops();
-
-  listDir(SPIFFS, "/", 0);
-  loadConfig(SPIFFS, "/config.ini"); // load our configuration file.  If this fails, everything fails.
-  display_header();
-
-  loadConstellations(SPIFFS, "/const.csv");
-  loadStars(SPIFFS, "/stars.csv");
-  //loadAnimation(SPIFFS, "/ani.csv");
-  loadFortune(SPIFFS, "/fortune.csv");
-
-  // finished loading all our files in to memory.  do we have any space free?
-  display_print(F("Free Ram: "));
-  display_print(String(ESP.getFreeHeap()));
-  display_print(F(". Free PSRam: "));
-  display_println(String(ESP.getFreePsram()));
-
-  // setup bluetooth
-  if(bluetooth_enable) {
-    bluetooth_setup();
-
+  if(DEBUG) {
     display_print(F("Free Ram: "));
     display_print(String(ESP.getFreeHeap()));
     display_print(F(". Free PSRam: "));
     display_println(String(ESP.getFreePsram()));
   }
 
-  button_setup();
+  setup_animations();
+  
+  if(DEBUG) {
+    display_print(F("Free Ram: "));
+    display_print(String(ESP.getFreeHeap()));
+    display_print(F(". Free PSRam: "));
+    display_println(String(ESP.getFreePsram()));
+  }
+
+  setup_fileops();
+
+  if(DEBUG)
+    listDir(SPIFFS, "/", 0); // only really care about this one for debug.
+  loadConfig(SPIFFS, "/config.ini"); // load our configuration file.  If this fails, everything fails.
+  display_header();
+
+  loadConstellations(SPIFFS, "/const.csv");
+  loadStars(SPIFFS, "/stars.csv");
+  loadSession(SPIFFS, "/animations.csv");
+  loadFortune(SPIFFS, "/fortune.csv");
+
+  // finished loading all our files in to memory.  do we have any space free?
+  if(DEBUG) {
+    display_print(F("Free Ram: "));
+    display_print(String(ESP.getFreeHeap()));
+    display_print(F(". Free PSRam: "));
+    display_println(String(ESP.getFreePsram()));
+  }
+
+  // setup bluetooth
+  if(bluetooth_enable) {
+    bluetooth_setup();
+
+    if(DEBUG) {
+      display_print(F("Free Ram: "));
+      display_print(String(ESP.getFreeHeap()));
+      display_print(F(". Free PSRam: "));
+      display_println(String(ESP.getFreePsram()));
+    }
+  }
+
+  //button_setup();
 
   // this is a test for more than 40 characters
   //display_print("1234567890123456789012345678901234567890111");
@@ -194,67 +210,68 @@ void loop() {
     update_time = millis();
   }
 
-  // If it's been 1.5 minutes since showing a constellation.
-  if(!screensaver && millis() > screensaver_timeout && screensaver_time < millis() - screensaver_timeout) {
-    // switch to screensaver after 1.5 minutes.
-    display_println(F("Screensaver active."));
+  // If it's been 1.5 minutes since showing any sessions.
+  if(screensaver == 0 && millis() > screensaver_timeout && screensaver_time < millis() - screensaver_timeout) {
+    // switch to screensaver after 1 minute.
+    if(DEBUG)
+      display_println(F("Screensaver active."));
     screensaver = 1;
     screensaver_time = millis();
   }
 
-  if(screensaver) {
-
+  if(screensaver == 1 && max_animation_counter > 0) {
+    // if we don't wait a few seconds when we start it goes a bit haywire
     // pick a ransom screensaver.
     // if it's 0, run for a minimum of 1 minute.
 
-    if(random_screensaver == -1) {
-      random_screensaver = random(0, animation_counter);
+    if(random_screensaver == -1 ) {
+      random_screensaver = random(0, max_animation_counter);
       screensaver_time = millis();
-      //if(DEBUG) {
-      //  display_println("Starting Screensaver: " + random_screensaver);
-        //display_println(random_screensaver);
-      //}
-    }
-
-    if(random_screensaver == 0 || animation_array[random_screensaver-1].count == 0) {
-      // Special case, display the splashing blue lights.
-      static uint8_t startIndex = 0;
-      startIndex = startIndex + 1; /* motion speed */
-      FillLEDsFromPaletteColors( startIndex);
-
-      // runs for a minute.  a bit long?
-      if(screensaver_time < millis() - 60000) {
-        random_screensaver = -1;
-        FastLED.clear ();
+      if(DEBUG) {
+        display_print("Starting Screensaver: ");
+        display_print(String(random_screensaver));
+        display_print("/");
+        display_println(String(max_animation_counter));
+        //Serial.println(animation_array[random_screensaver].count);
       }
-
-    } else if (random_screensaver > 0 && screensaver_time < millis() - 30000 && active_array[0].count < 10) {
-        // every 30 seconds, add new random animation to the display.
-        // 30 seconds might be to fast so we also check how many active stars we are showing.
-        // need to offset the random screensaver
-        activateAnimation(random_screensaver-1);
-
-        random_screensaver = -1;
     }
-  }
-  
-  if(!screensaver || random_screensaver != 0 ) {
+
+    //if (screensaver_time < millis() - 30000 && active_array[0].count < 10) {
+    if (active_array[0].count < 10) {
+      // every 30 seconds, add new random animation to the display.
+      // 30 seconds might be to fast so we also check how many active stars we are showing.
+      // need to offset the random screensaver
+      activateAnimation(random_screensaver, false);
+
+      screensaver_time = millis();
+
+      random_screensaver = -1;
+    }
+
     EVERY_N_MILLISECONDS(30) {
       openAnimation();
     }
+
+  } else if (screensaver == 2 || max_animation_counter == 0) {
+
+    // special case, just run the raindrops/twinkling.
+    static uint8_t startIndex = 0;
+    startIndex = startIndex + 1; /* motion speed */
+    FillLEDsFromPaletteColors(startIndex);
+
+  } else {
+   EVERY_N_MILLISECONDS(30) {
+      openAnimation();
+    }
+  }
+
+  if(millis() > 60000 && save_animations_time < millis() - 60000) {
+    // save every minute.
+    saveSession(SPIFFS, "/animations.csv");
+    save_animations_time = millis();
   }
   
-  // turn the beacon off after 3 minutes.
-  if(beacon_on == 1 && millis() > 180000 && discovery_time < millis() - 180000) {
-    beacon_on = 0;
-    BLEAdvertising *pAdvertising = pServer->getAdvertising();
-    pAdvertising->stop();
-    display_println(F("Bluetooth Hidden."));
-    display_header(); // need to update the colour.
-    
-  }
-  
-  read_button();
+  //read_button();
   
   FastLED.show();
 }

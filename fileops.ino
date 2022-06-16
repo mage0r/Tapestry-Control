@@ -85,6 +85,8 @@ void loadConfig(fs::FS &fs, const char * path) {
         //display_print(F("."));
     }
 
+    file.close();
+
     display_println(F(". Done."));
 
 }
@@ -118,6 +120,9 @@ void loadStars(fs::FS &fs, const char * path){
           star_array[star_counter].name[char_pos] = '\0';  // terminate our name nicely
           // we've got everything we need.  Link to a LED.
           star_array[star_counter].led = &leds[star_array[star_counter].pin][star_array[star_counter].point];
+
+          // We need the array position when we write our sessions and there's no other way to get it.
+          star_array[star_counter].number = star_counter;
 
           // we've linked this star to the constellation.
           // Lets update the constellation array to include this star too.
@@ -156,16 +161,11 @@ void loadStars(fs::FS &fs, const char * path){
         }
     }
 
+    file.close();
+
     display_print(F(". Done: "));
     display_println(String(star_counter));
 
-    /*  
-      Serial.println(star_array[30].name);
-      Serial.println(star_array[30].constellation);
-      Serial.println(star_array[30].magnitude);
-      Serial.println(star_array[30].pin);
-      Serial.println(star_array[30].point);
-      */
 
 }
 
@@ -199,24 +199,20 @@ void loadConstellations(fs::FS &fs, const char * path){
         }
     }
 
+    file.close();
+
     display_print(F(". Done: "));
     display_println(String(constellation_counter));
-
-    /*
-      Serial.println(constellation_array[2].name); // Triangulum
-      for(int i = 0 ; i < constellation_array[2].star_count; i++) {
-        Serial.println(constellation_array[2].star_list[i]->name);  // keep this in mind.  it's how we reference the star.
-        *constellation_array[2].star_list[i]->led = CRGB::Red;
-      }
-      */
     
 }
 
-void loadAnimation(fs::FS &fs, const char * path){
+void loadSession(fs::FS &fs, const char * path){
 
-    // <animation id>,<name>,<RED>,<GREEN>,<BLUE>,<LED #>,<TIMER>
+    // Renamed from LoadAnimation as Session better describes what we do.
+    // <SessionID>,<RED>,<GREEN>,<BLUE>,<LED #>,<TIMES>,<SHOW>
+
   
-    display_print(F("Loading Animations: "));
+    display_print(F("Loading Sessions: "));
     display_print(path);
 
     File file = fs.open(path);
@@ -229,10 +225,18 @@ void loadAnimation(fs::FS &fs, const char * path){
 
     byte counter1 = 0;
     int char_pos = 0;
+    int session_counter = 0;
 
     // collect variables.
-    int temp_animation_id;
+    int temp_animation_id = 0;
     int temp_star = 0;
+    byte temp_colour[3] = {0,0,0};
+    int temp_times = 0;
+    int temp_show = 0;
+    int animation_lines = 0;
+
+    animation_counter = 0; // make sure this has been reset to 0
+    max_animation_counter = 0;
     
     
     while(file.available()){
@@ -242,63 +246,147 @@ void loadAnimation(fs::FS &fs, const char * path){
         if(temp == ',') {
           counter1++;
         } else if(temp == '\n') {
+          // line complete.
+          
+          // just check the animation is clear.
+          // this breaks things
+          //animation_array[temp_animation_id].count = 0;
 
-          animation_array[temp_animation_id].star_list[animation_array[temp_animation_id].count] = &star_array[temp_star];
-          animation_array[temp_animation_id].count++;
+          if(DEBUG && false) {
+            Serial.println();
+            Serial.print(String(temp_animation_id));
+            Serial.print(",");
+            Serial.print(String(temp_colour[0]));
+            Serial.print(",");
+            Serial.print(String(temp_colour[1]));
+            Serial.print(",");
+            Serial.print(String(temp_colour[2]));
+            Serial.print(",");
+            Serial.print(String(temp_star));
+            Serial.print(",");
+            Serial.print(String(temp_times));
+            Serial.print(",");
+            Serial.print(String(temp_show));
+          }
 
-          char_pos = 0;
+          append_animation(temp_animation_id, temp_colour, temp_star, temp_times, temp_show);
+
+          // this is a bit fun.  We load animations in batches, but one line does not
+          // equal one animation.  This could potentially mean empty animations but
+          // they will fill as the system recycles.
+          if(temp_animation_id > animation_counter)
+            animation_counter = temp_animation_id;
+
+          if(temp_animation_id > max_animation_counter)
+            max_animation_counter = temp_animation_id;
+
           counter1 = 0;
           temp_star = 0;
-          animation_counter++;
+          temp_animation_id = 0;
+          temp_colour[0] = 0;
+          temp_colour[1] = 0;
+          temp_colour[2] = 0;
+          temp_times = 0;
+          temp_show = 0;
+          animation_lines++;
+
+          if(max_animation_counter >= MAX_SESSIONS) {
+            // don't accidentally overload.
+            break;
+          }
+
           
         } else if (temp == '\r') {
           // skip carriage return
         } else if(counter1 == 0) {
-          temp_animation_id = temp;
+          temp_animation_id = temp_animation_id*10 + (temp-48); // Which session/animation
         } else if (counter1 == 1) {
-          animation_array[temp_animation_id].colour[animation_array[temp_animation_id].count][0] = temp;
+          temp_colour[0] = temp_colour[0]*10 + (temp-48); // RED
         } else if (counter1 == 2) {
-          animation_array[temp_animation_id].colour[animation_array[temp_animation_id].count][1] = temp;
+          temp_colour[1] = temp_colour[1]*10 + (temp-48); // GREEN
         } else if (counter1 == 3) {
-          animation_array[temp_animation_id].colour[animation_array[temp_animation_id].count][2] = temp;
+          temp_colour[2] = temp_colour[2]*10 + (temp-48); // BLUE
         } else if (counter1 == 4) {
-          // this is our LED.
-          temp_star = temp_star*10 + (temp-48);
+          temp_star = temp_star*10 + (temp-48); // this is our LED.
         } else if (counter1 == 5) {
-          animation_array[temp_animation_id].times[animation_array[temp_animation_id].count] = temp;
+          temp_times = temp_times*10 + (temp-48); // Time between lighting up stars
+        } else if (counter1 == 6) {
+          temp_show = temp_show*10 + (temp-48); // how long to hold the light up.
         }
         
     }
+
+    // If we don't advance these, the next time we try to access them we
+    // will be adding to the existing int.
+    if(animation_lines > 0) {
+      animation_counter++;
+      max_animation_counter++;
+    }
+
+    file.close();
 
     display_print(F(". Done: "));
     display_println(String(animation_counter));
 
 }
-/*
-void appendAnimation(fs::FS &fs, const char * path, const char * message, int animation_position){
-    display_print(F("Appending to file: "));
-    display_print(path);
 
-    File file = fs.open(path, FILE_APPEND);
+// We can only store 500 of these locally
+// so we delete and re-create the file ever 30 minutes(?)
+void saveSession(fs::FS &fs, const char * path){
+    if(DEBUG) {
+      display_print(F("Saving Session data: "));
+      display_print(path);
+    }
+
+    if(!fs.remove(path)){
+      // delete failed.  Terminate the function.
+        Serial.println("- save failed");
+        return;
+    } // else, the file has been deleted and we can continue.
+
+    File file = fs.open(path, FILE_WRITE);
     if(!file){
         display_print(F("- failed"));
         return;
     }
 
-    display_print(F(""));
-    
-    if(file.print(message)){
-      display_print(F("Animation: "));
-      display_print(String(animation_position));
-      display_println(F(" appended."));
-    } else {
-      display_print(F("Animation: "));
-      display_print(String(animation_position));
-      display_println(F(" failed."));
+    int counter = 0;
+    int counter2 = 0;
+
+    for(int i = 0; i <= max_animation_counter; i++) {
+      for(int j = 0 ; j < animation_array[i].count; j++) {
+        String temp_message;
+
+        temp_message += i;
+        temp_message += ',';
+        temp_message += animation_array[i].colour[j][0];
+        temp_message += ',';
+        temp_message += animation_array[i].colour[j][1];
+        temp_message += ',';
+        temp_message += animation_array[i].colour[j][2];
+        temp_message += ',';
+        temp_message += animation_array[i].star_list[j]->number;
+        temp_message += ',';
+        temp_message += animation_array[i].times[j];
+        temp_message += ',';
+        temp_message += animation_array[i].show[j];
+        temp_message += '\n';
+
+        file.print(temp_message);
+        if(DEBUG && false) 
+          Serial.print(temp_message);
+        counter++;
+      }
+      counter2++;
     }
+
+  if(DEBUG) {
+    display_print(F(". Done: "));
+    display_println(String(counter2-1));
+  }
+
     file.close();
 }
-*/
 
 void loadFortune(fs::FS &fs, const char * path){
 
@@ -320,7 +408,7 @@ void loadFortune(fs::FS &fs, const char * path){
     int fortune_counter = 0;
      
     
-    while(file.available() && fortune_counter < 200){
+    while(file.available() && fortune_counter < 120){
 
         byte temp = file.read();
 
@@ -355,7 +443,9 @@ void loadFortune(fs::FS &fs, const char * path){
         
     }
 
+    file.close();
+
     display_print(F(". Done: "));
-    display_println(String(fortune_counter));
+    display_println(String(fortune_counter-1));
 
 }

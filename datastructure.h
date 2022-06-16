@@ -14,6 +14,7 @@
 typedef struct {
   // fun fact, Planets are represented here too!
   char name[43];
+  unsigned int number; // need to refer back to this occasionaly.
   byte constellation;
   float magnitude;
   byte pin;
@@ -37,11 +38,11 @@ constellations *constellation_array; // = (constellations *) ps_malloc(90 * size
 // We save an arbitrary number of animations to the unit to try and generate a history.
 // each animation
 typedef struct {
-  byte count = 0; // how many stars in this sequence.
-  stars *star_list[500]; // somewhat arbitrary size
-  unsigned int times[500]; // how long before starting the next led.
-  unsigned int show[500]; // how long to hold the led's on.
-  byte colour[500][3];
+  unsigned int count = 0; // how many stars in this sequence.
+  stars *star_list[MAX_SESSION_STARS]; // somewhat arbitrary size
+  unsigned int times[MAX_SESSION_STARS]; // how long before starting the next led.
+  unsigned int show[MAX_SESSION_STARS]; // how long to hold the led's on.
+  byte colour[MAX_SESSION_STARS][3];
 } animations;
 
 animations *animation_array; // = (animation *) ps_malloc(10 * sizeof(animation));
@@ -49,12 +50,12 @@ animations *animation_array; // = (animation *) ps_malloc(10 * sizeof(animation)
 // ok, if we keep an array of stars we are 
 typedef struct {
   int count = 0; // how many stars active at the moment.
-  stars *star_list[1000]; // always seems arbitrary, but as we only have 840 LED's, this leaves some buffer.
-  byte rising[1000]; // we fading in or fading out?  Could be a bool
-  byte colour[1000][3]; // What colour is our goal?
-  unsigned long update[1000]; // when are we next updating this star.  Basically the trigger time.
-  unsigned int show[1000];
-  byte brightness[1000];
+  stars *star_list[MAX_ACTIVE_STARS]; // always seems arbitrary, but as we only have 840 LED's, this leaves some buffer.
+  byte rising[MAX_ACTIVE_STARS]; // we fading in or fading out?  Could be a bool
+  byte colour[MAX_ACTIVE_STARS][3]; // What colour is our goal?
+  unsigned long update[MAX_ACTIVE_STARS]; // when are we next updating this star.  Basically the trigger time.
+  unsigned int show[MAX_ANIMATIONS];
+  byte brightness[MAX_ACTIVE_STARS];
 } active;
 
 active *active_array;
