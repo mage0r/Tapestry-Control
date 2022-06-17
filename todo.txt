@@ -5,8 +5,11 @@ Algorithim to not split words for display.
 	an extra printline?
 Brightness setting saved to config file?
 Crashed when loaded Scorpius?
-	it's the fortune.  fucking fortune.
-	disable for the minute.
+	revamped entire display.
+	fortune now works.
+	Splits lines properly.
+	Based on display size rather than arbitrary char number.
+	display is now much smoother.
 Crash after session ID mismatch
 	lots of errors.  Eventual crash.
 Overrun of max limit?
@@ -14,8 +17,6 @@ Overrun of max limit?
 Random fucking resets
 Return value for N.  if it's not set.
 	Need to advance the next element
-screensaver
-	dreaming doesn't work
 
 
 Hardware:
@@ -33,3 +34,5 @@ s always one more bug.
 
 Angus McInnes. Seriously, what a guy. Did you know he can count up to 1023 on two hands?
 he can count up to 1023 on two hands?
+
+Do you mean that you not only want a wrong answer, but a certain wrong answer? -- Tob

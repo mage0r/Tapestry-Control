@@ -73,6 +73,7 @@ class MyCallbacks: public BLECharacteristicCallbacks {
 
               // append to an existing
               byte temp_colour[3] = {value[4],value[5],value[6]};
+
               append_animation(sessionID, temp_colour, star_number, timer, show);
             }
           } else {
@@ -187,14 +188,16 @@ class MyServerCallbacks: public BLEServerCallbacks {
       if(DEBUG)
         display_println(F("New device connected."));
       BLEDevice::startAdvertising(); // this advertises the characteristic
-      display_header();
+      //display_header();
+      display_update_bt();
     };
 
     void onDisconnect(BLEServer* pServer) {
       bluetooth_connect--;
       if(DEBUG)
         display_println(F("Device disconnected."));
-      display_header();
+      //display_header();
+      display_update_bt();
     }
 
 };
@@ -239,7 +242,8 @@ void bluetooth_setup() {
   // maybe a little counterintuitive.
   bluetooth_connect = 1;
 
-  display_header();
+  //display_header();
+  display_update_bt();
 
   display_println(F("Bluetooth Initialised."));
 }

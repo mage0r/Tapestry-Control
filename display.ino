@@ -3,6 +3,7 @@ void setup_display() {
   myGLCD.init();
   myGLCD.setRotation(1);
   myGLCD.fillScreen(TFT_BLACK);
+  myGLCD.setTextWrap(false); // don't want to accidentally end up on the next line.
 
   display_header();
 
@@ -15,11 +16,13 @@ void setup_display() {
 }
 
 void display_header() {
-  myGLCD.fillRect(0, 0, 319, 16,TFT_BLUE); // clear the top of the screen
+  
+  //myGLCD.fillRect(0, 0, 319, 16,TFT_BLUE); // clear the top of the screen
 
   String temp_header; // we re-use this a bit.
 
   // First, lets be public with the unit name.
+  myGLCD.setTextPadding(320);
   myGLCD.setTextColor(TFT_WHITE, TFT_BLUE);
   temp_header = PROJECT;
   temp_header += ".";
@@ -27,8 +30,12 @@ void display_header() {
   myGLCD.drawString(temp_header,0,0,2);
   myGLCD.drawString(VERSION,200,0,2);
 
-  // Bluetooth Status
-  temp_header = " BT: ";
+  display_update_bt();
+}
+
+void display_update_bt() {
+    // Bluetooth Status
+  String temp_header = " BT: ";
   if(bluetooth_connect) {
     if(beacon_on == 0)
       myGLCD.setTextColor(TFT_WHITE, TFT_BLUE);
@@ -42,19 +49,17 @@ void display_header() {
     temp_header += "0";
   }
 
+  myGLCD.setTextPadding(0);
   myGLCD.drawRightString(temp_header,320,0,2);
-
-  // next line, start under the header.
 }
 
 void display_update() {
 
-  myGLCD.fillRect(0, 16, 319, 239,TFT_BLACK); // hide everything!
-  myGLCD.setCursor(0, 16, 2);
+  myGLCD.setTextPadding(320);
   myGLCD.setTextColor(TFT_WHITE,TFT_BLACK);
   myGLCD.setTextSize(1);
   for(int i = 0; i < 13; i++) {
-    myGLCD.println(display_strings[i]);
+    myGLCD.drawString(display_strings[i],0,16+(i*16),2);
   }
 }
 
@@ -63,32 +68,46 @@ void safe_append(String temp) {
   temp.replace('\n',' ');
   temp.replace('\r',' ');
 
-  // if this is a long string, work out where our spaces are.
-  // how many slots left on the current line?
-  /*
-  int temp_backwards = (DISPLAY_WIDTH - strlen(display_strings[13]));
-  int max_copy = temp_backwards;
+  String temp_text = display_strings[13];
+  temp_text += temp;
+  temp_text.trim();
+  //Serial.println(myGLCD.textWidth(temp_text,2)); // this shows the length of the string.
 
-  //Serial.println(temp_backwards);
-  //Serial.println(temp.length());
+  int break_point = temp_text.length();
 
-  if(temp.length() > temp_backwards-1) {
-    // work backwards from the max width.
-    for(int i = temp_backwards; i > 0; i--) {
-      if(temp.charAt(i) == ' ') {
-        max_copy = i;
-        i = 0;
-      }
-    }    
+  // work backwards from the max width.
+  if(myGLCD.textWidth(temp_text,2) > 320) {
+    for(int i = break_point; i > 0; i--) {
+        if(myGLCD.textWidth(temp_text.substring(0,i),2) < 320 && temp_text.charAt(i) == ' ' ) {
+          break_point = i;
+          break;
+        }
+    }
   }
-  */
 
-  //Serial.println(max_copy);
+  // save our new string to the array.
+  if(temp_text.substring(0,break_point).length() < DISPLAY_WIDTH)
+    strcpy(display_strings[13],temp_text.substring(0,break_point).c_str());
+
+  // we've got a long string
+  if(break_point != temp_text.length()) {
+    // Do the shuffle.
+    for(int i = 0; i < 13; i++) {
+      strcpy(display_strings[i],display_strings[i+1]);
+    }
+    display_strings[13][0] = '\0';
+
+    safe_append(temp_text.substring(break_point));
+  }
+
+  /*
+  // the old way
 
   int count = 0;
   int count2 = 0;
   for (int i = strlen(display_strings[13]); i < DISPLAY_WIDTH; i++) {
     display_strings[13][i] = temp.charAt(count);
+    
     count++;
     count2 = i;
     if(count > temp.length()) // || count >= max_copy)
@@ -97,21 +116,8 @@ void safe_append(String temp) {
   }
 
   display_strings[13][count2+1] = '\0';
-
-  // send the leftover string to a new line.
-  /*
-  if(count < temp.length()) {
-
-    // Do the shuffle.
-    for(int i = 0; i < 13; i++) {
-      strcpy(display_strings[i],display_strings[i+1]);
-    }
-
-    display_strings[13][0] = '\0';
-
-    temp = temp.substring(count+1);
-    safe_append(temp);
-  } 
+    
+  
   */
   
 }
@@ -169,7 +175,7 @@ boolean display_fortune(int animation_position, boolean constellation) {
     }
 
     if(display_text.length() > 0) {
-      //display_println(display_text);
+      display_println(display_text);
       return true;
     }
 

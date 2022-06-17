@@ -41,7 +41,7 @@ byte BRIGHTNESS = 64; // 0-255.  This is editable on the fly
 
 // Set our version number.  Don't forget to update when featureset changes
 #define PROJECT "Tapestry-Control"
-#define VERSION "V.0.34"
+#define VERSION "V.0.51"
 #define DEBUG 1
 char NAME[10];
 
@@ -78,9 +78,9 @@ unsigned int last_animation_counter[20]; //keep a record of which device has whi
 
 // TFT screen
 TFT_eSPI myGLCD = TFT_eSPI();       // Invoke custom library
-#define DISPLAY_WIDTH 50
-char display_strings[14][DISPLAY_WIDTH]; // This repesents our entire display screen.
-char display_temp[DISPLAY_WIDTH];
+#define DISPLAY_WIDTH 60
+char display_strings[14][DISPLAY_WIDTH+1]; // This repesents our entire display screen.
+char display_temp[DISPLAY_WIDTH+1];
 
 // Bluetooth
 char SERVICE_UUID[40]; // we load these configs from the file.
@@ -145,22 +145,8 @@ void setup() {
   // needs to happen before loading our stars to ensure the LED pointers are available.
   leds_setup();
 
-  if(DEBUG) {
-    display_print(F("Free Ram: "));
-    display_print(String(ESP.getFreeHeap()));
-    display_print(F(". Free PSRam: "));
-    display_println(String(ESP.getFreePsram()));
-  }
-
   setup_animations();
   
-  if(DEBUG) {
-    display_print(F("Free Ram: "));
-    display_print(String(ESP.getFreeHeap()));
-    display_print(F(". Free PSRam: "));
-    display_println(String(ESP.getFreePsram()));
-  }
-
   setup_fileops();
 
   if(DEBUG)
@@ -173,14 +159,6 @@ void setup() {
   loadSession(SPIFFS, "/animations.csv");
   loadFortune(SPIFFS, "/fortune.csv");
 
-  // finished loading all our files in to memory.  do we have any space free?
-  if(DEBUG) {
-    display_print(F("Free Ram: "));
-    display_print(String(ESP.getFreeHeap()));
-    display_print(F(". Free PSRam: "));
-    display_println(String(ESP.getFreePsram()));
-  }
-
   // setup bluetooth
   if(bluetooth_enable) {
     bluetooth_setup();
@@ -192,11 +170,6 @@ void setup() {
       display_println(String(ESP.getFreePsram()));
     }
   }
-
-  //button_setup();
-
-  // this is a test for more than 40 characters
-  //display_print("1234567890123456789012345678901234567890111");
 
 }
 
@@ -217,7 +190,7 @@ void loop() {
   if(screensaver == 0 && millis() > screensaver_timeout && screensaver_time < millis() - screensaver_timeout) {
     // switch to screensaver after 1 minute.
     if(DEBUG)
-      display_println(F("Screensaver active."));
+      display_println(F("Getting Sleepy...."));
     screensaver = 1;
     screensaver_time = millis();
   }
@@ -231,7 +204,7 @@ void loop() {
       random_screensaver = random(0, max_animation_counter);
       screensaver_time = millis();
       if(DEBUG) {
-        display_print("Starting Screensaver: ");
+        display_print("Dreaming about....");
         display_print(String(random_screensaver));
         display_print("/");
         display_println(String(max_animation_counter));
