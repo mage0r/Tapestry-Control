@@ -16,8 +16,6 @@ void setup_display() {
 }
 
 void display_header() {
-  
-  //myGLCD.fillRect(0, 0, 319, 16,TFT_BLUE); // clear the top of the screen
 
   String temp_header; // we re-use this a bit.
 
@@ -71,11 +69,11 @@ void safe_append(String temp) {
   String temp_text = display_strings[13];
   temp_text += temp;
   temp_text.trim();
-  //Serial.println(myGLCD.textWidth(temp_text,2)); // this shows the length of the string.
 
   int break_point = temp_text.length();
 
   // work backwards from the max width.
+  // basically strip off a character at time until the width is less than 320.
   if(myGLCD.textWidth(temp_text,2) > 320) {
     for(int i = break_point; i > 0; i--) {
         if(myGLCD.textWidth(temp_text.substring(0,i),2) < 320 && temp_text.charAt(i) == ' ' ) {
@@ -88,6 +86,11 @@ void safe_append(String temp) {
   // save our new string to the array.
   if(temp_text.substring(0,break_point).length() < DISPLAY_WIDTH)
     strcpy(display_strings[13],temp_text.substring(0,break_point).c_str());
+  else {
+    //honestly, this happens and things are bad.
+    //this should at least catch the error and give most of the output.
+    strcpy(display_strings[13],temp_text.substring(0,DISPLAY_WIDTH).c_str());
+  }
 
   // we've got a long string
   if(break_point != temp_text.length()) {
@@ -99,26 +102,6 @@ void safe_append(String temp) {
 
     safe_append(temp_text.substring(break_point));
   }
-
-  /*
-  // the old way
-
-  int count = 0;
-  int count2 = 0;
-  for (int i = strlen(display_strings[13]); i < DISPLAY_WIDTH; i++) {
-    display_strings[13][i] = temp.charAt(count);
-    
-    count++;
-    count2 = i;
-    if(count > temp.length()) // || count >= max_copy)
-      i = DISPLAY_WIDTH;
-    
-  }
-
-  display_strings[13][count2+1] = '\0';
-    
-  
-  */
   
 }
 
