@@ -1,0 +1,5 @@
+Active, session, #sessions
+1000,500,500			Free Ram: 178212. Free PSRam: 312131
+4000,2000,100			Free Ram: 181808. Free PSRam: 1064775
+6000,2000,100			Free Ram: 181796. Free PSRam: 979775
+8000,2000,100			Free Ram: 181792. Free PSRam: 945775

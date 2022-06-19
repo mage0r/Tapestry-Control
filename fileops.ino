@@ -292,6 +292,7 @@ void loadSession(fs::FS &fs, const char * path){
 
           if(max_animation_counter >= MAX_SESSIONS) {
             // don't accidentally overload.
+            file.close();
             break;
           }
 
@@ -325,8 +326,10 @@ void loadSession(fs::FS &fs, const char * path){
 
     file.close();
 
+    //display_print(F(". Done: "));
     display_print(F(". Done: "));
-    display_println(String(animation_counter));
+    //display_println(String(animation_counter));
+    display_println(String(max_animation_counter));
 
 }
 
@@ -334,8 +337,10 @@ void loadSession(fs::FS &fs, const char * path){
 // so we delete and re-create the file ever 30 minutes(?)
 void saveSession(fs::FS &fs, const char * path){
     if(DEBUG) {
-      display_print(F("Saving Session data: "));
-      display_print(path);
+      //display_print(F("Saving Session data: "));
+      Serial.print(F("Saving Session data: "));
+      //display_print(path);
+      Serial.print(path);
     }
 
     if(!fs.remove(path)){
@@ -346,14 +351,14 @@ void saveSession(fs::FS &fs, const char * path){
 
     File file = fs.open(path, FILE_WRITE);
     if(!file){
-        display_print(F("- failed"));
+        Serial.println(F("- failed"));
         return;
     }
 
     int counter = 0;
     int counter2 = 0;
 
-    for(int i = 0; i <= max_animation_counter; i++) {
+    for(int i = 0; i < max_animation_counter; i++) {
       for(int j = 0 ; j < animation_array[i].count; j++) {
         String temp_message;
 
@@ -381,8 +386,10 @@ void saveSession(fs::FS &fs, const char * path){
     }
 
   if(DEBUG) {
-    display_print(F(". Done: "));
-    display_println(String(counter2-1));
+    //display_print(F(". Done: "));
+    Serial.print(F(". Done: "));
+    //display_println(String(counter2-1));
+    Serial.println(String(counter2));
   }
 
     file.close();

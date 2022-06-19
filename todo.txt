@@ -1,38 +1,22 @@
 Software:
-Algorithim to not split words for display.
-	Random lines of a single character.
-	Buckaroo Banzi does this consistently.
-	an extra printline?
 Brightness setting saved to config file?
-Crashed when loaded Scorpius?
-	revamped entire display.
-	fortune now works.
-	Splits lines properly.
-	Based on display size rather than arbitrary char number.
-	display is now much smoother.
 Crash after session ID mismatch
 	lots of errors.  Eventual crash.
 Overrun of max limit?
 	fixed I think
 Random fucking resets
+	stupid prints cause random crashes.  weird character?
 Return value for N.  if it's not set.
 	Need to advance the next element
-
+Crash on connect
+number of sessions down. 100
+Number of entries per session up. 2000
+Number of active stars up. 6000
+Still that fucking problem starting up for the first time.
+The way it decides on a new ID is borked.
 
 Hardware:
 power cable plug
 4x power splitters with no diode.
 
-49
-53
-49
-7
-Howe's Law: Everyone has a scheme that will not work.
-
-Lubarsky's Law of Cybernetic Entomology: There'
-s always one more bug.
-
-Angus McInnes. Seriously, what a guy. Did you know he can count up to 1023 on two hands?
-he can count up to 1023 on two hands?
-
-Do you mean that you not only want a wrong answer, but a certain wrong answer? -- Tob
+Tablet 3, show us what you can do at 5

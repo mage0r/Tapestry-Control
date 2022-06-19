@@ -68,7 +68,6 @@ void safe_append(String temp) {
 
   String temp_text = display_strings[13];
   temp_text += temp;
-  temp_text.trim();
 
   int break_point = temp_text.length();
 
@@ -100,6 +99,10 @@ void safe_append(String temp) {
     }
     display_strings[13][0] = '\0';
 
+    while(temp_text.charAt(break_point) == ' ') {
+      break_point++;
+    }
+
     safe_append(temp_text.substring(break_point));
   }
   
@@ -110,7 +113,7 @@ void display_print(String temp) {
 
  safe_append(temp);
 
- myGLCD.print(temp); // don't need to redraw the whole screen.
+ //myGLCD.print(temp); // don't need to redraw the whole screen.
  Serial.print(temp);
 
 }
@@ -130,31 +133,40 @@ void display_println(String temp) {
 
 }
 
-boolean display_fortune(int animation_position, boolean constellation) {
+boolean display_fortune(int position, boolean constellation) {
     // special case!  If we have a special comment related to our star, throw it up!.
     // cheat a little here.  We only have 4 fortunes specific to constellations or stars, don't bother checking
     // the whole array.
     // we also don't have anything on the first star or constellation, so only pay attention if it's 
     // not 0
     // we only want to set one fortune display, so check stars, then check constellation.
+    //
+    // If constellation is true, position is the constellation array position.
+    // if constellation is false, position is the sessionID and we have to check if the star exists there. 
     String display_text;
 
-    if(animation_position) {
+    if(constellation) {
       for(int i = 0; i < 5; i++) {
-        if(!constellation && fortune_array[i].star == animation_position) {
+        if (fortune_array[i].constellation == position) {
           display_text = fortune_array[i].text;
-        } else if (constellation && fortune_array[i].constellation == animation_position) {
-          display_text = fortune_array[i].text;
+          break;
+        }
+      }
+    } else {
+      for(int i = 0; i < animation_array[position].count; i++) {
+        for(int j = 0; j < 5; j++) {
+          if(animation_array[position].star_list[j]->number == fortune_array[j].star) {
+            display_text = fortune_array[j].text;
+            i = animation_array[position].count; // pretty much faking a break
+            j = 5; // breaking again.
+          }
         }
       }
     }
 
     // no specific fortune, pick a random one.
-    // only do this every 10 times?
-    int random_fortune = random(0,9);
-    if(random_fortune == 1 && display_text.length() == 0) {
-      random_fortune = random(4, 101);
-      display_text = fortune_array[random_fortune].text;
+    if(display_text.length() == 0) {
+      display_text = fortune_array[random(4, 101)].text;
     }
 
     if(display_text.length() > 0) {

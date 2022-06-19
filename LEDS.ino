@@ -16,8 +16,6 @@ void leds_setup() {
   currentPalette = CloudColors_p;
   currentBlending = LINEARBLEND;
 
-  //leds[0][10] = CRGB::Red;
-
   FastLED.show();
 
   display_println(F("LED's Initialised."));
@@ -46,7 +44,7 @@ void setup_animations() {
 void append_animation(int animation_position, byte colour[3], int star_number, int timer, int show) {
 
   if(animation_array[animation_position].count > MAX_SESSION_STARS) {
-    display_print(F("Too many stars!"));
+    display_println(F("Too many stars!"));
 
   } else {
 
@@ -63,7 +61,7 @@ void append_animation(int animation_position, byte colour[3], int star_number, i
 }
 
 // This copies the requsted sequence in to the active stars array.
-void activateAnimation(int animation_position, boolean test_display) {
+void activateAnimation(int animation_position) {
   unsigned long temp_millis = millis();
   // so, this takes a few seconds to run
   //temp_millis += 100;
@@ -72,7 +70,7 @@ void activateAnimation(int animation_position, boolean test_display) {
   int current = active_array[0].count;
 
    if(DEBUG && false) {
-    display_println(F("Setup animation."));
+    Serial.println(F("Setup animation."));
     Serial.println(current);
     Serial.println(animation_position);
     Serial.println(animation_array[animation_position].count);
@@ -83,7 +81,7 @@ void activateAnimation(int animation_position, boolean test_display) {
     // just check that our animation array isn't full.
     // doing this at the top just in case it's full from the onset.
     if(current >= MAX_ACTIVE_STARS) {
-      display_println(F("Animation Buffer Exhausted."));
+      display_println(F("Animation Buffer Full."));
       break;
     }
 
@@ -100,15 +98,10 @@ void activateAnimation(int animation_position, boolean test_display) {
 
     current++;
 
-    if(!test_display)
-      test_display = display_fortune(animation_position, false);
-    
   }
 
   active_array[0].count = current;
 
-  if(!test_display)
-    display_fortune(animation_position, false);
 }
 
 // This copies the requsted constellation in to the active stars array.
@@ -118,9 +111,6 @@ void activateConstellation(byte animation_position, byte colour[3], int show) {
   // so, this takes a few seconds to run
   //temp_millis += 100;
 
-  //where is our animation up to
-  int current = active_array[0].count;
-
   // When displaying a constellation, we also copy it in to the session information.
   unsigned int temp_animation = animation_counter;
   animation_counter++;
@@ -129,6 +119,8 @@ void activateConstellation(byte animation_position, byte colour[3], int show) {
 
   if(max_animation_counter < MAX_SESSIONS)
     max_animation_counter++;
+
+  animation_array[temp_animation].count = 0; // reset it to zero.
 
   for(int i=0; i < constellation_array[animation_position].star_count; i++) {
 
@@ -143,12 +135,9 @@ void activateConstellation(byte animation_position, byte colour[3], int show) {
     animation_array[temp_animation].show[animation_array[temp_animation].count] = show;
     animation_array[temp_animation].count++;
 
-    activateAnimation(temp_animation, true);
+    activateAnimation(temp_animation);
 
   }
-
-
-  display_fortune(animation_position, true);
 
 }
 

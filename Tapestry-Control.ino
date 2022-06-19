@@ -35,13 +35,13 @@
 byte BRIGHTNESS = 64; // 0-255.  This is editable on the fly
 
 // Define some of our array sizes.
-#define MAX_ACTIVE_STARS 1000
-#define MAX_SESSION_STARS 500
-#define MAX_SESSIONS 500
+#define MAX_ACTIVE_STARS 8000
+#define MAX_SESSION_STARS 2000
+#define MAX_SESSIONS 100
 
 // Set our version number.  Don't forget to update when featureset changes
 #define PROJECT "Tapestry-Control"
-#define VERSION "V.0.51"
+#define VERSION "V.1.03"
 #define DEBUG 1
 char NAME[10];
 
@@ -74,7 +74,7 @@ unsigned int constellation_counter = 0;
 unsigned int planet_counter = 0;
 unsigned int animation_counter = 0;
 unsigned int max_animation_counter = 0; // need an extra counter for when we max out the array
-unsigned int last_animation_counter[20]; //keep a record of which device has which animation. 20 is widly optimistic.
+int last_animation_counter[20]; //keep a record of which device has which animation. 20 is widly optimistic.
 
 // TFT screen
 TFT_eSPI myGLCD = TFT_eSPI();       // Invoke custom library
@@ -136,10 +136,11 @@ void setup() {
   // First, build information
   display_println(PROJECT " " VERSION);
   display_println(F("Build Date: " __DATE__ " " __TIME__));
-  display_print(F("Free Ram: "));
-  display_print(String(ESP.getFreeHeap()));
-  display_print(F(". Free PSRam: "));
-  display_println(String(ESP.getFreePsram()));
+  String temp_text = "Free Ram: ";
+  temp_text += ESP.getFreeHeap();
+  temp_text += ". Free PSRam: ";
+  temp_text += ESP.getFreePsram();
+  display_println(temp_text);
 
   // run through our LED setup routine.
   // needs to happen before loading our stars to ensure the LED pointers are available.
@@ -164,11 +165,17 @@ void setup() {
     bluetooth_setup();
 
     if(DEBUG) {
-      display_print(F("Free Ram: "));
-      display_print(String(ESP.getFreeHeap()));
-      display_print(F(". Free PSRam: "));
-      display_println(String(ESP.getFreePsram()));
+      String temp_text = "Free Ram: ";
+      temp_text += ESP.getFreeHeap();
+      temp_text += ". Free PSRam: ";
+      temp_text += ESP.getFreePsram();
+      display_println(temp_text);
     }
+  }
+
+  // found this needs to be initalised to 0
+  for(int i = 0; i < 20; i++) {
+    last_animation_counter[i] = -1;
   }
 
 }
@@ -195,20 +202,21 @@ void loop() {
     screensaver_time = millis();
   }
 
-  if(screensaver == 1 && max_animation_counter > 0) {
+  if(screensaver == 1 && max_animation_counter > 2) {
     // if we don't wait a few seconds when we start it goes a bit haywire
     // pick a ransom screensaver.
     // if it's 0, run for a minimum of 1 minute.
 
-    if(random_screensaver == -1 ) {
-      random_screensaver = random(0, max_animation_counter);
+    if(random_screensaver == -1) {
+      random_screensaver = random(0, max_animation_counter-1); // max animation is always one ahead.
       screensaver_time = millis();
-      if(DEBUG) {
-        display_print("Dreaming about....");
-        display_print(String(random_screensaver));
-        display_print("/");
-        display_println(String(max_animation_counter));
-        //Serial.println(animation_array[random_screensaver].count);
+
+      if(DEBUG && animation_array[random_screensaver].count > 0) {
+        String temp_text = "Dreaming about....";
+        temp_text += random_screensaver+1;
+        temp_text += "/";
+        temp_text += max_animation_counter+1;
+        display_println(temp_text);
       }
     }
 
@@ -217,7 +225,8 @@ void loop() {
       // every 30 seconds, add new random animation to the display.
       // 30 seconds might be to fast so we also check how many active stars we are showing.
       // need to offset the random screensaver
-      activateAnimation(random_screensaver, false);
+
+      activateAnimation(random_screensaver);
 
       screensaver_time = millis();
 
@@ -241,8 +250,9 @@ void loop() {
     }
   }
 
-  if(millis() > 60000 && save_animations_time < millis() - 60000) {
+  if(millis() > 60000 && save_animations_time < millis() - 60000 && max_animation_counter > 0) {
     // save every minute.
+    // probably don't want to save if it's empty.
     saveSession(SPIFFS, "/animations.csv");
     save_animations_time = millis();
   }

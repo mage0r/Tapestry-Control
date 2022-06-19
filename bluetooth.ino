@@ -77,7 +77,8 @@ class MyCallbacks: public BLECharacteristicCallbacks {
               append_animation(sessionID, temp_colour, star_number, timer, show);
             }
           } else {
-            display_println("Session ID mismatch!");
+            // this can dump out a lot.
+            display_println(F("This session doesn't match the device!"));
           }
         } else if(value[1] == 'A') {
           // Display the animation sequence.
@@ -87,12 +88,16 @@ class MyCallbacks: public BLECharacteristicCallbacks {
           if(sessionID < max_animation_counter) {
             fade_time = millis();
             if(screensaver) {
+              display_println("I'm awake! I'm awake!");
               active_array[0].count = 0;
               FastLED.clear ();
               screensaver = 0;
             }
             screensaver_time = millis(); // always need to reset this one.
-            activateAnimation(sessionID, false);
+
+            display_fortune(sessionID, false);
+
+            activateAnimation(sessionID);
           }
         } else if(value[1] == 'D') {
           // clear a saved animation.
@@ -105,6 +110,7 @@ class MyCallbacks: public BLECharacteristicCallbacks {
           // Light up a constellation by constellation_id
           fade_time = millis();
           if(screensaver) {
+            display_println("I'm awake! I'm awake!");
             active_array[0].count = 0;
             FastLED.clear();
             screensaver = 0;
@@ -114,8 +120,10 @@ class MyCallbacks: public BLECharacteristicCallbacks {
 
           int show = (value[6] << 8) + value[7]; // timing delay
 
-          display_print(F("Display Constellation: "));
+          display_print(F("Lets look at "));
           display_println(constellation_array[value[5]].name);
+
+          display_fortune(value[5], true);
 
           activateConstellation(value[5], temp_byte, show);
 
@@ -126,7 +134,7 @@ class MyCallbacks: public BLECharacteristicCallbacks {
 
           // if the current session is empty, don't advance it.
           // provided the current device has this ID of course.
-          if(animation_counter > 0 && animation_array[last_animation_counter[value[0]-48]].count == 0) {
+          if(animation_counter > 0 && last_animation_counter[value[0]-48] != -1 && animation_array[last_animation_counter[value[0]-48]].count == 0 ) {
             // our last selected array is empty, just re-use it.
             temp += last_animation_counter[value[0]-48];
           } else {
@@ -134,23 +142,33 @@ class MyCallbacks: public BLECharacteristicCallbacks {
             temp += animation_counter;
 
             animation_counter++;
-            if(animation_counter >= 500)
-              animation_counter = 0;
 
-            // because we cycle around when we hit 500 entries, we need to keep an eye on that.
-            if(max_animation_counter < 500)
+            if(animation_counter >= MAX_SESSIONS) {
+              animation_counter = 0;
+            }
+
+            // because we cycle around when we hit MAX_SESSIONS entries, we need to keep an eye on that.
+            if(max_animation_counter < MAX_SESSIONS)
               max_animation_counter++;
+
 
             animation_array[animation_counter].count = 0; // reset it to zero.
           }
 
           if(DEBUG) {
-            display_print("New Session for Tablet ");
-            display_print(String(value[0]));
-            display_print(":");
-            display_println(String(last_animation_counter[value[0]-48]));
+            String temp_text;
+            temp_text += "Tablet ";
+            temp_text += value[0];
+            temp_text += ", show us what you can do at ";
+            temp_text += last_animation_counter[value[0]-48];
+            byte temp_screensaver = screensaver;
+            if(temp_screensaver == 1)
+              screensaver = 0;
+            //Serial.println(temp_text);
+            display_println(temp_text);
+            screensaver = temp_screensaver;
           }
- 
+
           pCharacteristic->setValue(temp.c_str());
         } else if (value[1] == 'N') {
           // Lets just check our current session for our tablet.
@@ -165,17 +183,18 @@ class MyCallbacks: public BLECharacteristicCallbacks {
           // special mode.  Play the raindrops screensaver.
 
           active_array[0].count = 0;
-          FastLED.clear();
           
           if(screensaver == 2) {
+            display_println("Getting Sleepy....");
             screensaver = 1;
             random_screensaver = -1;
-            screensaver_time = millis();
-            //display_println("Dreaming!");
+            //screensaver_time = millis();
           } else {
             screensaver = 2;
             display_println("Twinkle Twinkle!");
           }
+
+          FastLED.clear();
         }
 
       }
@@ -186,7 +205,7 @@ class MyServerCallbacks: public BLEServerCallbacks {
     void onConnect(BLEServer* pServer) {
       bluetooth_connect++;
       if(DEBUG)
-        display_println(F("New device connected."));
+        display_println(F("We have a New Challenger."));
       BLEDevice::startAdvertising(); // this advertises the characteristic
       //display_header();
       display_update_bt();
@@ -195,7 +214,7 @@ class MyServerCallbacks: public BLEServerCallbacks {
     void onDisconnect(BLEServer* pServer) {
       bluetooth_connect--;
       if(DEBUG)
-        display_println(F("Device disconnected."));
+        display_println(F("Bye Bye Tablet."));
       //display_header();
       display_update_bt();
     }
