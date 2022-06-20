@@ -165,8 +165,12 @@ boolean display_fortune(int position, boolean constellation) {
     }
 
     // no specific fortune, pick a random one.
-    if(display_text.length() == 0) {
+    // we only do this once every 10 times.
+    int random_fortune = random(0,9);
+    if(random_fortune == 1 && display_text.length() == 0) {
       display_text = fortune_array[random(4, 101)].text;
+    } else if (!constellation) {
+      display_text = "Let see what you got...";
     }
 
     if(display_text.length() > 0) {

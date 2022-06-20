@@ -32,7 +32,7 @@
 #define NUM_LEDS NUM_LEDS_PER_STRIP * NUM_STRIPS
 #define LED_TYPE    WS2812
 #define COLOR_ORDER GRB
-byte BRIGHTNESS = 64; // 0-255.  This is editable on the fly
+byte BRIGHTNESS = 150; // 0-255.  This is editable on the fly
 
 // Define some of our array sizes.
 #define MAX_ACTIVE_STARS 8000
@@ -41,7 +41,7 @@ byte BRIGHTNESS = 64; // 0-255.  This is editable on the fly
 
 // Set our version number.  Don't forget to update when featureset changes
 #define PROJECT "Tapestry-Control"
-#define VERSION "V.1.03"
+#define VERSION "V.1.05"
 #define DEBUG 1
 char NAME[10];
 

@@ -2,18 +2,11 @@ Software:
 Brightness setting saved to config file?
 Crash after session ID mismatch
 	lots of errors.  Eventual crash.
-Overrun of max limit?
-	fixed I think
-Random fucking resets
-	stupid prints cause random crashes.  weird character?
 Return value for N.  if it's not set.
 	Need to advance the next element
-Crash on connect
-number of sessions down. 100
-Number of entries per session up. 2000
-Number of active stars up. 6000
 Still that fucking problem starting up for the first time.
-The way it decides on a new ID is borked.
+	could be related to the bluetooth stuff.
+Bluetooth shouldn't do anything.  Just set variables and let loop take care of it!!
 
 Hardware:
 power cable plug
