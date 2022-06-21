@@ -41,7 +41,7 @@ byte BRIGHTNESS = 150; // 0-255.  This is editable on the fly
 
 // Set our version number.  Don't forget to update when featureset changes
 #define PROJECT "Tapestry-Control"
-#define VERSION "V.1.05"
+#define VERSION "V.1.12"
 #define DEBUG 1
 char NAME[10];
 
@@ -63,9 +63,6 @@ extern const TProgmemPalette16 myRedWhiteBluePalette_p PROGMEM;
 unsigned long screensaver_time = 0;
 unsigned long screensaver_timeout = 60000;
 byte screensaver = 1;
-unsigned long fade_time;
-unsigned long fade_timeout = 60000; // when to begin fadeout.
-int fadeAmount = 1;  // Set the amount to fade I usually do 5, 10, 15, 20, 25 etc even up to 255.
 long random_screensaver = -1;
 
 // just helps to have a counter of these things.
@@ -92,6 +89,10 @@ BLECharacteristic* pCharacteristic2 = NULL; // this ble entry lets you query the
 int bluetooth_connect = 0;
 boolean bluetooth_enable = true;
 uint32_t value = 0;
+std::string command_array[200]; // make this huge.  Can't trust people
+int command_count = 0;
+char display_buffer[10][40];
+int display_buffer_count = 0;
 
 // Button to put bluetooth in to discovery mode.
 const int buttonPin = 21;
@@ -181,6 +182,25 @@ void setup() {
 }
 
 void loop() {
+
+  // check if there's anything in the command buffer.
+  if(command_count > 0)
+    command_processing();
+
+  // There's some display buffer stuff the bluetooth system can't send until it's clear.
+  if(display_buffer_count > 0) {
+    char temp_display_buffer[10][40];
+    int temp_display_buffer_count = display_buffer_count;
+    for(int i = 0; i < temp_display_buffer_count; i++) {
+      strcpy(temp_display_buffer[i],display_buffer[i]);
+    }
+    display_buffer_count = 0; // copied, lets go back to zero.
+    while(temp_display_buffer_count) {
+      temp_display_buffer_count--;
+      display_println(String(temp_display_buffer[temp_display_buffer_count]));
+    }
+  }
+  
 
   // pulse report every 5 minutes.
   if( millis() > 300000 && update_time < millis() - 300000) {
