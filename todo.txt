@@ -7,17 +7,8 @@ Return value for N.  if it's not set.
 Still that fucking problem starting up for the first time.
 	could be related to the bluetooth stuff.
 Bluetooth shouldn't do anything.  Just set variables and let loop take care of it!!
-ok, now why the hell doesn't regular lights work.
 
 
 Hardware:
 power cable plug
 4x power splitters with no diode.
-
-Tablet 3, show us what you can do at 5
-
-char command_array[15][25];
-int command_count = 0;
-
-char display_buffer[10][40];
-int display_buffer_count = 0;

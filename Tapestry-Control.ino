@@ -38,10 +38,11 @@ byte BRIGHTNESS = 150; // 0-255.  This is editable on the fly
 #define MAX_ACTIVE_STARS 8000
 #define MAX_SESSION_STARS 2000
 #define MAX_SESSIONS 100
+#define MAX_BUFFER 6100
 
 // Set our version number.  Don't forget to update when featureset changes
 #define PROJECT "Tapestry-Control"
-#define VERSION "V.1.12"
+#define VERSION "V.1.23"
 #define DEBUG 1
 char NAME[10];
 
@@ -89,8 +90,8 @@ BLECharacteristic* pCharacteristic2 = NULL; // this ble entry lets you query the
 int bluetooth_connect = 0;
 boolean bluetooth_enable = true;
 uint32_t value = 0;
-std::string command_array[200]; // make this huge.  Can't trust people
 int command_count = 0;
+int processed_command_count = 0;
 char display_buffer[10][40];
 int display_buffer_count = 0;
 
@@ -184,7 +185,9 @@ void setup() {
 void loop() {
 
   // check if there's anything in the command buffer.
-  if(command_count > 0)
+  //if(command_count > 0)
+  //EVERY_N_MILLISECONDS(30)
+  if(processed_command_count < command_count)
     command_processing();
 
   // There's some display buffer stuff the bluetooth system can't send until it's clear.
@@ -257,7 +260,7 @@ void loop() {
       openAnimation();
     }
 
-  } else if (screensaver == 2 || max_animation_counter == 0) {
+  } else if (screensaver == 2) {
 
     // special case, just run the raindrops/twinkling.
     static uint8_t startIndex = 0;

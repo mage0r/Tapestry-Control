@@ -45,6 +45,8 @@ class MyCallbacks: public BLECharacteristicCallbacks {
               //display_println(temp_text);
               strcpy(display_buffer[display_buffer_count], temp_text.c_str());
               display_buffer_count++;
+              if(display_buffer_count >= 10)
+                display_buffer_count = 0;
             }
 
             pCharacteristic->setValue(temp.c_str());
@@ -58,9 +60,16 @@ class MyCallbacks: public BLECharacteristicCallbacks {
           
         } else {
           //strcpy(command_array[command_count],value.c_str());
-          command_array[command_count] = value;
+          //command_array[command_count] = value;
+          command_buffer[command_count].length = value.length();
+          for(int j = 0; j < value.length(); j++) {
+            command_buffer[command_count].text[j] = value[j];
+          }
 
           command_count++;
+
+          if(command_count >= MAX_BUFFER)
+            command_count = 0;
         }
       }
     }
@@ -69,11 +78,13 @@ class MyCallbacks: public BLECharacteristicCallbacks {
 class MyServerCallbacks: public BLEServerCallbacks {
     void onConnect(BLEServer* pServer) {
       bluetooth_connect++;
+      /*
       if(DEBUG) {
         String temp = "We have a New Challenger.";
         strcpy(display_buffer[display_buffer_count], temp.c_str());
         display_buffer_count++;
-      }
+      }*/
+      display_println(F("We have a New Challenger."));
       BLEDevice::startAdvertising(); // this advertises the characteristic
       //display_header();
       display_update_bt();
@@ -81,11 +92,13 @@ class MyServerCallbacks: public BLEServerCallbacks {
 
     void onDisconnect(BLEServer* pServer) {
       bluetooth_connect--;
+      /*
       if(DEBUG) {
         String temp = "Bye Bye Tablet.";
         strcpy(display_buffer[display_buffer_count], temp.c_str());
         display_buffer_count++;
-      }
+      }*/
+      display_println(F("Bye Bye Tablet."));
       //display_header();
       display_update_bt();
     }
@@ -135,79 +148,37 @@ void bluetooth_setup() {
   //display_header();
   display_update_bt();
 
-  String temp3 = "Bluetooth Initialised.";
-  strcpy(display_buffer[display_buffer_count], temp3.c_str());
-  display_buffer_count++;
+  command_buffer = (ble_buffer*) ps_calloc(MAX_BUFFER, sizeof(ble_buffer));
+
+  display_println(F("Bluetooth Initialised."));
+
 }
 
 void command_processing() {
   // a little messy
-  // there is a chance we'll get bluetooth adding new stuff to the array
-  // so we copy it, zero out the command counter and let the command counter work it out
-  // itself later.
+  // this is a rolling buffer.  Each call we will process 10 of these so we don't go blocking.
 
-  Serial.print(F("Free Ram: "));
-    Serial.print(String(ESP.getFreeHeap()));
-    Serial.print(F(". Free PSRam: "));
-    Serial.println(String(ESP.getFreePsram()));
+  for(int x = 0; x < 10; x++) {
+    
+    if(command_buffer[processed_command_count].length > 0) {
 
-  std::string temp_command_array[200];
-  int temp_command_count = command_count;
-  for(int i = 0; i < temp_command_count; i++) {
-    //strcpy(temp_command_array[i],command_array[i]);
-      temp_command_array[i] = command_array[i];
-  }
-  command_count = 0; // copied, lets go back to zero.
-
-  Serial.print(F("Free Ram: "));
-    Serial.print(String(ESP.getFreeHeap()));
-    Serial.print(F(". Free PSRam: "));
-    Serial.println(String(ESP.getFreePsram()));
-
-  while(temp_command_count) {
-    temp_command_count--;
-
-    std::string value2 = temp_command_array[temp_command_count];
-
-    if (value2.length() > 0) {
-
-      // this is debug
-        if(DEBUG && false) {
-          Serial.print(F("BT Update: "));
-          Serial.print(String(value2.length()));
-          Serial.print(F(":"));
-          for (int i = 0; i < value2.length(); i++){
-            Serial.print(String(value2[i] - 0));
-            Serial.print(F(" "));
-          }
-          Serial.println(F(""));
-
-          Serial.print(F("BT Update: "));
-          Serial.print(String(value2.length()));
-          Serial.print(F(":"));
-          for (int i = 0; i < value2.length(); i++){
-            Serial.print(String(value2[i]));
-          }
-          Serial.println(F(""));
-        }
-
-      if(value2[1] == 'B') {
+      if(command_buffer[processed_command_count].text[1] == 'B') {
         // adjust brightness
-        FastLED.setBrightness(  value2[2] );
-        BRIGHTNESS = value2[2];
-      } else if(value2[1] == 'a' && value2.length() > 3) {
+        FastLED.setBrightness(  command_buffer[processed_command_count].text[2] );
+        BRIGHTNESS = command_buffer[processed_command_count].text[2];
+      } else if(command_buffer[processed_command_count].text[1] == 'a' && command_buffer[processed_command_count].length > 3) {
         // append the string to the animation.
         // strip bytes 2 and 3 in to a high-low int.
-        int sessionID = (value2[2] << 8) + value2[3];
+        int sessionID = (command_buffer[processed_command_count].text[2] << 8) + command_buffer[processed_command_count].text[3];
 
-        if(last_animation_counter[value2[0]-48] == sessionID) {
-          for(int i = 7; i < value2.length(); i=i+6) {
-            int star_number = (value2[i] << 8) + value2[i+1];
-            int timer = (value2[i+2] << 8) + value2[i+3];
-            int show =  (value2[i+4] << 8) + value2[i+5];
+        if(last_animation_counter[command_buffer[processed_command_count].text[0]-48] == sessionID) {
+          for(int i = 7; i < command_buffer[processed_command_count].length; i=i+6) {
+            int star_number = (command_buffer[processed_command_count].text[i] << 8) + command_buffer[processed_command_count].text[i+1];
+            int timer = (command_buffer[processed_command_count].text[i+2] << 8) + command_buffer[processed_command_count].text[i+3];
+            int show =  (command_buffer[processed_command_count].text[i+4] << 8) + command_buffer[processed_command_count].text[i+5];
 
             // append to an existing
-            byte temp_colour[3] = {value2[4],value2[5],value2[6]};
+            byte temp_colour[3] = {command_buffer[processed_command_count].text[4],command_buffer[processed_command_count].text[5],command_buffer[processed_command_count].text[6]};
 
             append_animation(sessionID, temp_colour, star_number, timer, show);
           }
@@ -215,12 +186,15 @@ void command_processing() {
           // this can dump out a lot.
           display_println(F("This session doesn't match the device!"));
         }
-      } else if(value2[1] == 'A') {
+      } else if(command_buffer[processed_command_count].text[1] == 'A') {
         // Display the animation sequence.
         // strip bytes 2 and 3 in to a high-low int.
-        int sessionID = (value2[2] << 8) + value2[3];
+        int sessionID = (command_buffer[processed_command_count].text[2] << 8) + command_buffer[processed_command_count].text[3];
 
         if(sessionID < max_animation_counter) {
+          
+          display_fortune(sessionID, false);
+
           if(screensaver) {
             display_println("I'm awake! I'm awake!");
             active_array[0].count = 0;
@@ -229,18 +203,17 @@ void command_processing() {
           }
           screensaver_time = millis(); // always need to reset this one.
 
-          display_fortune(sessionID, false);
-
           activateAnimation(sessionID);
+
         }
-      } else if(value2[1] == 'D') {
+      } else if(command_buffer[processed_command_count].text[1] == 'D') {
         // clear a saved animation.
         // strip bytes 2 and 3 in to a high-low int.
-        int sessionID = (value2[2] << 8) + value2[3];
+        int sessionID = (command_buffer[processed_command_count].text[2] << 8) + command_buffer[processed_command_count].text[3];
 
         if(sessionID < max_animation_counter)
           animation_array[sessionID].count = 0;
-      } else if(value2[1] == 'c') {
+      } else if(command_buffer[processed_command_count].text[1] == 'c') {
         // Light up a constellation by constellation_id
         if(screensaver) {
           display_println("I'm awake! I'm awake!");
@@ -249,18 +222,18 @@ void command_processing() {
           screensaver = 0;
         }
         screensaver_time = millis(); // always need to reset this one.
-        byte temp_byte[3] = {value2[2],value2[3],value2[4]};
+        byte temp_byte[3] = {command_buffer[processed_command_count].text[2],command_buffer[processed_command_count].text[3],command_buffer[processed_command_count].text[4]};
 
-        int show = (value2[6] << 8) + value2[7]; // timing delay
+        int show = (command_buffer[processed_command_count].text[6] << 8) + command_buffer[processed_command_count].text[7]; // timing delay
 
         display_print(F("Lets look at "));
-        display_println(constellation_array[value2[5]].name);
+        display_println(constellation_array[command_buffer[processed_command_count].text[5]].name);
 
-        display_fortune(value2[5], true);
+        display_fortune(command_buffer[processed_command_count].text[5], true);
 
-        activateConstellation(value2[5], temp_byte, show);
+        activateConstellation(command_buffer[processed_command_count].text[5], temp_byte, show);
 
-      } else if (value2[1] == 'S') {
+      } else if (command_buffer[processed_command_count].text[1] == 'S') {
         // fire up the screensaver.
         // start up the screensaver.
         // special mode.  Play the raindrops screensaver.
@@ -277,6 +250,15 @@ void command_processing() {
           display_println("Twinkle Twinkle!");
         }
       }
+
+      processed_command_count++;
+
+      if(processed_command_count >= MAX_BUFFER)
+        processed_command_count = 0;
+
+      if(processed_command_count >= command_count)
+       x = 10;
+
     }
   }
 }
