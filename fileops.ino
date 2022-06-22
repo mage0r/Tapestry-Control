@@ -9,7 +9,7 @@ void setup_fileops() {
   // declaring these here let me load them in to PSRAM
   star_array = (stars *) ps_calloc(843, sizeof(stars));
   constellation_array = (constellations *) ps_calloc(105, sizeof(constellations));
-  fortune_array = (fortunes *) ps_calloc(102, sizeof(fortunes));
+  fortune_array = (fortunes *) ps_calloc(35, sizeof(fortunes));
   
 }
 
@@ -217,8 +217,12 @@ void loadSession(fs::FS &fs, const char * path){
 
     File file = fs.open(path);
     if(!file || file.isDirectory()){
-        display_println(F("- failed to open file for reading"));
-        return;
+      display_println(F("- failed to open file for reading"));
+      display_println(F(""));
+      fs.rename("/ani_backup.csv", path);
+      loadSession(SPIFFS, path);
+        
+      return;
     }
 
     // this is very specific to loading the Animations.
@@ -343,8 +347,12 @@ void saveSession(fs::FS &fs, const char * path){
       Serial.print(path);
     }
 
-    if(!fs.remove(path)){
-      // delete failed.  Terminate the function.
+    // first clear out our backup file.
+    fs.remove("/ani_bck.csv");
+  
+    // take a copy.
+    if(!fs.rename(path, "/ani_bck.csv")){
+      // rename failed.  Terminate the function.
         Serial.println("- save failed");
         return;
     } // else, the file has been deleted and we can continue.
