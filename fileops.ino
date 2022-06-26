@@ -9,7 +9,7 @@ void setup_fileops() {
   // declaring these here let me load them in to PSRAM
   star_array = (stars *) ps_calloc(843, sizeof(stars));
   constellation_array = (constellations *) ps_calloc(105, sizeof(constellations));
-  fortune_array = (fortunes *) ps_calloc(102, sizeof(fortunes));
+  fortune_array = (fortunes *) ps_calloc(35, sizeof(fortunes));
   
 }
 
@@ -217,8 +217,17 @@ void loadSession(fs::FS &fs, const char * path){
 
     File file = fs.open(path);
     if(!file || file.isDirectory()){
-        display_println(F("- failed to open file for reading"));
+      display_println(F("- failed to open file for reading"));
+      display_print(F("Loading Backup File: "));
+      fs.rename("/ani_backup.csv", path);
+      file.close();
+      file = fs.open(path);
+      if(file)
+        display_print("Success");
+      else {
+        display_println("Fail");
         return;
+      }
     }
 
     // this is very specific to loading the Animations.
@@ -322,7 +331,21 @@ void loadSession(fs::FS &fs, const char * path){
     if(animation_lines > 0) {
       animation_counter++;
       max_animation_counter++;
+
+      if(animation_counter >= MAX_SESSIONS)
+        animation_counter = 0;
+
+      if(max_animation_counter < MAX_SESSIONS)
+        max_animation_counter++;
+
     }
+
+    
+
+    //Serial.print("Animation_counter: ");
+    //Serial.println(animation_counter);
+    //Serial.print("max_animation_counter: ");
+    //Serial.println(max_animation_counter);
 
     file.close();
 
@@ -343,8 +366,12 @@ void saveSession(fs::FS &fs, const char * path){
       Serial.print(path);
     }
 
-    if(!fs.remove(path)){
-      // delete failed.  Terminate the function.
+    // first clear out our backup file.
+    fs.remove("/ani_bck.csv");
+  
+    // take a copy.
+    if(!fs.rename(path, "/ani_bck.csv")){
+      // rename failed.  Terminate the function.
         Serial.println("- save failed");
         return;
     } // else, the file has been deleted and we can continue.

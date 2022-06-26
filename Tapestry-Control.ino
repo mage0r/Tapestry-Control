@@ -38,10 +38,11 @@ byte BRIGHTNESS = 150; // 0-255.  This is editable on the fly
 #define MAX_ACTIVE_STARS 8000
 #define MAX_SESSION_STARS 2000
 #define MAX_SESSIONS 100
+#define MAX_BUFFER 6100
 
 // Set our version number.  Don't forget to update when featureset changes
 #define PROJECT "Tapestry-Control"
-#define VERSION "V.1.05"
+#define VERSION "V.1.30"
 #define DEBUG 1
 char NAME[10];
 
@@ -63,10 +64,9 @@ extern const TProgmemPalette16 myRedWhiteBluePalette_p PROGMEM;
 unsigned long screensaver_time = 0;
 unsigned long screensaver_timeout = 60000;
 byte screensaver = 1;
-unsigned long fade_time;
-unsigned long fade_timeout = 60000; // when to begin fadeout.
-int fadeAmount = 1;  // Set the amount to fade I usually do 5, 10, 15, 20, 25 etc even up to 255.
 long random_screensaver = -1;
+unsigned long tigger_time = 0;
+unsigned long trigger_reset = 1800000;
 
 // just helps to have a counter of these things.
 unsigned int star_counter = 0;
@@ -92,6 +92,10 @@ BLECharacteristic* pCharacteristic2 = NULL; // this ble entry lets you query the
 int bluetooth_connect = 0;
 boolean bluetooth_enable = true;
 uint32_t value = 0;
+int command_count = 0;
+int processed_command_count = 0;
+char display_buffer[10][40];
+int display_buffer_count = 0;
 
 // Button to put bluetooth in to discovery mode.
 const int buttonPin = 21;
@@ -182,6 +186,27 @@ void setup() {
 
 void loop() {
 
+  // check if there's anything in the command buffer.
+  //if(command_count > 0)
+  //EVERY_N_MILLISECONDS(30)
+  if(processed_command_count < command_count)
+    command_processing();
+
+  // There's some display buffer stuff the bluetooth system can't send until it's clear.
+  if(display_buffer_count > 0) {
+    char temp_display_buffer[10][40];
+    int temp_display_buffer_count = display_buffer_count;
+    for(int i = 0; i < temp_display_buffer_count; i++) {
+      strcpy(temp_display_buffer[i],display_buffer[i]);
+    }
+    display_buffer_count = 0; // copied, lets go back to zero.
+    while(temp_display_buffer_count) {
+      temp_display_buffer_count--;
+      display_println(String(temp_display_buffer[temp_display_buffer_count]));
+    }
+  }
+  
+
   // pulse report every 5 minutes.
   if( millis() > 300000 && update_time < millis() - 300000) {
     // particularly during development, RAM needs to be monitored
@@ -194,12 +219,13 @@ void loop() {
   }
 
   // If it's been 1.5 minutes since showing any sessions.
-  if(screensaver == 0 && millis() > screensaver_timeout && screensaver_time < millis() - screensaver_timeout) {
+  if(screensaver == 0 && millis() > screensaver_timeout && screensaver_time < millis() - screensaver_timeout && active_array[0].count < 1) {
     // switch to screensaver after 1 minute.
     if(DEBUG)
       display_println(F("Getting Sleepy...."));
     screensaver = 1;
     screensaver_time = millis();
+    tigger_time = millis(); // reset the trigger time every time we go in to screensaver mode
   }
 
   if(screensaver == 1 && max_animation_counter > 2) {
@@ -215,7 +241,7 @@ void loop() {
         String temp_text = "Dreaming about....";
         temp_text += random_screensaver+1;
         temp_text += "/";
-        temp_text += max_animation_counter+1;
+        temp_text += max_animation_counter;
         display_println(temp_text);
       }
     }
@@ -237,7 +263,7 @@ void loop() {
       openAnimation();
     }
 
-  } else if (screensaver == 2 || max_animation_counter == 0) {
+  } else if (screensaver == 2) {
 
     // special case, just run the raindrops/twinkling.
     static uint8_t startIndex = 0;
@@ -248,6 +274,14 @@ void loop() {
    EVERY_N_MILLISECONDS(30) {
       openAnimation();
     }
+  }
+
+  // If the screensaver has been running for 30 minutes, there's a chance
+  // the system has gone in to a failed state where it's not accepting connections.
+  // The restart on this system is pretty quick.  Just boot it and get it over with.
+  if(millis() > trigger_reset && tigger_time < millis() - trigger_reset) {
+    display_println("Pre-emptive restart!");
+    ESP.restart();
   }
 
   if(millis() > 60000 && save_animations_time < millis() - 60000 && max_animation_counter > 0) {

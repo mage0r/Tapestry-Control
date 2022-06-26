@@ -70,3 +70,12 @@ typedef struct {
 } fortunes;
 
 fortunes *fortune_array;
+
+// seems stupid, but this is the easiest way to load this array in to the PSRAM
+typedef struct {
+  byte length;
+  byte text[23];
+} ble_buffer;
+
+ble_buffer *command_buffer;
+ble_buffer *temp_buffer;

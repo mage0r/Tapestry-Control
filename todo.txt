@@ -8,8 +8,7 @@ Still that fucking problem starting up for the first time.
 	could be related to the bluetooth stuff.
 Bluetooth shouldn't do anything.  Just set variables and let loop take care of it!!
 
+
 Hardware:
 power cable plug
 4x power splitters with no diode.
-
-Tablet 3, show us what you can do at 5

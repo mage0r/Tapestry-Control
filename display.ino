@@ -143,7 +143,7 @@ boolean display_fortune(int position, boolean constellation) {
     //
     // If constellation is true, position is the constellation array position.
     // if constellation is false, position is the sessionID and we have to check if the star exists there. 
-    String display_text;
+    String display_text = "";
 
     if(constellation) {
       for(int i = 0; i < 5; i++) {
@@ -170,7 +170,7 @@ boolean display_fortune(int position, boolean constellation) {
     if(random_fortune == 1 && display_text.length() == 0) {
       display_text = fortune_array[random(4, 101)].text;
     } else if (!constellation) {
-      display_text = "Let see what you got...";
+      display_text = "Lets see what you got...";
     }
 
     if(display_text.length() > 0) {
