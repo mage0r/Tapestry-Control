@@ -21,6 +21,7 @@ class MyCallbacks: public BLECharacteristicCallbacks {
           } else {
             last_animation_counter[value[0]-48] = animation_counter; // keep a record of which tablet has which number
             temp += animation_counter;
+            animation_array[animation_counter].count = 0; // reset it to zero.
 
             animation_counter++;
 
@@ -32,8 +33,6 @@ class MyCallbacks: public BLECharacteristicCallbacks {
             if(max_animation_counter < MAX_SESSIONS)
               max_animation_counter++;
 
-
-            animation_array[animation_counter].count = 0; // reset it to zero.
           }
 
             if(DEBUG) {
@@ -193,8 +192,6 @@ void command_processing() {
 
         if(sessionID < max_animation_counter) {
           
-          display_fortune(sessionID, false);
-
           if(screensaver) {
             display_println("I'm awake! I'm awake!");
             active_array[0].count = 0;
@@ -202,6 +199,8 @@ void command_processing() {
             screensaver = 0;
           }
           screensaver_time = millis(); // always need to reset this one.
+
+          display_fortune(sessionID, false);
 
           activateAnimation(sessionID);
 

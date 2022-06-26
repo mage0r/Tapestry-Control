@@ -42,7 +42,7 @@ byte BRIGHTNESS = 150; // 0-255.  This is editable on the fly
 
 // Set our version number.  Don't forget to update when featureset changes
 #define PROJECT "Tapestry-Control"
-#define VERSION "V.1.23"
+#define VERSION "V.1.30"
 #define DEBUG 1
 char NAME[10];
 
@@ -65,6 +65,8 @@ unsigned long screensaver_time = 0;
 unsigned long screensaver_timeout = 60000;
 byte screensaver = 1;
 long random_screensaver = -1;
+unsigned long tigger_time = 0;
+unsigned long trigger_reset = 1800000;
 
 // just helps to have a counter of these things.
 unsigned int star_counter = 0;
@@ -217,12 +219,13 @@ void loop() {
   }
 
   // If it's been 1.5 minutes since showing any sessions.
-  if(screensaver == 0 && millis() > screensaver_timeout && screensaver_time < millis() - screensaver_timeout) {
+  if(screensaver == 0 && millis() > screensaver_timeout && screensaver_time < millis() - screensaver_timeout && active_array[0].count < 1) {
     // switch to screensaver after 1 minute.
     if(DEBUG)
       display_println(F("Getting Sleepy...."));
     screensaver = 1;
     screensaver_time = millis();
+    tigger_time = millis(); // reset the trigger time every time we go in to screensaver mode
   }
 
   if(screensaver == 1 && max_animation_counter > 2) {
@@ -238,7 +241,7 @@ void loop() {
         String temp_text = "Dreaming about....";
         temp_text += random_screensaver+1;
         temp_text += "/";
-        temp_text += max_animation_counter+1;
+        temp_text += max_animation_counter;
         display_println(temp_text);
       }
     }
@@ -271,6 +274,14 @@ void loop() {
    EVERY_N_MILLISECONDS(30) {
       openAnimation();
     }
+  }
+
+  // If the screensaver has been running for 30 minutes, there's a chance
+  // the system has gone in to a failed state where it's not accepting connections.
+  // The restart on this system is pretty quick.  Just boot it and get it over with.
+  if(millis() > trigger_reset && tigger_time < millis() - trigger_reset) {
+    display_println("Pre-emptive restart!");
+    ESP.restart();
   }
 
   if(millis() > 60000 && save_animations_time < millis() - 60000 && max_animation_counter > 0) {

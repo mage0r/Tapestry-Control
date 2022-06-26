@@ -218,11 +218,16 @@ void loadSession(fs::FS &fs, const char * path){
     File file = fs.open(path);
     if(!file || file.isDirectory()){
       display_println(F("- failed to open file for reading"));
-      display_println(F(""));
+      display_print(F("Loading Backup File: "));
       fs.rename("/ani_backup.csv", path);
-      loadSession(SPIFFS, path);
-        
-      return;
+      file.close();
+      file = fs.open(path);
+      if(file)
+        display_print("Success");
+      else {
+        display_println("Fail");
+        return;
+      }
     }
 
     // this is very specific to loading the Animations.
@@ -326,7 +331,21 @@ void loadSession(fs::FS &fs, const char * path){
     if(animation_lines > 0) {
       animation_counter++;
       max_animation_counter++;
+
+      if(animation_counter >= MAX_SESSIONS)
+        animation_counter = 0;
+
+      if(max_animation_counter < MAX_SESSIONS)
+        max_animation_counter++;
+
     }
+
+    
+
+    //Serial.print("Animation_counter: ");
+    //Serial.println(animation_counter);
+    //Serial.print("max_animation_counter: ");
+    //Serial.println(max_animation_counter);
 
     file.close();
 

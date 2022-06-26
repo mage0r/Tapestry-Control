@@ -44,7 +44,8 @@ void setup_animations() {
 void append_animation(int animation_position, byte colour[3], int star_number, int timer, int show) {
 
   if(animation_array[animation_position].count > MAX_SESSION_STARS) {
-    display_println(F("Too many stars!"));
+    display_print(String(animation_array[animation_position].count));
+    display_println(": Too many stars!");
 
   } else {
 
@@ -71,7 +72,7 @@ void activateAnimation(int animation_position) {
 
    if(DEBUG && false) {
     Serial.println(F("Setup animation."));
-    Serial.println(current);
+    Serial.println(String(current));
     Serial.println(animation_position);
     Serial.println(animation_array[animation_position].count);
    }
@@ -81,7 +82,8 @@ void activateAnimation(int animation_position) {
     // just check that our animation array isn't full.
     // doing this at the top just in case it's full from the onset.
     if(current >= MAX_ACTIVE_STARS) {
-      display_println(F("Animation Buffer Full."));
+      display_print(String(current));
+      display_println(F(": Animation Buffer Full."));
       break;
     }
 
@@ -113,14 +115,15 @@ void activateConstellation(byte animation_position, byte colour[3], int show) {
 
   // When displaying a constellation, we also copy it in to the session information.
   unsigned int temp_animation = animation_counter;
+  animation_array[temp_animation].count = 0; // reset it to zero.
   animation_counter++;
+
   if(animation_counter >= MAX_SESSIONS)
     animation_counter = 0;
 
   if(max_animation_counter < MAX_SESSIONS)
     max_animation_counter++;
 
-  animation_array[temp_animation].count = 0; // reset it to zero.
 
   for(int i=0; i < constellation_array[animation_position].star_count; i++) {
 
@@ -135,9 +138,9 @@ void activateConstellation(byte animation_position, byte colour[3], int show) {
     animation_array[temp_animation].show[animation_array[temp_animation].count] = show;
     animation_array[temp_animation].count++;
 
-    activateAnimation(temp_animation);
-
   }
+
+  activateAnimation(temp_animation);
 
 }
 
