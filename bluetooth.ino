@@ -53,6 +53,26 @@ class MyCallbacks: public BLECharacteristicCallbacks {
         } else if (value[1] == 'N') {
           // Lets just check our current session for our tablet.
           String temp = String(value[0]); // set the first character to be the tablet ID
+
+          // whoa whoa whoa, what happens if we restart with an open session?!
+          // you get a -1, which nothing really likes.
+          // the tablet reads that as 65535.
+          // 65535 doesn't match -1
+          // everything complains if you're lucky, crashes if you aren't.
+          // I hate putting processing in this section, but I guess we gotta.
+
+          if(last_animation_counter[value[0]-48] == -1) {
+            last_animation_counter[value[0]-48] = animation_counter;
+            animation_array[animation_counter].count = 0; // reset animation to zero.
+
+            animation_counter++;
+            if(animation_counter >= MAX_SESSIONS)
+              animation_counter = 0;
+            // because we cycle around when we hit MAX_SESSIONS entries, we need to keep an eye on that.
+            if(max_animation_counter < MAX_SESSIONS)
+              max_animation_counter++;
+          }
+
           temp += last_animation_counter[value[0]-48];
 
           pCharacteristic->setValue(temp.c_str());
@@ -183,6 +203,10 @@ void command_processing() {
           }
         } else {
           // this can dump out a lot.
+          display_print(String(last_animation_counter[command_buffer[processed_command_count].text[0]-48]));
+          display_print("<>");
+          display_print(String(sessionID));
+          display_print(":");
           display_println(F("This session doesn't match the device!"));
         }
       } else if(command_buffer[processed_command_count].text[1] == 'A') {
