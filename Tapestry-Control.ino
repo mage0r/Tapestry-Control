@@ -37,12 +37,12 @@ byte BRIGHTNESS = 150; // 0-255.  This is editable on the fly
 // Define some of our array sizes.
 #define MAX_ACTIVE_STARS 8000
 #define MAX_SESSION_STARS 2000
-#define MAX_SESSIONS 100
+#define MAX_SESSIONS 50
 #define MAX_BUFFER 6100
 
 // Set our version number.  Don't forget to update when featureset changes
 #define PROJECT "Tapestry-Control"
-#define VERSION "V.1.30"
+#define VERSION "V.1.32"
 #define DEBUG 1
 char NAME[10];
 
@@ -75,6 +75,7 @@ unsigned int planet_counter = 0;
 unsigned int animation_counter = 0;
 unsigned int max_animation_counter = 0; // need an extra counter for when we max out the array
 int last_animation_counter[20]; //keep a record of which device has which animation. 20 is widly optimistic.
+int save_counter = 0; // because we nibble away at the save, we need to keep track of how far in to that process we are.
 
 // TFT screen
 TFT_eSPI myGLCD = TFT_eSPI();       // Invoke custom library
@@ -279,19 +280,20 @@ void loop() {
   // If the screensaver has been running for 30 minutes, there's a chance
   // the system has gone in to a failed state where it's not accepting connections.
   // The restart on this system is pretty quick.  Just boot it and get it over with.
+  /*
   if(millis() > trigger_reset && tigger_time < millis() - trigger_reset) {
     display_println("Pre-emptive restart!");
     ESP.restart();
   }
+  */
 
+  
   if(millis() > 60000 && save_animations_time < millis() - 60000 && max_animation_counter > 0) {
     // save every minute.
     // probably don't want to save if it's empty.
     saveSession(SPIFFS, "/animations.csv");
-    save_animations_time = millis();
+    
   }
-  
-  //read_button();
-  
+
   FastLED.show();
 }

@@ -11,3 +11,191 @@ Saving Session data: /animations.csv. Done: 10
 Saving Session data: /animations.csv. Done: 10
 Lets look at Hydra
  ,@�+@
+
+-1<>65535:This session doesn't match the device!
+
+st:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 188777542, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:1
+load:0x3fff0030,len:1420
+ho 0 tail 12 room 4
+load:0x40078000,len:13540
+load:0x40080400,len:3604
+entry 0x400805f0
+Display Initialised.
+Tapestry-Control V.1.30
+Build Date: Jun 27 2022 22:05:53
+Free Ram: 243276. Free PSRam: 4191871
+LED's Initialised.
+Animations Initialised.
+SPIFFS Initialised.
+Listing directory: /
+  FILE: config.ini    SIZE: 214
+  FILE: const.csv    SIZE: 1000
+  FILE: fortune.csv    SIZE: 2724
+  FILE: stars.csv    SIZE: 23847
+  FILE: animations.csv    SIZE: 175381
+  FILE: ani_bck.csv    SIZE: 175381
+Loading Config: /config.ini. Done.
+Loading Constellations: /const.csv. Done: 105
+Loading Stars: /stars.csv. Done: 843
+Loading Sessions: /animations.csv. Done: 100
+Loading Fortune: /fortune.csv. Done: 34
+Bluetooth Initialised.
+Free Ram: 179800. Free PSRam: 807867
+Dreaming about....77/100
+Dreaming about....22/100
+Dreaming about....32/100
+Dreaming about....74/100
+Dreaming about....87/100
+Dreaming about....41/100
+Dreaming about....96/100
+Dreaming about....65/100
+Dreaming about....66/100
+Dreaming about....8/100
+Dreaming about....85/100
+Dreaming about....40/100
+Dreaming about....91/100
+Dreaming about....82/100
+Dreaming about....30/100
+Saving Session data: /animations.csv. Done: 100
+Dreaming about....36/100
+
+assert failed: xQueueGenericSend queue.c:832 (pxQueue->pcHead != ((void *)0) || pxQueue->u.xSemaphore.xMutexHolder == ((void *)0) || pxQueue->u.xSemaphore.xMutexHolder == xTaskGetCurrentTaskHandle())
+
+
+Backtrace:0x40083965:0x3ffc8fa00x40093c7d:0x3ffc8fc0 0x40098a25:0x3ffc8fe0 0x40094582:0x3ffc9110 0x400e0bfd:0x3ffc9150 0x400d71f9:0x3ffc9170 0x400d8bc5:0x3ffc9190 0x400d9963:0x3ffc91f0 0x400d2e6d:0x3ffc9240 0x400d312a:0x3ffc9260 0x400d4f36:0x3ffc92a0 0x400e1325:0x3ffc9480 
+
+
+
+
+ELF file SHA256: 0000000000000000
+
+Rebooting...
+ets Jun  8 2016 00:22:57
+
+rst:0xc (SW_CPU_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 188777542, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:1
+load:0x3fff0030,len:1420
+ho 0 tail 12 room 4
+load:0x40078000,len:13540
+load:0x40080400,len:3604
+entry 0x400805f0
+Display Initialised.
+Tapestry-Control V.1.30
+Build Date: Jun 27 2022 22:05:53
+Free Ram: 243276. Free PSRam: 4191871
+LED's Initialised.
+Animations Initialised.
+SPIFFS Initialised.
+Listing directory: /
+  FILE: ani_bck.csv    SIZE: 175381
+  FILE: config.ini    SIZE: 214
+  FILE: const.csv    SIZE: 1000
+  FILE: fortune.csv    SIZE: 2724
+  FILE: stars.csv    SIZE: 23847
+  FILE: animations.csv    SIZE: 175381
+Loading Config: /config.ini. Done.
+Loading Constellations: /const.csv. Done: 105
+Loading Stars: /stars.csv. Done: 843
+Loading Sessions: /animations.csv. Done: 100
+Loading Fortune: /fortune.csv. Done: 34
+Bluetooth Initialised.
+Free Ram: 179796. Free PSRam: 807867
+E (26590) task_wdt: Task watchdog got triggered. The following tasks did not reset the watchdog in time:
+E (26590) task_wdt:  - IDLE (CPU 0)
+E (26590) task_wdt: Tasks currently running:
+E (26590) task_wdt: CPU 0: BTC_TASK
+E (26590) task_wdt: CPU 1: loopTask
+E (26590) task_wdt: Aborting.
+
+abort() was called at PC 0x400e8889 on core 0
+
+
+Backtrace:0x40083965:0x3ffbe8200x40093c7d:0x3ffbe840 0x40098921:0x3ffbe860 0x400e8889:0x3ffbe8e0 0x40085c2d:0x3ffbe900 0x400d7f5d:0x3ffd1e90 0x400d8c36:0x3ffd1eb0 0x400d9963:0x3ffd1f10 0x400d2e6d:0x3ffd1f60 0x400d312a:0x3ffd1f80 0x400d3556:0x3ffd1fc0 0x400ddfa3:0x3ffd2000 0x400dc329:0x3ffd2060 0x400f1732:0x3ffd2080 0x400f2096:0x3ffd20a0 0x40118cd5:0x3ffd20f0 0x4011ab73:0x3ffd2110 
+
+
+
+
+ELF file SHA256: 0000000000000000
+
+Rebooting...
+ets Jun  8 2016 00:22:57
+
+rst:0xc (SW_CPU_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 188777542, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:1
+load:0x3fff0030,len:1420
+ho 0 tail 12 room 4
+load:0x40078000,len:13540
+load:0x40080400,len:3604
+entry 0x400805f0
+Display Initialised.
+Tapestry-Control V.1.30
+Build Date: Jun 27 2022 22:05:53
+Free Ram: 243276. Free PSRam: 4191871
+LED's Initialised.
+Animations Initialised.
+SPIFFS Initialised.
+Listing directory: /
+  FILE: ani_bck.csv    SIZE: 175381
+  FILE: config.ini    SIZE: 214
+  FILE: const.csv    SIZE: 1000
+  FILE: fortune.csv    SIZE: 2724
+  FILE: stars.csv    SIZE: 23847
+  FILE: animations.csv    SIZE: 175381
+Loading Config: /config.ini. Done.
+Loading Constellations: /const.csv. Done: 105
+Loading Stars: /stars.csv. Done: 843
+Loading Sessions: /animations.csv. Done: 100
+Loading Fortune: /fortune.csv. Done: 34
+Bluetooth Initialised.
+
+assert failed: xQueueGenericSend queue.c:832 (pxQueue->pcHead != ((void *)0) || pxQueue->u.xSemaphore.xMutexHolder == ((void *)0) || pxQueue->u.xSemaphore.xMutexHolder == xTaskGetCurrentTaskHandle())
+
+
+Backtrace:0x40083965:0x3ffd1cc00x40093c7d:0x3ffd1ce0 0x40098a25:0x3ffd1d00 0x40094582:0x3ffd1e30 0x400e0bfd:0x3ffd1e70 0x400d71f9:0x3ffd1e90 0x400d8bc5:0x3ffd1eb0 0x400d9963:0x3ffd1f10 0x400d2e6d:0x3ffd1f60 0x400d312a:0x3ffd1f80 0x400d3556:0x3ffd1fc0 0x400ddfa3:0x3ffd2000 0x400dc329:0x3ffd2060 0x400f1732:0x3ffd2080 0x400f2096:0x3ffd20a0 0x40118cd5:0x3ffd20f0 0x4011ab73:0x3ffd2110 
+
+
+
+
+ELF file SHA256: 0000000000000000
+
+Rebooting...
+ets Jun  8 2016 00:22:57
+
+rst:0xc (SW_CPU_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 188777542, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:1
+load:0x3fff0030,len:1420
+ho 0 tail 12 room 4
+load:0x40078000,len:13540
+load:0x40080400,len:3604
+entry 0x400805f0
+Display Initialised.
+Tapestry-Control V.1.30
+Build Date: Jun 27 2022 22:05:53
+Free Ram: 243276. Free PSRam: 4191871
+LED's Initialised.
+Animations Initialised.
+SPIFFS Initialised.
+Listing directory: /
+  FILE: ani_bck.csv    SIZE: 175381
+  FILE: config.ini    SIZE: 214
+  FILE: const.csv    SIZE: 1000
+  FILE: fortune.csv    SIZE: 2724
+  FILE: stars.csv    SIZE: 23847
+  FILE: animations.csv    SIZE: 175381
+Loading Config: /config.ini. Done.
+Loading Constellations: /const.csv. Done: 105
+Loading Stars: /stars.csv. Done: 843
+Loading Sessions: /animations.csv. Done: 100
+Loading Fortune: /fortune.csv. Done: 34
+Bluetooth Initialised.
+Free Ram: 179800. Free PSRam: 807867
+Dreaming about....32/100

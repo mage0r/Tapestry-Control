@@ -232,9 +232,7 @@ void loadSession(fs::FS &fs, const char * path){
 
     // this is very specific to loading the Animations.
 
-    byte counter1 = 0;
-    int char_pos = 0;
-    int session_counter = 0;
+    byte counter1 = 0; // this counts out the length of each line.
 
     // collect variables.
     int temp_animation_id = 0;
@@ -242,7 +240,7 @@ void loadSession(fs::FS &fs, const char * path){
     byte temp_colour[3] = {0,0,0};
     int temp_times = 0;
     int temp_show = 0;
-    int animation_lines = 0;
+    long animation_lines = 0; // potentially 100*2000 = 200,000.  int only allows 65535
 
     animation_counter = 0; // make sure this has been reset to 0
     max_animation_counter = 0;
@@ -359,67 +357,81 @@ void loadSession(fs::FS &fs, const char * path){
 // We can only store 500 of these locally
 // so we delete and re-create the file ever 30 minutes(?)
 void saveSession(fs::FS &fs, const char * path){
+
+  File file;
+  
+  // we run this command frequently and nibble away at our session array
+  // don't want to be blocking.
+  if(save_counter == 0) {
+    // save_counter of 0 means we're starting a new save session.
     if(DEBUG) {
       //display_print(F("Saving Session data: "));
-      Serial.print(F("Saving Session data: "));
+      Serial.print(millis());
+      Serial.print(F(":Saving Session data: "));
       //display_print(path);
-      Serial.print(path);
+      Serial.println(path);
     }
+    
+    fs.remove("/ani_bck.csv"); // first clear out our backup file.
 
-    // first clear out our backup file.
-    fs.remove("/ani_bck.csv");
-  
     // take a copy.
     if(!fs.rename(path, "/ani_bck.csv")){
       // rename failed.  Terminate the function.
-        Serial.println("- save failed");
+        Serial.println(F("Save failed"));
         return;
     } // else, the file has been deleted and we can continue.
 
-    File file = fs.open(path, FILE_WRITE);
+    file = fs.open(path, FILE_WRITE);
     if(!file){
-        Serial.println(F("- failed"));
+        Serial.println(F("Open failed"));
         return;
     }
 
-    int counter = 0;
-    int counter2 = 0;
-
-    for(int i = 0; i < max_animation_counter; i++) {
-      for(int j = 0 ; j < animation_array[i].count; j++) {
-        String temp_message;
-
-        temp_message += i;
-        temp_message += ',';
-        temp_message += animation_array[i].colour[j][0];
-        temp_message += ',';
-        temp_message += animation_array[i].colour[j][1];
-        temp_message += ',';
-        temp_message += animation_array[i].colour[j][2];
-        temp_message += ',';
-        temp_message += animation_array[i].star_list[j]->number;
-        temp_message += ',';
-        temp_message += animation_array[i].times[j];
-        temp_message += ',';
-        temp_message += animation_array[i].show[j];
-        temp_message += '\n';
-
-        file.print(temp_message);
-        if(DEBUG && false) 
-          Serial.print(temp_message);
-        counter++;
-      }
-      counter2++;
+  } else {
+    // open the file for appending. We have a backup and are in the process of writing.
+    file = fs.open(path, FILE_APPEND);
+    if(!file){
+        Serial.println(F("Append failed"));
+        return;
     }
-
-  if(DEBUG) {
-    //display_print(F(". Done: "));
-    Serial.print(F(". Done: "));
-    //display_println(String(counter2-1));
-    Serial.println(String(counter2));
   }
 
-    file.close();
+  for(int j = 0 ; j < animation_array[save_counter].count; j++) {
+    String temp_message;
+
+    temp_message += save_counter;
+    temp_message += ',';
+    temp_message += animation_array[save_counter].colour[j][0];
+    temp_message += ',';
+    temp_message += animation_array[save_counter].colour[j][1];
+    temp_message += ',';
+    temp_message += animation_array[save_counter].colour[j][2];
+    temp_message += ',';
+    temp_message += animation_array[save_counter].star_list[j]->number;
+    temp_message += ',';
+    temp_message += animation_array[save_counter].times[j];
+    temp_message += ',';
+    temp_message += animation_array[save_counter].show[j];
+    temp_message += '\n';
+
+    file.print(temp_message);
+  }
+
+  file.close();
+
+  save_counter++;
+
+  if(save_counter >= max_animation_counter) {
+    // We're finished!
+    // update our last saved time.
+    save_animations_time = millis();
+    if(DEBUG) {
+      Serial.print(millis());
+      Serial.print(F(":Session Data saved: "));
+      Serial.println(String(save_counter));
+    }
+    save_counter = 0; // back to the start.
+  }
 }
 
 void loadFortune(fs::FS &fs, const char * path){
