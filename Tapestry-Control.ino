@@ -262,6 +262,8 @@ void loop() {
 
     EVERY_N_MILLISECONDS(30) {
       openAnimation();
+      if(save_counter)
+        saveSession(SPIFFS, "/animations.csv");
     }
 
   } else if (screensaver == 2) {
@@ -274,6 +276,8 @@ void loop() {
   } else {
    EVERY_N_MILLISECONDS(30) {
       openAnimation();
+      if(save_counter)
+        saveSession(SPIFFS, "/animations.csv");
     }
   }
 
@@ -288,8 +292,8 @@ void loop() {
   */
 
   
-  if(millis() > 60000 && save_animations_time < millis() - 60000 && max_animation_counter > 0) {
-    // save every minute.
+  if(!save_counter && millis() > 300000 && save_animations_time < millis() - 300000 && max_animation_counter > 0) {
+    // save every 5 minutes.
     // probably don't want to save if it's empty.
     saveSession(SPIFFS, "/animations.csv");
     
