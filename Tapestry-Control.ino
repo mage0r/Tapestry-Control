@@ -42,7 +42,7 @@ byte BRIGHTNESS = 150; // 0-255.  This is editable on the fly
 
 // Set our version number.  Don't forget to update when featureset changes
 #define PROJECT "Tapestry-Control"
-#define VERSION "V.1.32"
+#define VERSION "V.1.34"
 #define DEBUG 1
 char NAME[10];
 
@@ -188,9 +188,7 @@ void setup() {
 void loop() {
 
   // check if there's anything in the command buffer.
-  //if(command_count > 0)
-  //EVERY_N_MILLISECONDS(30)
-  if(processed_command_count < command_count)
+  if(processed_command_count != command_count)
     command_processing();
 
   // There's some display buffer stuff the bluetooth system can't send until it's clear.

@@ -78,8 +78,7 @@ class MyCallbacks: public BLECharacteristicCallbacks {
           pCharacteristic->setValue(temp.c_str());
           
         } else {
-          //strcpy(command_array[command_count],value.c_str());
-          //command_array[command_count] = value;
+
           command_buffer[command_count].length = value.length();
           for(int j = 0; j < value.length(); j++) {
             command_buffer[command_count].text[j] = value[j];
@@ -89,6 +88,7 @@ class MyCallbacks: public BLECharacteristicCallbacks {
 
           if(command_count >= MAX_BUFFER)
             command_count = 0;
+
         }
       }
     }
@@ -97,12 +97,6 @@ class MyCallbacks: public BLECharacteristicCallbacks {
 class MyServerCallbacks: public BLEServerCallbacks {
     void onConnect(BLEServer* pServer) {
       bluetooth_connect++;
-      /*
-      if(DEBUG) {
-        String temp = "We have a New Challenger.";
-        strcpy(display_buffer[display_buffer_count], temp.c_str());
-        display_buffer_count++;
-      }*/
       display_println(F("We have a New Challenger."));
       BLEDevice::startAdvertising(); // this advertises the characteristic
       //display_header();
@@ -111,14 +105,9 @@ class MyServerCallbacks: public BLEServerCallbacks {
 
     void onDisconnect(BLEServer* pServer) {
       bluetooth_connect--;
-      /*
-      if(DEBUG) {
-        String temp = "Bye Bye Tablet.";
-        strcpy(display_buffer[display_buffer_count], temp.c_str());
-        display_buffer_count++;
-      }*/
+
       display_println(F("Bye Bye Tablet."));
-      //display_header();
+
       display_update_bt();
     }
 
@@ -279,8 +268,9 @@ void command_processing() {
       if(processed_command_count >= MAX_BUFFER)
         processed_command_count = 0;
 
-      if(processed_command_count >= command_count)
-       x = 10;
+      // we've hit the active limit.  Cancel the loop.
+      if(processed_command_count == command_count)
+        x = 10;
 
     }
   }
