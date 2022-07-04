@@ -11,13 +11,10 @@ FEATURES
 * tinyPICO ESP32 (https://www.tinypico.com).
 * 12-24V to 5V 10A DC-DC convertor (https://daygreen.com/collections/12-24v-to-5v/products/12v-24v-to-5v-10a-50w-dc-dc-step-down-converter-voltage-regulator-1).
 * 2.4" TFT LCD Screen.
-* Wifi
 * Bluetooth LE
-* MQTT (currently inactive)
-* SPIFFS (1MB)
-* 3MB Program space (Using about 1.5MB of it.)
+* SPIFFS (2MB)
+* 2MB Program space (Using a little over 1MB of it.)
 * 843 WS2812 LED's (using fastled).
-* Two buttons (? maybe.  may be attached with glue.).
 
 CREDITS
 ------------
