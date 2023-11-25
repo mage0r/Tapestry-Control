@@ -43,7 +43,9 @@ byte BRIGHTNESS = 150;  // 0-255.  This is editable on the fly
 
 // Set our version number.  Don't forget to update when featureset changes
 #define PROJECT "Tapestry-Control"
-#define VERSION "V.1.34"
+#define VERSION "V.1.37"
+
+
 #define DEBUG 1
 char NAME[10];
 
@@ -77,6 +79,7 @@ unsigned int animation_counter = 0;
 unsigned int max_animation_counter = 0;  // need an extra counter for when we max out the array
 int last_animation_counter[20];          //keep a record of which device has which animation. 20 is widly optimistic.
 int save_counter = 0;                    // because we nibble away at the save, we need to keep track of how far in to that process we are.
+boolean save_enable = false;
 
 // TFT screen
 TFT_eSPI myGLCD = TFT_eSPI();  // Invoke custom library
@@ -259,7 +262,7 @@ void loop() {
 
     EVERY_N_MILLISECONDS(30) {
       openAnimation();
-      if (save_counter)
+      if (save_enable && save_counter)
         saveSession(SPIFFS, "/animations.csv");
     }
 
@@ -273,7 +276,7 @@ void loop() {
   } else {
     EVERY_N_MILLISECONDS(30) {
       openAnimation();
-      if (save_counter)
+      if (save_enable && save_counter)
         saveSession(SPIFFS, "/animations.csv");
     }
   }
@@ -289,7 +292,7 @@ void loop() {
   */
 
 
-  if (!save_counter && millis() > 300000 && save_animations_time < millis() - 300000 && max_animation_counter > 0) {
+  if (save_enable && !save_counter && millis() > 300000 && save_animations_time < millis() - 300000 && max_animation_counter > 0) {
     // save every 5 minutes.
     // probably don't want to save if it's empty.
     saveSession(SPIFFS, "/animations.csv");

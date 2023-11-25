@@ -133,7 +133,7 @@ void display_println(String temp) {
 
 }
 
-boolean display_fortune(int position, boolean constellation) {
+boolean display_fortune(int position, boolean constellation, int tabletID) {
     // special case!  If we have a special comment related to our star, throw it up!.
     // cheat a little here.  We only have 4 fortunes specific to constellations or stars, don't bother checking
     // the whole array.
@@ -170,7 +170,9 @@ boolean display_fortune(int position, boolean constellation) {
     if(random_fortune == 1 && display_text.length() == 0) {
       display_text = fortune_array[random(4, 101)].text;
     } else if (!constellation) {
-      display_text = "Lets see what you got...";
+      display_text = "Tablet ";
+      display_text += tabletID;
+      display_text += ", lets see what you got...";
     }
 
     if(display_text.length() > 0) {

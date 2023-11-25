@@ -213,7 +213,7 @@ void command_processing() {
           }
           screensaver_time = millis(); // always need to reset this one.
 
-          display_fortune(sessionID, false);
+          display_fortune(sessionID, false, command_buffer[processed_command_count].text[0]-48);
 
           activateAnimation(sessionID);
 
@@ -241,7 +241,7 @@ void command_processing() {
         display_print(F("Lets look at "));
         display_println(constellation_array[command_buffer[processed_command_count].text[5]].name);
 
-        display_fortune(command_buffer[processed_command_count].text[5], true);
+        display_fortune(command_buffer[processed_command_count].text[5], true, command_buffer[processed_command_count].text[0]-48);
 
         activateConstellation(command_buffer[processed_command_count].text[5], temp_byte, show);
 

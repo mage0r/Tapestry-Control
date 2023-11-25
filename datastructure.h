@@ -78,4 +78,3 @@ typedef struct {
 } ble_buffer;
 
 ble_buffer *command_buffer;
-ble_buffer *temp_buffer;

@@ -364,6 +364,7 @@ void saveSession(fs::FS &fs, const char * path){
   // don't want to be blocking.
   if(save_counter == 0) {
     // save_counter of 0 means we're starting a new save session.
+    //BLEDevice::deinit(true);
     if(DEBUG) {
       //display_print(F("Saving Session data: "));
       Serial.print(millis());
@@ -415,6 +416,7 @@ void saveSession(fs::FS &fs, const char * path){
     temp_message += '\n';
 
     file.print(temp_message);
+    vTaskDelay(2);
   }
 
   file.close();
@@ -431,6 +433,7 @@ void saveSession(fs::FS &fs, const char * path){
       Serial.println(String(save_counter));
     }
     save_counter = 0; // back to the start.
+    //bluetooth_setup();
   }
 }
 
